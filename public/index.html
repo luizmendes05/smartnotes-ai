@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartNotes AI - Intelligent Offline Notepad</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='logo-grad' x1='4' y1='3' x2='20' y2='21' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0%25' stop-color='%23c084fc'/%3E%3Cstop offset='100%25' stop-color='%2300e676'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='7' y='3' width='13' height='15' rx='2' stroke='url(%23logo-grad)' stroke-width='1.5' stroke-linejoin='round'/%3E%3Crect x='4' y='6' width='13' height='15' rx='2' fill='%230c0a1c' stroke='url(%23logo-grad)' stroke-width='2' stroke-linejoin='round'/%3E%3Cline x1='7' y1='11' x2='14' y2='11' stroke='url(%23logo-grad)' stroke-width='1.5' stroke-linecap='round'/%3E%3Cline x1='7' y1='14' x2='12' y2='14' stroke='url(%23logo-grad)' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M19 4.5c0 .83.67 1.5 1.5 1.5-.83 0-1.5.67-1.5 1.5 0-.83-.67-1.5-1.5-1.5.83 0 1.5-.67 1.5-1.5z' fill='%2300e676'/%3E%3Cpath d='M15.5 2c0 .55.45 1 1 1-.55 0-1 .45-1 1 0-.55-.45-1-1-1 .55 0 1-.45 1-1z' fill='%23c084fc'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Fira+Code:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        
+        <!-- SIDEBAR: Note Manager & Settings -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-top">
+                    <div class="logo">
+                        <svg class="logo-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="logo-grad" x1="4" y1="3" x2="20" y2="21" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" stop-color="#c084fc"/>
+                                    <stop offset="100%" stop-color="#00e676"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- Back sheet of paper -->
+                            <rect x="7" y="3" width="13" height="15" rx="2" stroke="url(#logo-grad)" stroke-width="1.5" stroke-linejoin="round" />
+                            <!-- Front sheet of paper -->
+                            <rect x="4" y="6" width="13" height="15" rx="2" fill="var(--bg-sidebar)" stroke="url(#logo-grad)" stroke-width="2" stroke-linejoin="round" />
+                            <!-- Text lines -->
+                            <line x1="7" y1="11" x2="14" y2="11" stroke="url(#logo-grad)" stroke-width="1.5" stroke-linecap="round" />
+                            <line x1="7" y1="14" x2="12" y2="14" stroke="url(#logo-grad)" stroke-width="1.5" stroke-linecap="round" />
+                            <!-- Sparkles (AI stars) -->
+                            <path d="M19 4.5c0 .83.67 1.5 1.5 1.5-.83 0-1.5.67-1.5 1.5 0-.83-.67-1.5-1.5-1.5.83 0 1.5-.67 1.5-1.5z" fill="#00e676" />
+                            <path d="M15.5 2c0 .55.45 1 1 1-.55 0-1 .45-1 1 0-.55-.45-1-1-1 .55 0 1-.45 1-1z" fill="#c084fc" />
+                        </svg>
+                        <h2>SmartNotes <span class="accent-text">AI</span></h2>
+                    </div>
+                    
+                    <div class="sidebar-actions-toolbar">
+                        <button id="graph-toggle-btn" class="btn-icon-only toolbar-btn" title="Show Notes Graph" data-i18n-title="graphBtnTitle">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="4.5" y1="16.5" x2="9.5" y2="9.5" />
+                                <line x1="9.5" y1="9.5" x2="18.5" y2="6.5" />
+                                <line x1="9.5" y1="9.5" x2="15.5" y2="17.5" />
+                                <line x1="4.5" y1="16.5" x2="15.5" y2="17.5" />
+                                <circle cx="4.5" cy="16.5" r="2.5" fill="none" stroke="currentColor" />
+                                <circle cx="9.5" cy="9.5" r="3.5" fill="var(--primary-color)" stroke="var(--primary-color)" />
+                                <circle cx="18.5" cy="6.5" r="2" fill="none" stroke="currentColor" />
+                                <circle cx="15.5" cy="17.5" r="2.5" fill="none" stroke="currentColor" />
+                            </svg>
+                        </button>
+                        <button id="theme-toggle-btn" class="btn-icon-only toolbar-btn" title="Toggle Theme">
+                            <svg class="sun-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="5" />
+                                <line x1="12" y1="1" x2="12" y2="3" />
+                                <line x1="12" y1="21" x2="12" y2="23" />
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                                <line x1="1" y1="12" x2="3" y2="12" />
+                                <line x1="21" y1="12" x2="23" y2="12" />
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                            </svg>
+                            <svg class="moon-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                            </svg>
+                        </button>
+                        <button id="lang-toggle-btn" class="btn-icon-only toolbar-btn lang-badge-btn" title="Switch Language">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="2" y1="12" x2="22" y2="12" />
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                            </svg>
+                            <span class="lang-label">EN</span>
+                        </button>
+                    </div>
+                </div>
+                <button id="new-note-btn" class="btn btn-primary" data-i18n="newNote">+ New Note</button>
+            </div>
+            
+            <div class="notes-list-container">
+                <div class="search-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="notes-search" placeholder="Search notes..." data-i18n-placeholder="searchPlaceholder">
+                </div>
+                <div id="active-tag-filter" class="active-tag-filter" style="display: none;">
+                    <span id="active-tag-filter-text">Tag: Work</span>
+                    <button id="clear-tag-filter-btn" title="Clear filter">✕</button>
+                </div>
+                <h3 data-i18n="yourNotes">Your Notes</h3>
+                <ul id="notes-list" class="notes-list">
+                    <!-- Inserted dynamically via JS -->
+                </ul>
+            </div>
+        </aside>
+        
+        <!-- MAIN EDITOR: Writing canvas -->
+        <main class="main-editor">
+            <header class="editor-header">
+                <div class="title-row">
+                    <button id="mobile-sidebar-toggle" class="btn-icon-only mobile-toggle-btn" title="Toggle Sidebar">☰</button>
+                    <input type="text" id="note-title" placeholder="Untitled Note" class="title-input" data-i18n-placeholder="noteTitlePlaceholder">
+                    <button id="mobile-chat-toggle" class="btn-icon-only mobile-toggle-btn" title="Toggle Assistant">💬</button>
+                    <div class="editor-header-actions">
+                        <!-- Copa IA Toolbox Dropdown -->
+                        <div class="copa-dropdown-wrapper">
+                            <button id="copa-dropdown-btn" class="btn premium-ai-btn dropdown-trigger-btn" data-i18n="copaDropdownTitle">⚡ Ações com IA</button>
+                            <div id="copa-dropdown-menu" class="copa-dropdown-menu" style="display: none;">
+                                <div class="dropdown-section-title" data-i18n="copaGincanaTitle">🚀 Pitch & Produtividade</div>
+                                <button id="pitch-mode-btn" class="copa-dropdown-item" data-i18n="pitchModeBtn">📊 Apresentar Pitch</button>
+                                <button id="roi-calc-btn" class="copa-dropdown-item" data-i18n="roiCalcBtn">⏱️ Calculadora de ROI</button>
+                                <button id="generate-ata-btn" class="copa-dropdown-item" data-i18n="generateAtaBtnText">🎙️ Gerar Ata</button>
+                                
+                                <div class="dropdown-section-title" data-i18n="copaAssistantsTitle">🎙️ Assistentes & Foco</div>
+                                <button id="dictate-btn" class="copa-dropdown-item" title="Start Dictation" data-i18n-title="dictateBtnTitle" data-i18n="dictateBtnText">🎙️ Dictate</button>
+                                <button id="toggle-reader-btn" class="copa-dropdown-item" title="Toggle Text Reader" data-i18n-title="readerBtnTitle" data-i18n="readerBtnText">🔊 Reader</button>
+                                <button id="zen-toggle-btn" class="copa-dropdown-item" title="Zen Focus Mode" data-i18n-title="zenBtnTitle" data-i18n="zenBtnText">🧘 Zen Mode</button>
+                            </div>
+                        </div>
+
+                        <!-- Reader controls inline when active -->
+                        <div id="tts-header-controls" class="tts-header-controls" style="display: none;">
+                            <button id="tts-play-btn" class="tts-control-btn-header" title="Play note audio" data-i18n-title="ttsPlayTitle">▶️</button>
+                            <button id="tts-stop-btn" class="tts-control-btn-header" title="Stop audio" data-i18n-title="ttsStopTitle">⏹️</button>
+                            <button id="tts-settings-btn" class="tts-control-btn-header" title="Audio Settings" data-i18n-title="ttsSettingsTitle">⚙️</button>
+                            <button id="close-reader-btn" class="close-reader-btn-header" title="Close Reader">✕</button>
+                        </div>
+
+                        <!-- Consolidated Export Dropdown -->
+                        <div class="export-dropdown-wrapper">
+                            <button id="export-dropdown-btn" class="btn btn-secondary dropdown-trigger-btn" title="Export Note" data-i18n="exportMenuBtn">📤 Export</button>
+                            <div id="export-dropdown-menu" class="export-dropdown-menu" style="display: none;">
+                                <button id="export-pdf-btn" class="export-dropdown-item" title="Export as PDF" data-i18n="exportPdf">📄 PDF</button>
+                                <button id="export-html-btn" class="export-dropdown-item" title="Copy clean HTML" data-i18n="exportHtml">📋 HTML</button>
+                                <button id="export-patch-btn" class="export-dropdown-item" title="Export as Git Patch" data-i18n="exportPatch">💾 Git Patch</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tag Manager bar -->
+                <div class="tag-manager-bar">
+                    <div class="tag-manager-left">
+                        <div id="note-tags-container" class="note-tags-container">
+                            <!-- Tags dynamically added here -->
+                        </div>
+                        <div class="add-tag-wrapper">
+                            <button id="add-tag-trigger-btn" class="add-tag-btn">+ Tag</button>
+                            <div id="tag-picker-popover" class="tag-picker-popover" style="display: none;">
+                                <div class="tag-color-presets">
+                                    <span class="color-dot active" style="background: #3b82f6;" data-color="#3b82f6"></span>
+                                    <span class="color-dot" style="background: #10b981;" data-color="#10b981"></span>
+                                    <span class="color-dot" style="background: #ef4444;" data-color="#ef4444"></span>
+                                    <span class="color-dot" style="background: #f59e0b;" data-color="#f59e0b"></span>
+                                    <span class="color-dot" style="background: #8b5cf6;" data-color="#8b5cf6"></span>
+                                    <span class="color-dot" style="background: #ec4899;" data-color="#ec4899"></span>
+                                </div>
+                                <input type="text" id="new-tag-input" placeholder="New tag name..." data-i18n-placeholder="tagInputPlaceholder">
+                                <div id="tag-autocomplete-suggestions" class="tag-autocomplete-suggestions" style="display: none;"></div>
+                                <button id="save-tag-btn" class="btn btn-primary" data-i18n="saveTag">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="status-indicator-wrapper">
+                        <button id="cancel-ai-btn" class="cancel-ai-btn" style="display: none;" title="Stop AI Assistant" data-i18n-title="stopAiTitle" data-i18n="cancelAiText">⏹️ Stop AI</button>
+                        <div class="status-indicator" id="status-text" data-i18n="statusSaved">Saved locally</div>
+                        <div class="stats-text" id="stats-text">0 words | 0 chars</div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Text Formatting Toolbar (Premium Rich Text) -->
+            <div class="format-toolbar">
+                <button class="format-btn" data-command="bold" title="Bold"><b>B</b></button>
+                <button class="format-btn" data-command="italic" title="Italic"><i>I</i></button>
+                <button class="format-btn" data-command="underline" title="Underline"><u>U</u></button>
+                <button class="format-btn" data-command="strikeThrough" title="Strikethrough"><del>S</del></button>
+                
+                <span class="format-separator"></span>
+                
+                <select id="font-select" class="format-select" title="Font">
+                    <option value="Arial, sans-serif">Arial</option>
+                    <option value="'Times New Roman', Times, serif">Times New Roman</option>
+                    <option value="'Courier New', Courier, monospace">Courier New</option>
+                    <option value="Verdana, Geneva, sans-serif">Verdana</option>
+                    <option value="'Trebuchet MS', Helvetica, sans-serif">Trebuchet MS</option>
+                    <option value="Georgia, serif">Georgia</option>
+                    <option value="'Plus Jakarta Sans', sans-serif" selected>Plus Jakarta Sans</option>
+                    <option value="'Inter', sans-serif">Inter</option>
+                    <option value="'Poppins', sans-serif">Poppins</option>
+                    <option value="'Montserrat', sans-serif">Montserrat</option>
+                    <option value="'Playfair Display', serif">Playfair Display</option>
+                    <option value="'Lora', serif">Lora</option>
+                    <option value="'Fira Code', monospace">Fira Code</option>
+                </select>
+                
+                <select id="size-select" class="format-select" title="Size">
+                    <option value="3" selected>Medium</option>
+                    <option value="2">Small</option>
+                    <option value="4">Large</option>
+                    <option value="5">Extra Large</option>
+                </select>
+                
+                <span class="format-separator"></span>
+                
+                <button class="format-btn" data-command="justifyLeft" title="Align Left">
+                    <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M3 15h18v-2H3v2zm0 4h18v-2H3v2zm0-8h18V9H3v2zm0-6v2h18V5H3z"/></svg>
+                </button>
+                <button class="format-btn" data-command="justifyCenter" title="Align Center">
+                    <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M7 15h10v-2H7v2zm-4 4h18v-2H3v2zm4-8h10V9H7v2zM3 5v2h18V5H3z"/></svg>
+                </button>
+                <button class="format-btn" data-command="justifyRight" title="Align Right">
+                    <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M3 21h18v-2H3v2zM3 3v2h18V3H3zm0 10h18v-2H3v2zM3 9h18V7H3v2zm0 8h18v-2H3v2z"/></svg>
+                </button>
+                
+                <span class="format-separator"></span>
+                
+                <button class="format-btn" data-command="insertUnorderedList" title="Bulleted List">
+                    <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"/></svg>
+                </button>
+                <button class="format-btn" data-command="insertOrderedList" title="Numbered List">
+                    <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M2 17h2v.5H3v1h1v.5H2v1h3v-4H2v1zm1-9h1V4H2v1h1v3zm-1 3h1.8L2 13.1v.9h3v-1H3.2L5 10.9V10H2v1zm5-6v2h14V5H7zm0 14h14v-2H7v2zm0-6h14v-2H7v2z"/></svg>
+                </button>
+                
+                <span class="format-separator"></span>
+                
+                <!-- Foreground and Background Colors -->
+                <div class="color-picker-wrapper" style="display: inline-flex; position: relative;">
+                    <button class="format-btn" id="color-fore-btn" title="Text Color" style="display: flex; flex-direction: column; line-height: 1; padding-top: 2px;">
+                        <span style="font-weight: bold;">A</span>
+                        <span id="color-fore-indicator" style="width: 12px; height: 3px; background: #f8fafc; border-radius: 1px; margin-top: 1px;"></span>
+                    </button>
+                    <input type="color" id="color-fore" style="position: absolute; opacity: 0; width: 0; height: 0; padding: 0; border: none;" value="#f8fafc">
+                </div>
+                <div class="color-picker-wrapper" style="display: inline-flex; position: relative;">
+                    <button class="format-btn" id="color-back-btn" title="Highlight Color" style="display: flex; flex-direction: column; line-height: 1; padding-top: 2px;">
+                        <span style="font-weight: bold; background: #06b6d4; color: #080c14; padding: 0 2px; border-radius: 2px; font-size: 0.75rem;">A</span>
+                        <span id="color-back-indicator" style="width: 12px; height: 3px; background: transparent; border-radius: 1px; margin-top: 1px;"></span>
+                    </button>
+                    <input type="color" id="color-back" style="position: absolute; opacity: 0; width: 0; height: 0; padding: 0; border: none;" value="#06b6d4">
+                </div>
+                <button class="format-btn" id="remove-highlight-btn" title="Remove Highlight" data-i18n-title="removeHighlightTitle">🚫</button>
+                
+                <span class="format-separator"></span>
+                
+                <button class="format-btn" data-command="removeFormat" title="Clear Formatting">
+                    <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M12.244 4H19v2h-4.041l-2.715 2.715L15 11.43l-1.414 1.414-2.715-2.715-2.029 2.029 3.586 3.586L10.999 17.16l-3.586-3.586-2.029 2.029L4 14.189l2.029-2.029-2.715-2.715L4.728 8.03l2.715 2.715 2.029-2.029-2.029-2.029L8.857 5.3l2.029 2.029L12.244 4zM19 18v2H5v-2h14z"/></svg>
+                </button>
+                
+            </div>
+            
+            <div class="editor-body">
+                <div class="editor-workspace">
+                    <!-- Selection Tip Banner -->
+                    <div class="selection-tip-banner" id="selection-tip-banner">
+                        <span class="tip-icon">💡</span>
+                        <span class="tip-text" data-i18n="selectionTip">Tip: Select a specific text range in the note to format, read aloud, or run AI actions only on that part. Otherwise, actions apply to the entire note.</span>
+                        <button class="close-tip-btn" id="close-tip-btn" title="Dismiss tip" data-i18n-title="dismissTipTitle">✕</button>
+                    </div>
+                    <div id="note-content" contenteditable="true" class="rich-editor" placeholder="Start writing your note here..." data-i18n-placeholder="editorPlaceholder"></div>
+                </div>
+            </div>
+            
+            <!-- AI Quick Actions Toolbar (Collapsible & Staggered) -->
+            <div class="ai-toolbar" id="ai-quick-actions-toolbar">
+                <button class="btn premium-ai-btn" id="ai-toolbar-toggle-btn">
+                    <span data-i18n="quickActionsLabel">⚡ AI Quick Actions</span>
+                    <span class="toggle-icon" style="margin-left: 8px;">▶</span>
+                </button>
+                <div class="ai-toolbar-buttons" id="ai-toolbar-buttons">
+                    <button class="btn btn-secondary ai-action-btn" data-action="summarize" data-i18n="actionSummarize">📝 Summarize</button>
+                    <button class="btn btn-secondary ai-action-btn" data-action="improve" data-i18n="actionImprove">✨ Improve Writing</button>
+                    <button class="btn btn-secondary ai-action-btn" data-action="format" data-i18n="actionFormat">🪄 Auto-Format</button>
+                    <button class="btn btn-secondary ai-action-btn" data-action="translate" data-i18n="actionTranslate">🌍 Translate (Portuguese)</button>
+                    <button class="btn btn-secondary ai-action-btn" data-action="bullets" data-i18n="actionBullets">📌 Extract Topics</button>
+                    <button class="btn btn-secondary ai-action-btn" data-action="expand" data-i18n="actionExpand">✍️ Expand Topic</button>
+                </div>
+            </div>
+
+            <!-- Toggle border arrows for desktop collapse -->
+            <button id="desktop-sidebar-toggle" class="desktop-border-toggle-btn" title="Toggle Sidebar">
+                <span class="arrow-icon">◀</span>
+            </button>
+            <button id="desktop-chat-toggle" class="desktop-border-toggle-btn" title="Toggle Assistant">
+                <span class="arrow-icon">▶</span>
+            </button>
+        </main>
+        
+        <!-- CHAT PANEL: Conversational AI assistant with active note context -->
+        <section class="chat-panel">
+            <div class="chat-header">
+                <h3 data-i18n="chatHeader">AI Assistant</h3>
+                <div class="chat-header-actions" style="display: flex; gap: 0.5rem; align-items: center;">
+                    <span class="chat-status" data-i18n="chatStatus">Offline (Local)</span>
+                    <button id="clear-chat-btn" class="btn-icon-only" style="width: 28px; height: 28px; font-size: 0.8rem; border-radius: 6px;" title="Clear conversation" data-i18n-title="chatClearTitle">🗑️</button>
+                </div>
+            </div>
+            
+            <!-- Local AI Model Selector -->
+            <div class="chat-model-box">
+                <label for="model-select" data-i18n="modelLabel">Local AI Model</label>
+                <div class="select-wrapper">
+                    <select id="model-select">
+                        <option value="qwen3-0.6b">Qwen 3 (0.6B) - Ultra-light</option>
+                        <option value="qwen3.5-2b-text">Qwen 3.5 (2B) - Balanced</option>
+                        <option value="phi-4-mini" selected>Phi-4-mini (4B) - Advanced</option>
+                        <option value="deepseek-r1-1.5b">DeepSeek R1 (1.5B) - Reasoning Light</option>
+                        <option value="deepseek-r1-7b">DeepSeek R1 (7B) - Reasoning Pro</option>
+                        <option value="mistral-nemo-12b-instruct">Mistral Nemo (12B) - Text Expert</option>
+                        <option value="gpt-oss-20b">GPT-OSS (20B) - Heavy GPU</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- YouTube Transcript Tool -->
+            <div class="yt-tool-box">
+                <input type="text" id="yt-url" placeholder="YouTube video link..." class="yt-input" data-i18n-placeholder="ytUrlPlaceholder">
+                <button id="yt-btn" class="btn btn-secondary" title="Summarize YouTube video" data-i18n-title="ytBtnTitle" data-i18n="ytBtnText">🎥 Summarize</button>
+            </div>
+            
+            <!-- Web Scraper Tool (Scrapling) -->
+            <div class="scraper-tool-box">
+                <input type="text" id="scraper-url" placeholder="Webpage link to scrape..." class="scraper-input" data-i18n-placeholder="scraperUrlPlaceholder">
+                <button id="scraper-btn" class="btn btn-secondary" title="Scrape webpage" data-i18n-title="scraperBtnTitle" data-i18n="scraperBtnText">🕸️ Scrape Web</button>
+            </div>
+            
+            <!-- PDF Ingestion Tool -->
+            <div class="pdf-tool-box">
+                <div class="pdf-dropzone" id="pdf-dropzone">
+                    <span class="pdf-icon">📄</span>
+                    <span class="pdf-text" data-i18n="pdfDropText">Upload PDF Document</span>
+                    <input type="file" id="pdf-file-input" accept="application/pdf" style="display: none;">
+                </div>
+            </div>
+            
+            <div class="chat-messages" id="chat-messages">
+                <div class="message system-message" data-i18n="chatWelcome">
+                    Hello! I am your personal AI assistant. You can ask me questions about your note, request text generation, or analyze selected content.
+                </div>
+            </div>
+            
+            <div class="chat-input-area">
+                <textarea id="chat-input" placeholder="Ask something about your note..." data-i18n-placeholder="chatInputPlaceholder"></textarea>
+                <button id="chat-send-btn" class="btn btn-primary send-btn" title="Send message" data-i18n-title="chatSendTitle">
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                        <path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                    </svg>
+                </button>
+                <button id="chat-stop-btn" class="btn btn-danger stop-btn" style="display: none;" title="Stop AI Assistant" data-i18n-title="stopAiTitle">
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                        <rect x="4" y="4" width="16" height="16" fill="currentColor" rx="2" />
+                    </svg>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Custom Confirmation Modal (Premium) -->
+    <div id="confirm-modal" class="custom-modal">
+        <div class="modal-content">
+            <div class="modal-icon">⚠️</div>
+            <h3 id="confirm-modal-title" data-i18n="confirmDeleteTitle">Delete Note</h3>
+            <p id="confirm-modal-message" data-i18n="confirmDeleteMsg">Are you sure you want to proceed?</p>
+            <div class="modal-buttons">
+                <button id="confirm-modal-cancel" class="btn btn-secondary" data-i18n="confirmCancel">Cancel</button>
+                <button id="confirm-modal-ok" class="btn btn-danger" data-i18n="confirmOk">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Obsidian-style Notes Graph Modal -->
+    <div id="graph-view-modal" class="custom-modal graph-modal">
+        <div class="modal-content graph-modal-content">
+            <button id="close-graph-btn" class="close-modal-btn">✕</button>
+            <h3 data-i18n="graphTitle">Knowledge Network Graph</h3>
+            <p class="graph-help-text" data-i18n="graphHelp">Drag nodes to explore. Double-click a note node to open it.</p>
+            <div class="canvas-container">
+                <canvas id="graph-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- TTS Settings Modal -->
+    <div id="tts-settings-modal" class="custom-modal">
+        <div class="modal-content tts-modal-content" style="max-width: 320px; padding: 1.5rem; border-radius: var(--border-radius-lg);">
+            <button id="close-tts-settings-btn" class="close-modal-btn">✕</button>
+            <h3 data-i18n="ttsSettingsTitle" style="margin-bottom: 1.25rem; font-size: 1.1rem; font-weight: 700; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Voice & Audio</h3>
+            
+            <div class="tts-settings-group" style="display: flex; flex-direction: column; gap: 1rem; text-align: left;">
+                
+                <!-- Voice selection -->
+                <div class="settings-field" style="display: flex; flex-direction: column; gap: 0.35rem;">
+                    <label for="tts-voice-select" class="tts-label" data-i18n="ttsVoiceLabel" style="font-size: 0.7rem;">Voice:</label>
+                    <select id="tts-voice-select" class="tts-select" style="max-width: 100%; width: 100%;">
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+                
+                <!-- Speed Slider -->
+                <div class="settings-field" style="display: flex; flex-direction: column; gap: 0.35rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <label for="tts-speed-slider" class="tts-label" data-i18n="ttsSpeedLabel" style="font-size: 0.7rem;">Speed:</label>
+                        <span id="tts-speed-display" class="tts-value-display" style="font-size: 0.75rem;">1.0x</span>
+                    </div>
+                    <input type="range" id="tts-speed-slider" min="0.5" max="2" step="0.1" value="1.0" class="tts-slider" style="width: 100%; margin-top: 0.25rem;">
+                </div>
+                
+                <!-- Volume Slider -->
+                <div class="settings-field" style="display: flex; flex-direction: column; gap: 0.35rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <label for="tts-vol-slider" class="tts-label" data-i18n="ttsVolLabel" style="font-size: 0.7rem;">Vol:</label>
+                    </div>
+                    <input type="range" id="tts-vol-slider" min="0" max="1" step="0.1" value="0.8" class="tts-slider" style="width: 100%; margin-top: 0.25rem;">
+                </div>
+                
+                <!-- Status Badge row -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
+                    <span class="tts-label" style="font-size: 0.7rem; text-transform: none; letter-spacing: 0;">Status:</span>
+                    <span id="tts-status-badge" class="tts-status-badge local" data-i18n="ttsStatusLocal">Local fallback</span>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Zen Mode Floating Audio Widget -->
+    <div id="zen-audio-widget" class="zen-audio-widget" style="display: none;">
+        <div class="widget-header">
+            <span data-i18n="zenSoundsLabel">Ambient Sounds</span>
+            <button id="zen-sound-close-btn" title="Exit Zen Mode">✕</button>
+        </div>
+        <div class="sound-tracks">
+            <div class="sound-track-row">
+                <button class="sound-btn" data-track="rain" data-i18n="soundRain">🌧️ Rain</button>
+                <input type="range" class="sound-vol" data-track="rain" min="0" max="1" step="0.1" value="0.5">
+            </div>
+            <div class="sound-track-row">
+                <button class="sound-btn" data-track="forest" data-i18n="soundForest">🌲 Forest</button>
+                <input type="range" class="sound-vol" data-track="forest" min="0" max="1" step="0.1" value="0.5">
+            </div>
+            <div class="sound-track-row">
+                <button class="sound-btn" data-track="lofi" data-i18n="soundLofi">🎵 Lo-fi</button>
+                <input type="range" class="sound-vol" data-track="lofi" min="0" max="1" step="0.1" value="0.5">
+            </div>
+        </div>
+    </div>
+
+    <!-- Show Zen Sounds Floating Button -->
+    <button id="show-zen-sounds-btn" class="show-zen-sounds-btn" style="display: none;" title="Show Ambient Sounds">🎵</button>
+
+    <!-- Positivo S+ Background Glow Blobs -->
+    <div class="bg-glow-blob bg-glow-green"></div>
+    <div class="bg-glow-blob bg-glow-purple"></div>
+
+    <!-- Pitch Presentation Modal -->
+    <div id="pitch-modal" class="custom-modal pitch-modal" style="display: none;">
+        <div class="pitch-modal-content">
+            <button id="close-pitch-btn" class="close-modal-btn">✕</button>
+            
+            <div id="pitch-loading" class="pitch-loading-overlay" style="display: none;">
+                <div class="spinner"></div>
+                <p data-i18n="pitchLoading" style="margin-top: 1rem; font-weight: 500;">Preparando apresentação de slides com IA Local...</p>
+                <button id="cancel-pitch-gen-btn" class="btn btn-secondary" style="margin-top: 1rem;" data-i18n="confirmCancel">Cancelar</button>
+            </div>
+            
+            <div class="pitch-slides-container">
+                <div id="pitch-slide" class="pitch-slide">
+                    <h2 id="slide-title" class="slide-title">Título do Slide</h2>
+                    <ul id="slide-bullets" class="slide-bullets">
+                        <li>Ponto de demonstração 1</li>
+                        <li>Ponto de demonstração 2</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pitch-controls">
+                <button id="pitch-prev-btn" class="btn btn-secondary">◀ Anterior</button>
+                <div id="pitch-dots" class="pitch-dots"></div>
+                <button id="pitch-next-btn" class="btn btn-primary" style="background: var(--primary-gradient); border: none;">Próximo ▶</button>
+            </div>
+            
+            <div class="pitch-footer">
+                <span class="pitch-brand" style="color: var(--primary-purple);">SmartNotes <span class="green-text" style="color: var(--primary-green); font-weight: 800;">AI</span></span>
+                <span id="pitch-slide-number" class="pitch-slide-number">Slide 1 de 5</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROI Calculator Modal -->
+    <div id="roi-modal" class="custom-modal roi-modal" style="display: none;">
+        <div class="modal-content roi-modal-content">
+            <button id="close-roi-btn" class="close-modal-btn">✕</button>
+            <h3 style="margin-bottom: 1.5rem; font-size: 1.35rem; font-weight: 700; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">⏱️ Calculadora de Impacto & ROI</h3>
+            
+            <div class="roi-layout">
+                <div class="roi-inputs">
+                    <div class="settings-field">
+                        <label for="roi-time-manual" style="font-weight: 600;">Tempo Manual Antes da IA (Minutos/Tarefa):</label>
+                        <input type="range" id="roi-time-manual" min="5" max="480" step="5" value="60" class="tts-slider">
+                        <span id="roi-time-manual-val" class="roi-val-badge">60 min</span>
+                    </div>
+                    
+                    <div class="settings-field" style="margin-top: 1rem;">
+                        <label for="roi-frequency" style="font-weight: 600;">Frequência de Execução:</label>
+                        <select id="roi-frequency" class="tts-select">
+                            <option value="20" selected>Diária (20x por mês)</option>
+                            <option value="4">Semanal (4x por mês)</option>
+                            <option value="1">Mensal (1x por mês)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="settings-field" style="margin-top: 1rem;">
+                        <label for="roi-time-ai" style="font-weight: 600;">Tempo Estimado com IA (Minutos/Tarefa):</label>
+                        <input type="range" id="roi-time-ai" min="1" max="30" step="1" value="5" class="tts-slider">
+                        <span id="roi-time-ai-val" class="roi-val-badge">5 min</span>
+                    </div>
+                    
+                    <div class="roi-strategic-brief">
+                        <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem; font-size: 0.85rem; text-transform: uppercase; color: var(--primary-purple); letter-spacing: 1px;">Análise Estratégica da IA Local:</h4>
+                        <div id="roi-ai-summary" class="roi-ai-summary-box">
+                            Carregando análise estratégica da produtividade...
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="roi-preview">
+                    <!-- Glowing Impact Card S+ -->
+                    <div class="impact-card-splus" id="impact-card">
+                        <div class="impact-card-glow-green"></div>
+                        <div class="impact-card-glow-purple"></div>
+                        <div class="impact-card-header">
+                            <span class="badge">🏆 RELATÓRIO DE PRODUTIVIDADE</span>
+                            <div class="brand-logo" style="color: var(--primary-purple);">SmartNotes <span class="green-text" style="color: var(--primary-green); font-weight: 800;">AI</span></div>
+                        </div>
+                        <div class="impact-card-body">
+                            <h2 id="impact-card-saved-hours">18h</h2>
+                            <p class="impact-lead">Economizadas por Mês</p>
+                            <div class="impact-divider"></div>
+                            <div class="impact-details">
+                                <div class="detail-col">
+                                    <span class="metric" id="impact-card-percent">91%</span>
+                                    <span class="label">Redução de Tempo</span>
+                                </div>
+                                <div class="detail-col">
+                                    <span class="metric" id="impact-card-annual">27 dias</span>
+                                    <span class="label">Produtividade Anual</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="impact-card-footer">
+                            <span class="cert-text">Certificado de Eficiência AI-First</span>
+                            <span id="impact-note-title" class="note-title-badge">SmartNotes AI</span>
+                        </div>
+                    </div>
+                    
+                    <button id="copy-roi-btn" class="btn btn-primary" style="margin-top: 1.25rem; width: 100%; font-weight: 600; background: var(--primary-gradient); border: none;">
+                        💾 Copiar Relatório de ROI
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="mobile-overlay" class="mobile-overlay"></div>
+    <!-- Frontend logic script -->
+    <script src="app.js?v=2"></script>
+</body>
+</html>
