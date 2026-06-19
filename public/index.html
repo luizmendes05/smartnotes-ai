@@ -380,6 +380,12 @@
             <p class="graph-help-text" data-i18n="graphHelp">Drag nodes to explore. Double-click a note node to open it.</p>
             <div class="canvas-container">
                 <canvas id="graph-canvas"></canvas>
+                <div class="graph-controls">
+                    <button id="graph-zoom-in" class="graph-control-btn" title="Aumentar Zoom">＋</button>
+                    <button id="graph-zoom-out" class="graph-control-btn" title="Diminuir Zoom">－</button>
+                    <button id="graph-zoom-reset" class="graph-control-btn" title="Centralizar Grafo">⟲</button>
+                </div>
+                <div id="graph-tooltip" class="graph-tooltip" style="display: none; position: absolute; pointer-events: none; z-index: 100;"></div>
             </div>
         </div>
     </div>

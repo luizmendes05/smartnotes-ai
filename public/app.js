@@ -84,6 +84,7 @@ let hoveredNode = null;
 let canvasScale = 1;
 let canvasOffsetX = 0;
 let canvasOffsetY = 0;
+let graphPhysicsInterval = null;
 
 // Translation Dictionary (i18n)
 const i18n = {
@@ -843,6 +844,7 @@ function setupEventListeners() {
         handleAutocompleteKeydown(e);
     });
     document.addEventListener('keydown', handleGlobalUndoRedo);
+    document.addEventListener('keydown', handleGlobalEscKey);
     
     noteContent.addEventListener('paste', () => {
         pushHistory();
@@ -2650,6 +2652,29 @@ function buildGraphData() {
     
     const tagMap = new Map();
     
+    // First, add all tags to tagMap so we can count their references
+    notes.forEach(note => {
+        if (note.tags) {
+            note.tags.forEach(tag => {
+                const tagKey = tag.name.toLowerCase();
+                if (!tagMap.has(tagKey)) {
+                    tagMap.set(tagKey, {
+                        id: 'tag_' + tagKey,
+                        type: 'tag',
+                        label: tag.name,
+                        color: tag.color,
+                        notesCount: 0,
+                        x: Math.random() * 500 + 100,
+                        y: Math.random() * 300 + 100,
+                        vx: 0,
+                        vy: 0
+                    });
+                }
+                tagMap.get(tagKey).notesCount++;
+            });
+        }
+    });
+
     notes.forEach(note => {
         // Dynamic node color based on tag names (audit context categories)
         let noteColor = '#06b6d4'; // default cyan
@@ -2663,6 +2688,11 @@ function buildGraphData() {
             else if (hasLog) noteColor = '#f59e0b'; // Orange
         }
 
+        // Calculate size based on note text volume (word count)
+        const textContent = note.content ? note.content.replace(/<[^>]*>/g, '').trim() : '';
+        const wordCount = textContent ? textContent.split(/\s+/).length : 0;
+        const noteSize = Math.min(18, 8 + Math.min(10, wordCount / 100));
+
         graphNodes.push({
             id: note.id,
             type: 'note',
@@ -2672,37 +2702,55 @@ function buildGraphData() {
             vx: 0,
             vy: 0,
             color: noteColor,
-            size: 8
+            size: noteSize
         });
         
         if (note.tags) {
             note.tags.forEach(tag => {
                 const tagKey = tag.name.toLowerCase();
-                if (!tagMap.has(tagKey)) {
-                    tagMap.set(tagKey, {
-                        id: 'tag_' + tagKey,
-                        type: 'tag',
-                        label: tag.name,
-                        color: tag.color,
-                        size: 6,
-                        x: Math.random() * 500 + 100,
-                        y: Math.random() * 300 + 100,
-                        vx: 0,
-                        vy: 0
-                    });
-                }
-                
                 graphLinks.push({
                     source: note.id,
-                    target: 'tag_' + tagKey
+                    target: 'tag_' + tagKey,
+                    type: 'note-to-tag'
                 });
             });
         }
     });
     
+    // Add tags to graphNodes with dynamic size based on connected notes
     for (const tagNode of tagMap.values()) {
+        tagNode.size = Math.min(15, 6 + tagNode.notesCount * 1.5);
+        delete tagNode.notesCount; // cleanup temporary property
         graphNodes.push(tagNode);
     }
+
+    // Automatic Note-to-Note connections (Semantic references)
+    notes.forEach(noteA => {
+        notes.forEach(noteB => {
+            if (noteA.id === noteB.id) return;
+            
+            // Search for noteB.title inside noteA.content (case insensitive)
+            const cleanContent = noteA.content ? noteA.content.replace(/<[^>]*>/g, ' ').toLowerCase() : '';
+            const titleLower = noteB.title.toLowerCase().trim();
+            
+            // Ensure title has a reasonable length to avoid false positives
+            if (titleLower.length >= 3 && cleanContent.includes(titleLower)) {
+                // Check if link already exists in reverse direction to prevent duplicate lines
+                const exists = graphLinks.some(l => 
+                    (l.source === noteA.id && l.target === noteB.id) ||
+                    (l.source === noteB.id && l.target === noteA.id)
+                );
+                
+                if (!exists) {
+                    graphLinks.push({
+                        source: noteA.id,
+                        target: noteB.id,
+                        type: 'note-to-note'
+                    });
+                }
+            }
+        });
+    });
 }
 
 function initGraphSimulation() {
@@ -2710,25 +2758,32 @@ function initGraphSimulation() {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     
-    const rect = canvas.parentNode.getBoundingClientRect();
+    let rect = canvas.parentNode.getBoundingClientRect();
     canvas.width = rect.width;
     canvas.height = rect.height;
     
     canvasOffsetX = 0;
     canvasOffsetY = 0;
+    canvasScale = 1.0; // Reset scale on opening
     
     let isDraggingCanvas = false;
     let dragStartX = 0;
     let dragStartY = 0;
     
+    const getMouseCoords = (e) => {
+        rect = canvas.parentNode.getBoundingClientRect();
+        const mouseX = (e.clientX - rect.left - canvasOffsetX) / canvasScale;
+        const mouseY = (e.clientY - rect.top - canvasOffsetY) / canvasScale;
+        return { mouseX, mouseY };
+    };
+
     canvas.onmousedown = (e) => {
-        const mouseX = (e.clientX - rect.left - canvasOffsetX);
-        const mouseY = (e.clientY - rect.top - canvasOffsetY);
+        const { mouseX, mouseY } = getMouseCoords(e);
         
         draggedNode = null;
         for (const node of graphNodes) {
             const dist = Math.hypot(node.x - mouseX, node.y - mouseY);
-            if (dist < node.size * 2) {
+            if (dist < node.size * 1.8) {
                 draggedNode = node;
                 break;
             }
@@ -2742,8 +2797,7 @@ function initGraphSimulation() {
     };
     
     canvas.onmousemove = (e) => {
-        const mouseX = (e.clientX - rect.left - canvasOffsetX);
-        const mouseY = (e.clientY - rect.top - canvasOffsetY);
+        const { mouseX, mouseY } = getMouseCoords(e);
         
         if (draggedNode) {
             draggedNode.x = mouseX;
@@ -2756,9 +2810,40 @@ function initGraphSimulation() {
         hoveredNode = null;
         for (const node of graphNodes) {
             const dist = Math.hypot(node.x - mouseX, node.y - mouseY);
-            if (dist < node.size * 2) {
+            if (dist < node.size * 1.8) {
                 hoveredNode = node;
                 break;
+            }
+        }
+
+        // Show/hide and update preview tooltip position
+        const tooltip = document.getElementById('graph-tooltip');
+        if (tooltip) {
+            if (hoveredNode) {
+                if (hoveredNode.type === 'note') {
+                    const note = notes.find(n => n.id === hoveredNode.id);
+                    if (note) {
+                        const cleanText = note.content ? note.content.replace(/<[^>]*>/g, '').trim() : '';
+                        const previewText = cleanText.substring(0, 120) + (cleanText.length > 120 ? '...' : '');
+                        tooltip.innerHTML = `
+                            <div class="graph-tooltip-title">${note.title}</div>
+                            <div class="graph-tooltip-content">${previewText || '<i>Vazia</i>'}</div>
+                        `;
+                    }
+                } else if (hoveredNode.type === 'tag') {
+                    const count = graphLinks.filter(l => l.target === hoveredNode.id).length;
+                    tooltip.innerHTML = `
+                        <div class="graph-tooltip-title" style="color: ${hoveredNode.color}">#${hoveredNode.label}</div>
+                        <div class="graph-tooltip-content">${count} nota(s) vinculada(s)</div>
+                    `;
+                }
+                
+                tooltip.style.display = 'block';
+                // Adjust position relative to the modal box (rect.left/top)
+                tooltip.style.left = (e.clientX - rect.left + 15) + 'px';
+                tooltip.style.top = (e.clientY - rect.top + 15) + 'px';
+            } else {
+                tooltip.style.display = 'none';
             }
         }
     };
@@ -2767,20 +2852,100 @@ function initGraphSimulation() {
         draggedNode = null;
         isDraggingCanvas = false;
     };
+
+    canvas.onmouseleave = () => {
+        draggedNode = null;
+        isDraggingCanvas = false;
+        hoveredNode = null;
+        const tooltip = document.getElementById('graph-tooltip');
+        if (tooltip) tooltip.style.display = 'none';
+    };
     
     canvas.ondblclick = (e) => {
-        const mouseX = (e.clientX - rect.left - canvasOffsetX);
-        const mouseY = (e.clientY - rect.top - canvasOffsetY);
+        const { mouseX, mouseY } = getMouseCoords(e);
         
         for (const node of graphNodes) {
             const dist = Math.hypot(node.x - mouseX, node.y - mouseY);
-            if (dist < node.size * 2 && node.type === 'note') {
+            if (dist < node.size * 1.8 && node.type === 'note') {
+                const tooltip = document.getElementById('graph-tooltip');
+                if (tooltip) tooltip.style.display = 'none';
                 selectNote(node.id);
                 closeGraphModal();
                 break;
             }
         }
     };
+
+    // Zoom on wheel scroll
+    canvas.onwheel = (e) => {
+        e.preventDefault();
+        rect = canvas.parentNode.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        
+        const zoomFactor = 1.15;
+        const graphMouseX = (mouseX - canvasOffsetX) / canvasScale;
+        const graphMouseY = (mouseY - canvasOffsetY) / canvasScale;
+        
+        if (e.deltaY < 0) {
+            canvasScale = Math.min(3.0, canvasScale * zoomFactor);
+        } else {
+            canvasScale = Math.max(0.3, canvasScale / zoomFactor);
+        }
+        
+        canvasOffsetX = mouseX - graphMouseX * canvasScale;
+        canvasOffsetY = mouseY - graphMouseY * canvasScale;
+    };
+
+    // Graph UI buttons hookups
+    const zoomInBtn = document.getElementById('graph-zoom-in');
+    const zoomOutBtn = document.getElementById('graph-zoom-out');
+    const zoomResetBtn = document.getElementById('graph-zoom-reset');
+    
+    if (zoomInBtn) {
+        zoomInBtn.onclick = (e) => {
+            e.stopPropagation();
+            rect = canvas.parentNode.getBoundingClientRect();
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const graphCenterX = (centerX - canvasOffsetX) / canvasScale;
+            const graphCenterY = (centerY - canvasOffsetY) / canvasScale;
+            canvasScale = Math.min(3.0, canvasScale * 1.25);
+            canvasOffsetX = centerX - graphCenterX * canvasScale;
+            canvasOffsetY = centerY - graphCenterY * canvasScale;
+        };
+    }
+    
+    if (zoomOutBtn) {
+        zoomOutBtn.onclick = (e) => {
+            e.stopPropagation();
+            rect = canvas.parentNode.getBoundingClientRect();
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const graphCenterX = (centerX - canvasOffsetX) / canvasScale;
+            const graphCenterY = (centerY - canvasOffsetY) / canvasScale;
+            canvasScale = Math.max(0.3, canvasScale / 1.25);
+            canvasOffsetX = centerX - graphCenterX * canvasScale;
+            canvasOffsetY = centerY - graphCenterY * canvasScale;
+        };
+    }
+    
+    if (zoomResetBtn) {
+        zoomResetBtn.onclick = (e) => {
+            e.stopPropagation();
+            canvasScale = 1.0;
+            canvasOffsetX = 0;
+            canvasOffsetY = 0;
+            rect = canvas.parentNode.getBoundingClientRect();
+            // Re-center node positions randomly in view
+            graphNodes.forEach(node => {
+                node.x = Math.random() * (rect.width - 200) + 100;
+                node.y = Math.random() * (rect.height - 200) + 100;
+                node.vx = 0;
+                node.vy = 0;
+            });
+        };
+    }
     
     if (graphPhysicsInterval) clearInterval(graphPhysicsInterval);
     
@@ -2800,6 +2965,7 @@ function initGraphSimulation() {
 }
 
 function runGraphPhysics(width, height) {
+    if (width <= 40 || height <= 40) return;
     const kRepulsion = 120;
     const kAttraction = 0.05;
     const friction = 0.85;
@@ -2880,12 +3046,15 @@ function runGraphPhysics(width, height) {
 }
 
 function drawGraph(ctx, width, height) {
+    if (width <= 40 || height <= 40) return;
     ctx.clearRect(0, 0, width, height);
     ctx.save();
-    ctx.translate(canvasOffsetX, canvasOffsetY);
     
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
-    ctx.lineWidth = 1.5;
+    // Scale and translate for zoom & pan support
+    ctx.translate(canvasOffsetX, canvasOffsetY);
+    ctx.scale(canvasScale, canvasScale);
+    
+    // 1. Draw Links
     graphLinks.forEach(link => {
         const nodeA = graphNodes.find(n => n.id === link.source);
         const nodeB = graphNodes.find(n => n.id === link.target);
@@ -2893,25 +3062,69 @@ function drawGraph(ctx, width, height) {
             ctx.beginPath();
             ctx.moveTo(nodeA.x, nodeA.y);
             ctx.lineTo(nodeB.x, nodeB.y);
+            
+            // Highlight link if connected to hovered node
+            let opacity = 0.08;
+            if (hoveredNode) {
+                const isConnected = (link.source === hoveredNode.id || link.target === hoveredNode.id);
+                opacity = isConnected ? 0.6 : 0.02;
+            }
+            
+            if (link.type === 'note-to-note') {
+                ctx.strokeStyle = `rgba(168, 85, 247, ${opacity * 1.5})`; // Purple link
+                ctx.lineWidth = 2.0;
+                ctx.setLineDash([4, 4]); // Dashed line for internal note-to-note wikilinks
+            } else {
+                ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`; // White-gray link
+                ctx.lineWidth = 1.2;
+                ctx.setLineDash([]);
+            }
             ctx.stroke();
         }
     });
+    ctx.setLineDash([]); // Reset line dash
     
+    // 2. Draw Nodes
     graphNodes.forEach(node => {
-        ctx.shadowBlur = (hoveredNode === node) ? 20 : 6;
+        let opacity = 1.0;
+        if (hoveredNode) {
+            const isSelf = (hoveredNode.id === node.id);
+            const isConnected = graphLinks.some(l => 
+                (l.source === hoveredNode.id && l.target === node.id) ||
+                (l.source === node.id && l.target === hoveredNode.id)
+            );
+            opacity = (isSelf || isConnected) ? 1.0 : 0.15;
+        }
+        
+        ctx.save();
+        ctx.globalAlpha = opacity;
+        
+        // Dynamic node glow (shadow)
+        ctx.shadowBlur = (hoveredNode && hoveredNode.id === node.id) ? 22 : 6;
         ctx.shadowColor = node.color;
         
+        // Node circle
         ctx.fillStyle = node.color;
         ctx.beginPath();
-        ctx.arc(node.x, node.y, (hoveredNode === node) ? node.size + 2 : node.size, 0, Math.PI * 2);
+        const size = (hoveredNode && hoveredNode.id === node.id) ? node.size + 2.5 : node.size;
+        ctx.arc(node.x, node.y, size, 0, Math.PI * 2);
         ctx.fill();
         
+        // Node label
         ctx.shadowBlur = 0;
-        ctx.fillStyle = (hoveredNode === node) ? '#ffffff' : '#94a3b8';
-        ctx.font = (hoveredNode === node) ? 'bold 11px sans-serif' : '10px sans-serif';
+        ctx.fillStyle = (hoveredNode && hoveredNode.id === node.id) ? '#ffffff' : '#94a3b8';
+        ctx.font = (hoveredNode && hoveredNode.id === node.id) ? 'bold 11px sans-serif' : '10px sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText(node.label, node.x, node.y - node.size - 6);
+        
+        // Truncate labels that are too long on small notes
+        let label = node.label;
+        if (label.length > 22 && (!hoveredNode || hoveredNode.id !== node.id)) {
+            label = label.substring(0, 19) + '...';
+        }
+        ctx.fillText(label, node.x, node.y - size - 6);
+        ctx.restore();
     });
+    
     ctx.restore();
 }
 
@@ -3547,6 +3760,51 @@ function handleGlobalUndoRedo(e) {
         } else if (e.key.toLowerCase() === 'y') {
             e.preventDefault();
             redo();
+        }
+    }
+}
+
+function handleGlobalEscKey(e) {
+    if (e.key === 'Escape') {
+        // 1. Confirm modal
+        const confirmModal = document.getElementById('confirm-modal');
+        if (confirmModal && confirmModal.classList.contains('active')) {
+            const cancelBtn = document.getElementById('confirm-modal-cancel');
+            if (cancelBtn) cancelBtn.click();
+            return;
+        }
+        
+        // 2. Graph modal
+        if (isGraphModalOpen) {
+            closeGraphModal();
+            return;
+        }
+        
+        // 3. TTS settings modal
+        const ttsSettingsModal = document.getElementById('tts-settings-modal');
+        if (ttsSettingsModal && ttsSettingsModal.classList.contains('active')) {
+            ttsSettingsModal.classList.remove('active');
+            return;
+        }
+        
+        // 4. Pitch modal
+        const pitchModal = document.getElementById('pitch-modal');
+        if (pitchModal && (pitchModal.classList.contains('active') || pitchModal.style.display === 'flex')) {
+            if (activeAiAbortController) {
+                activeAiAbortController.abort();
+            }
+            pitchModal.style.display = 'none';
+            pitchModal.classList.remove('active');
+            document.removeEventListener('keydown', handlePitchKeydown);
+            return;
+        }
+        
+        // 5. ROI modal
+        const roiModal = document.getElementById('roi-modal');
+        if (roiModal && (roiModal.classList.contains('active') || roiModal.style.display === 'flex')) {
+            roiModal.style.display = 'none';
+            roiModal.classList.remove('active');
+            return;
         }
     }
 }
