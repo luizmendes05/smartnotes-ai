@@ -846,8 +846,16 @@ function setupEventListeners() {
     document.addEventListener('keydown', handleGlobalUndoRedo);
     document.addEventListener('keydown', handleGlobalEscKey);
     
-    noteContent.addEventListener('paste', () => {
+    noteContent.addEventListener('paste', (e) => {
         pushHistory();
+        e.preventDefault();
+        
+        // Get plain text from clipboard
+        const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+        
+        // Insert it at the cursor position
+        document.execCommand('insertText', false, text);
+        
         setTimeout(() => {
             adaptNoteColorsToTheme();
             updateActiveNote();
