@@ -207,7 +207,8 @@ const i18n = {
         readerBtnText: "🔊 Reader",
         ttsActiveLabel: "🔊 Audio Reader",
         ttsSettingsTitle: "Voice & Audio",
-        exportMenuBtn: "📤 Export"
+        exportMenuBtn: "📤 Export",
+        exitZenBtn: "🧘 Exit Zen Mode"
     },
     pt: {
         newNote: "+ Nova Nota",
@@ -328,7 +329,8 @@ const i18n = {
         readerBtnText: "🔊 Leitor",
         ttsActiveLabel: "🔊 Leitor de Voz",
         ttsSettingsTitle: "Voz & Áudio",
-        exportMenuBtn: "📤 Exportar"
+        exportMenuBtn: "📤 Exportar",
+        exitZenBtn: "🧘 Sair do Modo Zen"
     }
 };
 
@@ -1119,6 +1121,13 @@ function setupEventListeners() {
     if (zenToggleBtn) {
         zenToggleBtn.addEventListener('click', () => {
             toggleZenMode();
+        });
+    }
+
+    const exitZenBtn = document.getElementById('exit-zen-btn');
+    if (exitZenBtn) {
+        exitZenBtn.addEventListener('click', () => {
+            exitZenMode();
         });
     }
 
@@ -2527,6 +2536,11 @@ function toggleZenMode() {
         showSoundsBtn.style.display = 'none'; // reset when zen mode toggles
     }
     
+    const exitZenBtn = document.getElementById('exit-zen-btn');
+    if (exitZenBtn) {
+        exitZenBtn.style.display = isZen ? 'flex' : 'none';
+    }
+    
     if (isZen) {
         initAudioObjects();
     } else {
@@ -2547,6 +2561,10 @@ function exitZenMode() {
     const showSoundsBtn = document.getElementById('show-zen-sounds-btn');
     if (showSoundsBtn) {
         showSoundsBtn.style.display = 'none';
+    }
+    const exitZenBtn = document.getElementById('exit-zen-btn');
+    if (exitZenBtn) {
+        exitZenBtn.style.display = 'none';
     }
     stopAllAmbientSounds();
 }

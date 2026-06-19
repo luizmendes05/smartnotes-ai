@@ -1649,6 +1649,38 @@ body.zen-focus-mode .format-toolbar:hover {
     height: 4px;
     cursor: pointer;
 }
+/* Exit Zen Mode Floating Button */
+.exit-zen-btn {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 1000;
+    padding: 0.6rem 1.2rem;
+    background: rgba(14, 20, 32, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition-fast);
+    box-shadow: var(--shadow-md);
+    animation: fadeIn 0.3s ease;
+}
+body.light-theme .exit-zen-btn {
+    background: rgba(255, 255, 255, 0.85);
+    color: #0f172a;
+}
+.exit-zen-btn:hover {
+    background: var(--primary-gradient);
+    border-color: transparent;
+    color: #ffffff;
+    transform: scale(1.05);
+}
 
 /* Notes network graph modal */
 .graph-modal-content {
