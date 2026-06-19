@@ -12,3 +12,6 @@ logs/
 # Arquivos temporários do OS
 .DS_Store
 Thumbs.db
+
+# Customizações locais do Antigravity
+.agents/
