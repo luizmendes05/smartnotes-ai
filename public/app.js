@@ -5343,21 +5343,44 @@ function closeSlashSuggestions() {
 
 function positionPopover(popover, range) {
     const rect = range.getBoundingClientRect();
-    let top = rect.bottom + window.scrollY;
     let left = rect.left + window.scrollX;
+    let caretBottom = rect.bottom;
+    let caretTop = rect.top;
     
     if (rect.top === 0 && rect.left === 0) {
         const parent = range.startContainer.parentElement;
         if (parent) {
             const parentBox = parent.getBoundingClientRect();
-            top = parentBox.bottom + window.scrollY;
+            caretBottom = parentBox.bottom;
+            caretTop = parentBox.top;
             left = parentBox.left + window.scrollX;
         }
     }
     
-    popover.style.top = `${top + 5}px`;
-    popover.style.left = `${left}px`;
     popover.style.display = 'flex';
+    
+    const popoverHeight = popover.offsetHeight || 180;
+    const popoverWidth = popover.offsetWidth || 250;
+    const viewportHeight = window.innerHeight;
+    const viewportWidth = window.innerWidth;
+    
+    // Vertical positioning: Upwards if not enough space below, and more space above
+    const spaceBelow = viewportHeight - caretBottom;
+    let top;
+    if (spaceBelow < popoverHeight + 15 && caretTop > spaceBelow) {
+        top = caretTop + window.scrollY - popoverHeight - 5;
+    } else {
+        top = caretBottom + window.scrollY + 5;
+    }
+    
+    // Horizontal positioning: Prevent overflow on the right edge
+    const caretLeft = rect.top === 0 && rect.left === 0 ? (left - window.scrollX) : rect.left;
+    if (caretLeft + popoverWidth > viewportWidth - 15) {
+        left = Math.max(10, viewportWidth - popoverWidth - 15) + window.scrollX;
+    }
+    
+    popover.style.top = `${top}px`;
+    popover.style.left = `${left}px`;
 }
 
 function handleAutocompleteSuggestionsKeydown(e) {
