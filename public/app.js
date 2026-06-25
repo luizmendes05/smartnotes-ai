@@ -1846,6 +1846,9 @@ function setupEventListeners() {
     // Dictation Event Listener
     const dictateBtn = document.getElementById('dictate-btn');
     if (dictateBtn) {
+        dictateBtn.addEventListener('mousedown', (e) => {
+            e.preventDefault(); // Retain editor focus and selection
+        });
         dictateBtn.addEventListener('click', toggleDictation);
     }
 
