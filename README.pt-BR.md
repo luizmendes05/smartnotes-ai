@@ -20,12 +20,16 @@ A aplicação conta com **Português (Brasil) como idioma padrão** para confort
 * **Tipografia Moderna**: Seleção de fontes corporativas (*Plus Jakarta Sans, Inter, Poppins, Montserrat, Playfair Display, Lora, Fira Code, Georgia, Courier*) e tamanhos.
 * **Layout**: Alinhamentos (Esquerda, Centralizado, Direita) e listas (**Listas com Marcadores** e **Listas Numeradas**).
 * **Cores**: Ajustes de **Cor do Texto**, **Cor de Destaque (Fundo)** e botão de **Limpar Destaque**.
+* **🔗 Conexões Rápidas por WikiLinks (`[[`)**: Digite `[[` no editor para abrir o popover de sugestão inteligente de notas. Selecionar uma nota insere a referência `[[Título da Nota]]`, criando uma conexão visual e semântica imediata no Grafo de Conhecimento.
+* **⌨️ Comandos Slash (`/`)**: Digite `/` no início de uma linha vazia para abrir um menu de injeção rápida de modelos estruturados (Auditorias de Vulnerabilidade, Atas, Tabelas, Código, e atalhos de IA local).
+* **💡 Placeholders Dinâmicos e Central de Dicas (💡)**: Exibe dicas de inicialização dentro de notas em branco. Uma gaveta retrátil de Guia Rápido (`?` no rodapé da barra lateral) detalha todos os atalhos ocultos, comandos de teclado e comportamentos interativos do grafo.
 * **Persistência e Histórico**: Preserva a seleção de texto e posição do cursor ao usar ferramentas ou IA. Inclui estatísticas de palavras/caracteres e um motor robusto de Desfazer/Refazer (Ctrl+Z / Ctrl+Y).
 
 ### 2. Ferramentas de Apresentação e Documentos (Suíte Corporativa) 🚀
 * **📊 Modo Apresentação de Slides (Pitch)**: Gera apresentações de slides estruturadas (Problema, Solução, Recursos, ROI, Próximos Passos) a partir das notas via LLMs locais. Possui controles de navegação por teclado (`Setas`/`Espaço`/`Esc`) e um **Botão Cancelar** para abortar a geração no meio do processo.
 * **⏱️ Calculadora de ROI e Produtividade**: Calcula horas economizadas no mês, percentual de redução e dias de trabalho recuperados no ano com base na frequência das tarefas. Gera um **Card de Impacto** brilhante pronto para print e solicita à IA local um briefing estratégico de 2 frases.
 * **🎙️ Ata de Reunião Inteligente (Gerar Ata)**: Converte anotações, transcrições ou ditados em uma ata estruturada com Sumário Geral, Principais Decisões e uma tabela markdown contendo *Ação/Tarefa, Responsável e Prazo*.
+* **📄 Exportação Avançada para PDF**: Escolha entre modelos formatados (Margens Limpas Padrão, Ata de Reunião Formal com cabeçalhos e assinatura de participantes, ou Relatório de Impacto de Segurança com ROI auto-importado) antes de imprimir ou salvar.
 
 ### 3. Ações Rápidas de IA & Assistente Conversacional 💬
 * **Ações Rápidas**: `Resumir` (síntese estruturada), `Melhorar Escrita` (polimento gramatical), `Traduzir` (tradução dinâmica direta), `Extrair Tópicos` (bullets), `Expandir Assunto` (escrita de continuação inline) e `Formatação Automática` (ajuste automático de parágrafos).
@@ -37,8 +41,9 @@ A aplicação conta com **Português (Brasil) como idioma padrão** para confort
 * **Resumo de Vídeos do YouTube**: Extrai e resume legendas nativas do YouTube sem chaves externas de API, caindo para raspagem de metadados se a legenda não existir.
 * **🔊 Leitor de Áudio (TTS)**: Vozes neurais de alta fidelidade (Azure TTS) ou fallback via Web Speech API do navegador, com controles de velocidade e volume em um modal dedicado.
 
-### 5. Zen Focus & Visualização de Grafos 🧘📊
-* **🧘 Modo Zen Focus**: Canvas livre de distrações com sons ambientes MP3 em loop (Chuva, Floresta, Lo-fi) e controles deslizantes de volume.
+### 5. Zen Focus, Quadro Kanban & Visualização de Grafos 🧘📊📋
+* **📋 Quadro Kanban Integrado**: Alterne dinamicamente entre o Editor e um Quadro Kanban interativo. As notas são classificadas automaticamente em colunas (*A Fazer*, *Em Progresso*, *Concluído* ou *Sem Status*) conforme suas tags, suportando drag-and-drop nativo para atualização de status em tempo real.
+* **🧘 Modo Zen Focus & Pomodoro Timer**: Canvas minimalista livre de distrações com loops de som ambiente (Chuva, Floresta, Lo-fi) e controles de volume. Inclui um **Timer Pomodoro** flutuante no canto inferior direito com sessões configuráveis (Foco, Pausa Curta, Pausa Longa) e alarmes sonoros sintetizados.
 * **Grafo de Rede (Física)**: Mapa interativo de conexões entre notas, com cores dinâmicas baseadas em Tags (Vulnerabilidade = Vermelho, Correção = Verde, Log = Laranja, Padrão = Ciano).
 * **Painéis Colapsáveis (Desktop)**: Botões de setas de borda (`◀` / `▶`) para recolher a barra lateral ou painel de chat, expandindo o espaço de escrita.
 * **Autocomplete Inteligente**: Sugestões de escrita inline (ghost text aceito via `Tab` ou `Seta Direita`) e autocompletar de tags por histórico.

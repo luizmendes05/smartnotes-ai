@@ -20,12 +20,16 @@ The application **defaults to Portuguese (Brazil)** for regional comfort and fea
 * **Modern Typography**: Choice of corporate-ready fonts (*Plus Jakarta Sans, Inter, Poppins, Montserrat, Playfair Display, Lora, Fira Code, Georgia, Courier*) and font sizes.
 * **Layouts**: Alignments (Left, Center, Right), **Bulleted Lists**, and **Numbered Lists**.
 * **Colors**: Custom **Text Color**, **Highlight (Background) Color** pickers, and a **Remove Highlight** tool.
+* **🔗 WikiLinks Quick Connections (`[[`)**: Type `[[` inside the editor to open a keyboard-navigable autocomplete suggestions menu. Selecting a note creates a reference (`[[Note Title]]`) that instantly links nodes together inside the Knowledge Graph.
+* **⌨️ Slash Commands (`/`)**: Type `/` at the beginning of an empty line to show an actions menu. Instantly inject pre-formatted templates like *Vulnerability Audits* (with risk matrices), *Meeting Minutes*, *Markdown Tables*, *Code Blocks*, or run inline AI tasks like auto-summarization.
+* **💡 Placeholders & Help Center (💡)**: Displays start-up tips inside empty notes. A collapsible **Quick Guide drawer** (`?` button in the sidebar footer) explains all hidden shortcuts, keyboard controls, and interactive graph behaviors.
 * **Preservation**: Prevents the text editor from losing its cursor position or active selection when clicking toolbar elements or AI actions. Includes Word/Character statistics and a robust programmatic Undo/Redo (Ctrl+Z / Ctrl+Y) history engine.
 
 ### 2. Document & Pitch Tools (Corporate Suite) 🚀
 * **📊 Slide Presentation Mode (Pitch Mode)**: Generates structured, responsive slide decks (Problem, Solution, Key Features, ROI, Next Steps) from notes using local LLMs. It features keyboard navigation (`ArrowLeft`/`ArrowRight`/`Space`/`Escape`) and an **Abort Button** to cancel generation mid-way.
 * **⏱️ ROI & Productivity Calculator**: Computes monthly time saved, percentage reduction, and annual workdays recovered based on task frequency. Generates a glowing, download-ready **Impact Card** certificate and prompts the local AI to compile a 2-sentence Strategic Business Brief.
 * **🎙️ Meeting Minutes (Gerar Ata)**: Formats meeting notes, transcripts, or dictations into a professional document with a General Summary, Key Decisions, and a structured markdown table of Action Items, Owners, and Deadlines.
+* **📄 Advanced PDF Export**: Choose between styled templates (Standard Clean margins, Formal Meeting Minutes with header details and signature lines, or Security Impact Reports including auto-imported calculations from the ROI calculator) before printing or saving.
 
 ### 3. AI Quick Actions & Conversational Assistant 💬
 * **Toolbar AI Actions**: `Summarize` (notes synthesis), `Improve Writing` (rephrasing), `Translate` (automatic language toggle), `Extract Topics` (extract bullet points), `Expand Topic` (inline context generator), and `Auto-Format` (grammar and spacing polish).
@@ -37,8 +41,9 @@ The application **defaults to Portuguese (Brazil)** for regional comfort and fea
 * **Real YouTube Summarizer**: Extracts and decodes YouTube captions on the Node.js backend (no third-party keys required), falling back to description scraping if captions are unavailable.
 * **🔊 Audio Reader (TTS)**: Streams high-fidelity neural voices (Azure TTS) or utilizes browser-native Web Speech API fallback, featuring volume, speed rate, and voice controls in a settings modal.
 
-### 5. Zen Focus & Graph Visualization 🧘📊
-* **🧘 Zen Focus Mode**: Minimizes writing canvas distractions with high-quality MP3 ambient loop layers (Rain, Forest, Lo-fi) and volume controls.
+### 5. Zen Focus, Kanban Board & Graph Visualization 🧘📊📋
+* **📋 Integrated Kanban Board**: Toggle between Editor view and a dynamic Kanban Board. Notes are automatically grouped into columns (*To Do*, *Doing*, *Done*, or *Uncategorized*) based on tags. Drag-and-drop notes between columns to update status tags in real-time.
+* **🧘 Zen Focus Mode & Pomodoro Timer**: Minimalist writing canvas with ambient background loops (Rain, Forest, Lo-fi) and volume controls. Features a built-in **Pomodoro Timer** in the bottom-right corner with configurable cycles (Focus, Short Break, Long Break) and synthetic audio chime alerts.
 * **Physics-based Note Graph**: Interactive knowledge network graph mapping note connections. Node colors automatically highlight categories (Vulnerability = Red, Fix = Green, Log = Orange, Default = Cyan).
 * **Desktop Collapsible Panels**: Smooth CSS-collapsing sidebars with vertical toggle border arrow buttons (`◀` / `▶`) to maximize workspace on desktop viewports.
 * **Smart Autocomplete (Smart Compose)**: Inline word completion suggestions (ghost text accepted via `Tab` or `ArrowRight`) and tag autocomplete dropdowns.
