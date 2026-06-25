@@ -1019,6 +1019,10 @@ function setupEventListeners() {
     });
     
     noteContent.addEventListener('input', (e) => {
+        // Force fully empty DOM when no text exists, to trigger CSS :empty placeholder
+        if (noteContent.textContent.trim() === "" && (noteContent.innerHTML === "" || noteContent.innerHTML === "<br>" || noteContent.innerHTML === "<div><br></div>" || noteContent.innerHTML === "<p><br></p>")) {
+            noteContent.innerHTML = "";
+        }
         showStatus(i18n[currentLang].statusSaving);
         updateActiveNote();
         handleAutocompleteInput(e);
