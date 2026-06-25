@@ -5137,10 +5137,23 @@ function openWikiLinksSuggestions(query, range) {
         item.className = 'suggestion-item' + (index === 0 ? ' active' : '');
         item.dataset.index = index;
         item.dataset.noteTitle = note.title;
+        
+        let tagText = '';
+        if (note.tags && note.tags.length > 0) {
+            const firstTag = note.tags[0];
+            if (firstTag) {
+                tagText = typeof firstTag === 'object' ? (firstTag.name || '') : firstTag;
+            }
+        }
+        
         item.innerHTML = `
             <span>📄 ${note.title}</span>
-            <span class="item-sub">${note.tags && note.tags.length > 0 ? note.tags[0].name : ''}</span>
+            <span class="item-sub">${tagText}</span>
         `;
+        
+        item.onmousedown = (e) => {
+            e.preventDefault();
+        };
         
         item.onclick = () => {
             selectWikiLinkSuggestion(note.title, range);
@@ -5211,6 +5224,10 @@ function openSlashSuggestions(query, range) {
                 <span style="font-size: 0.65rem; opacity: 0.6;">${cmd.desc}</span>
             </div>
         `;
+        
+        item.onmousedown = (e) => {
+            e.preventDefault();
+        };
         
         item.onclick = () => {
             selectSlashSuggestion(cmd.name, range);
@@ -5329,7 +5346,7 @@ function positionPopover(popover, range) {
     let top = rect.bottom + window.scrollY;
     let left = rect.left + window.scrollX;
     
-    if (rect.width === 0 && rect.height === 0) {
+    if (rect.top === 0 && rect.left === 0) {
         const parent = range.startContainer.parentElement;
         if (parent) {
             const parentBox = parent.getBoundingClientRect();
@@ -5381,8 +5398,14 @@ function handleAutocompleteSuggestionsKeydown(e) {
 }
 
 function insertHtmlAtCaret(html, rangeToRemove) {
+    let range;
     if (rangeToRemove) {
         rangeToRemove.deleteContents();
+        range = rangeToRemove;
+    } else {
+        const selection = window.getSelection();
+        if (!selection.rangeCount) return;
+        range = selection.getRangeAt(0);
     }
     
     const el = document.createElement("div");
@@ -5394,12 +5417,10 @@ function insertHtmlAtCaret(html, rangeToRemove) {
         lastNode = frag.appendChild(node);
     }
     
-    const selection = window.getSelection();
-    if (!selection.rangeCount) return;
-    const range = selection.getRangeAt(0);
     range.insertNode(frag);
     
     if (lastNode) {
+        const selection = window.getSelection();
         const newRange = range.cloneRange();
         newRange.setStartAfter(lastNode);
         newRange.collapse(true);
