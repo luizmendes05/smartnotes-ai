@@ -117,7 +117,7 @@ const i18n = {
         quickActionsLabel: "⚡ AI Quick Actions",
         actionSummarize: "📝 Summarize",
         actionImprove: "✨ Improve Writing",
-        actionTranslate: "🌍 Translate (Portuguese)",
+        actionTranslate: "🌍 Translate",
         actionBullets: "📌 Extract Topics",
         actionExpand: "✍️ Expand Topic",
         actionFormat: "🪄 Auto-Format",
@@ -248,7 +248,7 @@ const i18n = {
         quickActionsLabel: "⚡ Ações Rápidas com IA",
         actionSummarize: "📝 Resumir",
         actionImprove: "✨ Melhorar Escrita",
-        actionTranslate: "🌍 Traduzir (Inglês)",
+        actionTranslate: "🌍 Traduzir",
         actionBullets: "📌 Extrair Tópicos",
         actionExpand: "✍️ Expandir Assunto",
         actionFormat: "🪄 Formatação Automática",
@@ -1091,26 +1091,6 @@ function setupEventListeners() {
             saveSelection();
             if (colorBackIndicator) {
                 colorBackIndicator.style.background = color;
-            }
-            showStatus(i18n[currentLang].statusHighlightChanged);
-            updateActiveNote();
-            noteContent.focus();
-        });
-    }
-    
-    // Remove Highlight Button Hookup (shortcut)
-    const removeHighlightBtn = document.getElementById('remove-highlight-btn');
-    if (removeHighlightBtn) {
-        removeHighlightBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            pushHistory();
-            restoreSelection();
-            if (!document.execCommand('hiliteColor', false, 'transparent')) {
-                document.execCommand('backColor', false, 'transparent');
-            }
-            saveSelection();
-            if (colorBackIndicator) {
-                colorBackIndicator.style.background = 'transparent';
             }
             showStatus(i18n[currentLang].statusHighlightChanged);
             updateActiveNote();
@@ -1965,6 +1945,30 @@ async function callLocalAI(prompt, systemInstruction) {
     }
 }
 
+// Helper to ensure the AI Assistant Chat panel is visible
+function ensureChatPanelOpen() {
+    const appContainer = document.getElementById('app-container');
+    const chatPanel = document.getElementById('chat-panel');
+    const mobileOverlay = document.getElementById('mobile-overlay');
+    
+    if (appContainer && appContainer.classList.contains('chat-collapsed')) {
+        appContainer.classList.remove('chat-collapsed');
+        const desktopChatToggle = document.getElementById('desktop-chat-toggle');
+        if (desktopChatToggle) {
+            const icon = desktopChatToggle.querySelector('.arrow-icon');
+            if (icon) {
+                icon.textContent = '▶';
+            }
+        }
+    }
+    
+    const isMobileMode = window.matchMedia('(max-width: 1024px), (orientation: portrait)').matches;
+    if (isMobileMode) {
+        if (chatPanel) chatPanel.classList.add('active');
+        if (mobileOverlay) mobileOverlay.classList.add('active');
+    }
+}
+
 // Handles toolbar AI quick actions (summarize, improve, translate, etc.)
 async function handleAiAction(actionType) {
     const selection = window.getSelection();
@@ -1983,6 +1987,9 @@ async function handleAiAction(actionType) {
         return;
     }
     
+    // Auto-open chat panel so user can see AI status/results
+    ensureChatPanelOpen();
+    
     let prompt = "";
     let systemInstruction = "";
     
@@ -2000,7 +2007,8 @@ async function handleAiAction(actionType) {
                     prompt = `Improve the writing and clarity of the following text in English. Make it elegant, fluid, and professional:\n\n"${textToProcess}"`;
                     break;
                 case 'translate':
-                    prompt = `Translate the following text to Portuguese naturally:\n\n"${textToProcess}"`;
+                    prompt = `Translate the following text to English. If the text is already in English, translate it to Portuguese naturally and precisely. Return ONLY the clean translation:\n\n"${textToProcess}"`;
+                    systemInstruction = "You are a professional bidirectional translator (English <-> Portuguese). Translate the provided text. If the text is in Portuguese, translate to English. If it is in English, translate to Portuguese. Return only the clean, direct translation without any intro, outro, explanations, or quotes.";
                     break;
                 case 'bullets':
                     prompt = `Extract the main topics and important information from the following text into a list of short bullet points in English:\n\n"${textToProcess}"`;
@@ -2029,7 +2037,8 @@ async function handleAiAction(actionType) {
                     prompt = `Melhore a escrita e clareza do seguinte texto em português. Torne-o mais elegante, fluido e profissional:\n\n"${textToProcess}"`;
                     break;
                 case 'translate':
-                    prompt = `Traduza o seguinte texto para o inglês de forma natural:\n\n"${textToProcess}"`;
+                    prompt = `Traduza o seguinte texto para o português. Se o texto já estiver em português, traduza-o para o inglês de forma natural e precisa. Retorne APENAS a tradução direta, sem introduções ou explicações:\n\n"${textToProcess}"`;
+                    systemInstruction = "Você é um tradutor profissional bidirecional (Inglês <-> Português). Traduza o texto fornecido. Se o texto for em inglês, traduza para o português. Se for em português, traduza para o inglês. Retorne apenas a tradução limpa e direta, sem introduções, explicações ou aspas.";
                     break;
                 case 'bullets':
                     prompt = `Extraia os principais tópicos e informações importantes do seguinte texto em uma lista de bullet points curtos:\n\n"${textToProcess}"`;
@@ -3045,6 +3054,7 @@ function initGraphSimulation() {
         
         draggedNode = null;
         for (const node of graphNodes) {
+            if (!isGraphNodeVisible(node)) continue;
             const dist = Math.hypot(node.x - mouseX, node.y - mouseY);
             if (dist < node.size * 1.8) {
                 draggedNode = node;
@@ -3072,6 +3082,7 @@ function initGraphSimulation() {
         
         hoveredNode = null;
         for (const node of graphNodes) {
+            if (!isGraphNodeVisible(node)) continue;
             const dist = Math.hypot(node.x - mouseX, node.y - mouseY);
             if (dist < node.size * 1.8) {
                 hoveredNode = node;
@@ -3129,11 +3140,17 @@ function initGraphSimulation() {
         
         for (const node of graphNodes) {
             const dist = Math.hypot(node.x - mouseX, node.y - mouseY);
-            if (dist < node.size * 1.8 && node.type === 'note') {
+            if (dist < node.size * 1.8 && isGraphNodeVisible(node)) {
                 const tooltip = document.getElementById('graph-tooltip');
                 if (tooltip) tooltip.style.display = 'none';
-                selectNote(node.id);
-                closeGraphModal();
+                
+                if (node.type === 'note') {
+                    selectNote(node.id);
+                    closeGraphModal();
+                } else if (node.type === 'tag') {
+                    setTagFilter(node.label);
+                    closeGraphModal();
+                }
                 break;
             }
         }
@@ -3227,6 +3244,25 @@ function initGraphSimulation() {
     }, 1000 / 60);
 }
 
+const isGraphNodeVisible = (node) => {
+    const showNotes = document.getElementById('graph-filter-notes')?.checked !== false;
+    const showTags = document.getElementById('graph-filter-tags')?.checked !== false;
+    
+    if (node.type === 'note' && !showNotes) return false;
+    if (node.type === 'tag' && !showTags) return false;
+    return true;
+};
+
+const isGraphLinkVisible = (link) => {
+    const showLinks = document.getElementById('graph-filter-links')?.checked !== false;
+    if (!showLinks) return false;
+    
+    const nodeA = graphNodes.find(n => n.id === link.source);
+    const nodeB = graphNodes.find(n => n.id === link.target);
+    if (!nodeA || !nodeB) return false;
+    return isGraphNodeVisible(nodeA) && isGraphNodeVisible(nodeB);
+};
+
 function runGraphPhysics(width, height) {
     if (width <= 40 || height <= 40) return;
     const kRepulsion = 120;
@@ -3238,8 +3274,10 @@ function runGraphPhysics(width, height) {
     
     for (let i = 0; i < graphNodes.length; i++) {
         const nodeA = graphNodes[i];
+        if (!isGraphNodeVisible(nodeA)) continue;
         for (let j = i + 1; j < graphNodes.length; j++) {
             const nodeB = graphNodes[j];
+            if (!isGraphNodeVisible(nodeB)) continue;
             const dx = nodeB.x - nodeA.x || 0.1;
             const dy = nodeB.y - nodeA.y || 0.1;
             const dist = Math.hypot(dx, dy);
@@ -3262,6 +3300,7 @@ function runGraphPhysics(width, height) {
     }
     
     graphLinks.forEach(link => {
+        if (!isGraphLinkVisible(link)) return;
         const nodeA = graphNodes.find(n => n.id === link.source);
         const nodeB = graphNodes.find(n => n.id === link.target);
         if (!nodeA || !nodeB) return;
@@ -3286,6 +3325,7 @@ function runGraphPhysics(width, height) {
     });
     
     graphNodes.forEach(node => {
+        if (!isGraphNodeVisible(node)) return;
         if (node === draggedNode) return;
         
         if (width > 40 && height > 40) {
@@ -3317,8 +3357,12 @@ function drawGraph(ctx, width, height) {
     ctx.translate(canvasOffsetX, canvasOffsetY);
     ctx.scale(canvasScale, canvasScale);
     
+    const isLightTheme = document.body.classList.contains('light-theme');
+    const searchQuery = document.getElementById('graph-search-input')?.value.toLowerCase().trim() || "";
+    
     // 1. Draw Links
     graphLinks.forEach(link => {
+        if (!isGraphLinkVisible(link)) return;
         const nodeA = graphNodes.find(n => n.id === link.source);
         const nodeB = graphNodes.find(n => n.id === link.target);
         if (nodeA && nodeB) {
@@ -3333,12 +3377,25 @@ function drawGraph(ctx, width, height) {
                 opacity = isConnected ? 0.6 : 0.02;
             }
             
+            // If there's a search active, make unrelated links extremely faint
+            if (searchQuery) {
+                const matchesA = nodeA.label.toLowerCase().includes(searchQuery);
+                const matchesB = nodeB.label.toLowerCase().includes(searchQuery);
+                if (!matchesA && !matchesB) {
+                    opacity = 0.01;
+                }
+            }
+            
             if (link.type === 'note-to-note') {
-                ctx.strokeStyle = `rgba(168, 85, 247, ${opacity * 1.5})`; // Purple link
+                ctx.strokeStyle = isLightTheme
+                    ? `rgba(107, 33, 168, ${opacity * 1.5})`  // Darker purple for light theme
+                    : `rgba(168, 85, 247, ${opacity * 1.5})`; // Purple link
                 ctx.lineWidth = 2.0;
-                ctx.setLineDash([4, 4]); // Dashed line for internal note-to-note wikilinks
+                ctx.setLineDash([4, 4]); // Dashed line for wikilinks
             } else {
-                ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`; // White-gray link
+                ctx.strokeStyle = isLightTheme
+                    ? `rgba(15, 23, 42, ${opacity * 1.2})`   // Dark gray for light theme
+                    : `rgba(255, 255, 255, ${opacity})`;   // White-gray link
                 ctx.lineWidth = 1.2;
                 ctx.setLineDash([]);
             }
@@ -3349,8 +3406,19 @@ function drawGraph(ctx, width, height) {
     
     // 2. Draw Nodes
     graphNodes.forEach(node => {
+        if (!isGraphNodeVisible(node)) return;
+        
         let opacity = 1.0;
-        if (hoveredNode) {
+        let isSearching = false;
+        let matchesSearch = false;
+        
+        if (searchQuery) {
+            isSearching = true;
+            matchesSearch = node.label.toLowerCase().includes(searchQuery);
+            opacity = matchesSearch ? 1.0 : 0.12;
+        }
+        
+        if (hoveredNode && !isSearching) {
             const isSelf = (hoveredNode.id === node.id);
             const isConnected = graphLinks.some(l => 
                 (l.source === hoveredNode.id && l.target === node.id) ||
@@ -3363,28 +3431,42 @@ function drawGraph(ctx, width, height) {
         ctx.globalAlpha = opacity;
         
         // Dynamic node glow (shadow)
-        ctx.shadowBlur = (hoveredNode && hoveredNode.id === node.id) ? 22 : 6;
+        const isHovered = hoveredNode && hoveredNode.id === node.id;
+        ctx.shadowBlur = isHovered ? 22 : (matchesSearch ? 18 : 6);
         ctx.shadowColor = node.color;
         
         // Node circle
         ctx.fillStyle = node.color;
         ctx.beginPath();
-        const size = (hoveredNode && hoveredNode.id === node.id) ? node.size + 2.5 : node.size;
-        ctx.arc(node.x, node.y, size, 0, Math.PI * 2);
+        
+        let finalSize = node.size;
+        if (isHovered) {
+            finalSize += 2.5;
+        } else if (matchesSearch) {
+            finalSize += 1.5;
+        }
+        
+        ctx.arc(node.x, node.y, finalSize, 0, Math.PI * 2);
         ctx.fill();
         
         // Node label
         ctx.shadowBlur = 0;
-        ctx.fillStyle = (hoveredNode && hoveredNode.id === node.id) ? '#ffffff' : '#94a3b8';
-        ctx.font = (hoveredNode && hoveredNode.id === node.id) ? 'bold 11px sans-serif' : '10px sans-serif';
+        
+        // Label color based on theme
+        const textColor = isLightTheme 
+            ? (isHovered ? '#0f172a' : '#475569')
+            : (isHovered ? '#ffffff' : '#94a3b8');
+            
+        ctx.fillStyle = textColor;
+        ctx.font = (isHovered || matchesSearch) ? 'bold 11px sans-serif' : '10px sans-serif';
         ctx.textAlign = 'center';
         
         // Truncate labels that are too long on small notes
         let label = node.label;
-        if (label.length > 22 && (!hoveredNode || hoveredNode.id !== node.id)) {
+        if (label.length > 22 && !isHovered && !matchesSearch) {
             label = label.substring(0, 19) + '...';
         }
-        ctx.fillText(label, node.x, node.y - size - 6);
+        ctx.fillText(label, node.x, node.y - finalSize - 6);
         ctx.restore();
     });
     

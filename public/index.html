@@ -421,6 +421,26 @@
             <button id="close-graph-btn" class="close-modal-btn">✕</button>
             <h3 data-i18n="graphTitle">Knowledge Network Graph</h3>
             <p class="graph-help-text" data-i18n="graphHelp">Drag nodes to explore. Double-click a note node to open it.</p>
+            
+            <!-- Graph Toolbar: Search & Filters -->
+            <div class="graph-toolbar" style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem; align-items: center; justify-content: space-between; flex-wrap: wrap; padding: 0 0.25rem;">
+                <div class="graph-search-wrapper" style="position: relative; flex: 1; min-width: 180px;">
+                    <span style="position: absolute; left: 0.6rem; top: 50%; transform: translateY(-50%); font-size: 0.8rem; pointer-events: none; opacity: 0.6;">🔍</span>
+                    <input type="text" id="graph-search-input" placeholder="Search nodes..." data-i18n-placeholder="searchPlaceholder" style="width: 100%; padding: 0.45rem 0.6rem 0.45rem 1.7rem; border-radius: var(--border-radius-sm); border: 1px solid var(--border-color); background: rgba(255, 255, 255, 0.05); color: var(--text-primary); font-size: 0.8rem;">
+                </div>
+                <div class="graph-filters" style="display: flex; gap: 0.75rem; align-items: center;">
+                    <label class="graph-filter-label" style="display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; cursor: pointer; color: var(--text-secondary); user-select: none;">
+                        <input type="checkbox" id="graph-filter-notes" checked style="accent-color: var(--primary-color); cursor: pointer;"> Notes
+                    </label>
+                    <label class="graph-filter-label" style="display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; cursor: pointer; color: var(--text-secondary); user-select: none;">
+                        <input type="checkbox" id="graph-filter-tags" checked style="accent-color: var(--primary-color); cursor: pointer;"> Tags
+                    </label>
+                    <label class="graph-filter-label" style="display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; cursor: pointer; color: var(--text-secondary); user-select: none;">
+                        <input type="checkbox" id="graph-filter-links" checked style="accent-color: var(--primary-color); cursor: pointer;"> Connections
+                    </label>
+                </div>
+            </div>
+            
             <div class="canvas-container">
                 <canvas id="graph-canvas"></canvas>
                 <div class="graph-controls">
