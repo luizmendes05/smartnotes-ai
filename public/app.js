@@ -217,7 +217,90 @@ const i18n = {
         colorNoneTitle: "No Highlight",
         toastBackupExportSuccess: "Backup file downloaded successfully!",
         toastBackupImportSuccess: "Backup imported successfully! Reloading...",
-        toastBackupImportError: "Failed to parse backup file. Please select a valid SmartNotes JSON backup."
+        toastBackupImportError: "Failed to parse backup file. Please select a valid SmartNotes JSON backup.",
+        
+        // New features translations
+        viewEditor: "📝 Editor View",
+        viewKanban: "📋 Kanban View",
+        kanbanColumnTodo: "To Do",
+        kanbanColumnDoing: "In Progress",
+        kanbanColumnDone: "Completed",
+        kanbanColumnUncategorized: "Uncategorized",
+        kanbanNewCard: "+ Create Note",
+        pomodoroFocus: "Focus Session",
+        pomodoroBreak: "Short Break",
+        pomodoroLongBreak: "Long Break",
+        pomodoroStart: "Start Timer",
+        pomodoroPause: "Pause Timer",
+        pomodoroReset: "Reset Timer",
+        pdfExportOptionsTitle: "PDF Export Templates",
+        pdfTemplateDefault: "Standard Document",
+        pdfTemplateMinutes: "Meeting Minutes (Ata)",
+        pdfTemplateROI: "ROI Executive Report",
+        pdfExportBtn: "Export & Print PDF",
+        quickGuideTitle: "💡 Shortcuts & Gestures",
+        quickGuideShortcutSlash: "Command Menu",
+        quickGuideShortcutSlashDesc: "Type '/' on an empty block to insert vulnerability tables, meeting minutes headers, and HTML layouts.",
+        quickGuideShortcutLinks: "WikiLinks Notes",
+        quickGuideShortcutLinksDesc: "Type '[[' inside the editor to search and link another note dynamically. Links are connected in the graph.",
+        quickGuideGraphGestureRight: "Pin Graph Node",
+        quickGuideGraphGestureRightDesc: "Right-click a node inside the Knowledge Graph to freeze/pin it. Right-click again to release.",
+        quickGuideGraphGestureDouble: "Double-click nodes",
+        quickGuideGraphGestureDoubleDesc: "Double-click a note node to open it, or a tag node to filter your active list in the sidebar.",
+        quickGuideZenMode: "Zen & Pomodoro",
+        quickGuideZenModeDesc: "Activating Zen Focus Mode launches focus white noises and the Pomodoro timer in the bottom-right.",
+        quickGuideClose: "Close Guide",
+        editorDynamicPlaceholder: "Start writing your note here... (type '/' for templates or '[[' to link notes)",
+        titleBold: "Bold",
+        titleItalic: "Italic",
+        titleUnderline: "Underline",
+        titleStrike: "Strikethrough",
+        titleFont: "Font",
+        titleSize: "Size",
+        titleAlignLeft: "Align Left",
+        titleAlignCenter: "Align Center",
+        titleAlignRight: "Align Right",
+        titleListBullet: "Bulleted List",
+        titleListNumber: "Numbered List",
+        titleTextColor: "Text Color",
+        titleHighlightColor: "Highlight Color",
+        titleClearFormat: "Clear Formatting",
+        titleRemoveHighlight: "Remove Highlight",
+        sizeSmall: "Small",
+        sizeMedium: "Medium",
+        sizeLarge: "Large",
+        sizeExtraLarge: "Extra Large",
+        graphFilterNotes: "Notes",
+        graphFilterTags: "Tags",
+        graphFilterConnections: "Connections",
+        graphZoomIn: "Zoom In",
+        graphZoomOut: "Zoom Out",
+        graphZoomReset: "Center Graph",
+        clearFilterTitle: "Clear filter",
+        toggleSidebarTitle: "Toggle Sidebar",
+        toggleAssistantTitle: "Toggle Assistant",
+        chatSendTitle: "Send message",
+        showAmbientSoundsTitle: "Show Ambient Sounds",
+        exitZenTitle: "Exit Zen Mode",
+        pomodoroSettings: "Settings",
+        pomodoroSkip: "Skip Session",
+        pitchPrev: "◀ Previous",
+        pitchNext: "Next ▶",
+        roiModalTitle: "⏱️ Impact & ROI Calculator",
+        roiManualTimeLabel: "Manual Time Before AI (Minutes/Task):",
+        roiFrequencyLabel: "Execution Frequency:",
+        roiFreqDaily: "Daily (20x per month)",
+        roiFreqWeekly: "Weekly (4x per month)",
+        roiFreqMonthly: "Monthly (1x per month)",
+        roiAiTimeLabel: "Estimated Time with AI (Minutes/Task):",
+        roiStrategicAnalysisTitle: "Local AI Strategic Analysis:",
+        roiStrategicAnalysisLoading: "Loading strategic productivity analysis...",
+        roiReportBadge: "🏆 PRODUCTIVITY REPORT",
+        roiSavedPerMonthLabel: "Saved per Month",
+        roiTimeReductionLabel: "Time Reduction",
+        roiAnnualProdLabel: "Annual Productivity",
+        roiCertText: "AI-First Efficiency Certificate",
+        roiCopyReportBtn: "💾 Copy ROI Report"
     },
     pt: {
         newNote: "+ Nova Nota",
@@ -348,7 +431,90 @@ const i18n = {
         colorNoneTitle: "Sem Destaque",
         toastBackupExportSuccess: "Arquivo de backup baixado com sucesso!",
         toastBackupImportSuccess: "Backup importado com sucesso! Recarregando...",
-        toastBackupImportError: "Falha ao ler o arquivo de backup. Selecione um arquivo JSON de backup válido do SmartNotes."
+        toastBackupImportError: "Falha ao ler o arquivo de backup. Selecione um arquivo JSON de backup válido do SmartNotes.",
+        
+        // New features translations
+        viewEditor: "📝 Visualizar Editor",
+        viewKanban: "📋 Quadro Kanban",
+        kanbanColumnTodo: "A Fazer",
+        kanbanColumnDoing: "Em Progresso",
+        kanbanColumnDone: "Concluído",
+        kanbanColumnUncategorized: "Sem Status",
+        kanbanNewCard: "+ Criar Nota",
+        pomodoroFocus: "Sessão de Foco",
+        pomodoroBreak: "Pausa Curta",
+        pomodoroLongBreak: "Pausa Longa",
+        pomodoroStart: "Iniciar Timer",
+        pomodoroPause: "Pausar Timer",
+        pomodoroReset: "Reiniciar Timer",
+        pdfExportOptionsTitle: "Modelos de Exportação PDF",
+        pdfTemplateDefault: "Documento Padrão",
+        pdfTemplateMinutes: "Ata de Reunião",
+        pdfTemplateROI: "Relatório ROI/Executivo",
+        pdfExportBtn: "Exportar & Imprimir PDF",
+        quickGuideTitle: "💡 Atalhos & Gestos Rápido",
+        quickGuideShortcutSlash: "Menu de Comandos",
+        quickGuideShortcutSlashDesc: "Digite '/' em um bloco de texto vazio para inserir templates de vulnerabilidades, ata de reunião e blocos HTML.",
+        quickGuideShortcutLinks: "WikiLinks Conexão",
+        quickGuideShortcutLinksDesc: "Digite '[[' no editor para abrir o menu de busca de notas. Selecionar uma nota cria um vínculo automático no grafo.",
+        quickGuideGraphGestureRight: "Fixar Nó no Grafo",
+        quickGuideGraphGestureRightDesc: "Clique com o botão direito em um nó do Grafo para fixá-lo em uma posição. Clique direito novamente para soltá-lo.",
+        quickGuideGraphGestureDouble: "Duplo clique em Nós",
+        quickGuideGraphGestureDoubleDesc: "Dê duplo clique em um nó de nota para abri-la ou de tag para filtrar a listagem na barra lateral.",
+        quickGuideZenMode: "Modo Zen & Pomodoro",
+        quickGuideZenModeDesc: "Entrar no Modo Zen Focus abre ruídos brancos no canto inferior esquerdo e o timer Pomodoro no canto inferior direito.",
+        quickGuideClose: "Fechar Guia",
+        editorDynamicPlaceholder: "Comece a escrever a sua nota aqui... (digite '/' para modelos ou '[[' para conectar notas)",
+        titleBold: "Negrito",
+        titleItalic: "Itálico",
+        titleUnderline: "Sublinhado",
+        titleStrike: "Tachado",
+        titleFont: "Fonte",
+        titleSize: "Tamanho",
+        titleAlignLeft: "Alinhar à Esquerda",
+        titleAlignCenter: "Centralizar",
+        titleAlignRight: "Alinhar à Direita",
+        titleListBullet: "Lista com Marcadores",
+        titleListNumber: "Lista Numerada",
+        titleTextColor: "Cor do Texto",
+        titleHighlightColor: "Cor do Destaque",
+        titleClearFormat: "Limpar Formatação",
+        titleRemoveHighlight: "Remover Destaque",
+        sizeSmall: "Pequeno",
+        sizeMedium: "Médio",
+        sizeLarge: "Grande",
+        sizeExtraLarge: "Muito Grande",
+        graphFilterNotes: "Notas",
+        graphFilterTags: "Tags",
+        graphFilterConnections: "Conexões",
+        graphZoomIn: "Aumentar Zoom",
+        graphZoomOut: "Diminuir Zoom",
+        graphZoomReset: "Centralizar Grafo",
+        clearFilterTitle: "Limpar filtro",
+        toggleSidebarTitle: "Alternar Barra Lateral",
+        toggleAssistantTitle: "Alternar Assistente",
+        chatSendTitle: "Enviar mensagem",
+        showAmbientSoundsTitle: "Mostrar Sons Ambientes",
+        exitZenTitle: "Sair do Modo Zen",
+        pomodoroSettings: "Configurações",
+        pomodoroSkip: "Pular Sessão",
+        pitchPrev: "◀ Anterior",
+        pitchNext: "Próximo ▶",
+        roiModalTitle: "⏱️ Calculadora de Impacto & ROI",
+        roiManualTimeLabel: "Tempo Manual Antes da IA (Minutos/Tarefa):",
+        roiFrequencyLabel: "Frequência de Execução:",
+        roiFreqDaily: "Diária (20x por mês)",
+        roiFreqWeekly: "Semanal (4x por mês)",
+        roiFreqMonthly: "Mensal (1x por mês)",
+        roiAiTimeLabel: "Tempo Estimado com IA (Minutos/Tarefa):",
+        roiStrategicAnalysisTitle: "Análise Estratégica da IA Local:",
+        roiStrategicAnalysisLoading: "Carregando análise estratégica da produtividade...",
+        roiReportBadge: "🏆 RELATÓRIO DE PRODUTIVIDADE",
+        roiSavedPerMonthLabel: "Economizadas por Mês",
+        roiTimeReductionLabel: "Redução de Tempo",
+        roiAnnualProdLabel: "Produtividade Anual",
+        roiCertText: "Certificado de Eficiência AI-First",
+        roiCopyReportBtn: "💾 Copiar Relatório de ROI"
     }
 };
 
@@ -2628,6 +2794,34 @@ function updateUiLanguage() {
         }
         langBtn.title = currentLang === 'en' ? 'Switch to Portuguese' : 'Alternar para Inglês';
     }
+    
+    // Translate size-select options
+    const sizeSelect = document.getElementById('size-select');
+    if (sizeSelect && sizeSelect.options.length >= 4) {
+        sizeSelect.options[0].text = i18n[currentLang].sizeMedium;
+        sizeSelect.options[1].text = i18n[currentLang].sizeSmall;
+        sizeSelect.options[2].text = i18n[currentLang].sizeLarge;
+        sizeSelect.options[3].text = i18n[currentLang].sizeExtraLarge;
+    }
+    
+    // Translate active Pomodoro play button title dynamically
+    const pomoPlayBtn = document.getElementById('pomodoro-play-btn');
+    if (pomoPlayBtn) {
+        if (pomoIsActive) {
+            pomoPlayBtn.title = i18n[currentLang].pomodoroPause;
+            pomoPlayBtn.setAttribute('data-i18n-title', 'pomodoroPause');
+        } else {
+            pomoPlayBtn.title = i18n[currentLang].pomodoroStart;
+            pomoPlayBtn.setAttribute('data-i18n-title', 'pomodoroStart');
+        }
+    }
+    
+    // Translate Pomodoro skip button title
+    const pomoSkipBtn = document.getElementById('pomodoro-skip-btn');
+    if (pomoSkipBtn) {
+        pomoSkipBtn.title = i18n[currentLang].pomodoroSkip;
+        pomoSkipBtn.setAttribute('data-i18n-title', 'pomodoroSkip');
+    }
 }
 
 function toggleLanguage() {
@@ -4513,20 +4707,21 @@ async function openPitchPresenter() {
     try {
         const textContent = getCleanEditorHtml().replace(/<[^>]*>/g, '').trim();
         
-        let systemPrompt = `You are a pitch presentation expert. Analyze the following text and divide it into exactly 5 slides for a 5-minute presentation.
-Format the output ESTRITAMENTE as a JSON array of slide objects. Each object MUST have a "title" string and a "content" array of strings (bullet points).
+        const systemPrompt = `You are a pitch presentation expert. Analyze the following text and divide it into exactly 5 slides for a 5-minute presentation.
+Format the output STRICTLY as a JSON array of slide objects. Each object MUST have a "title" string and a "content" array of strings (bullet points).
+The slides must be written in ${currentLang === 'en' ? 'English' : 'Portuguese'}.
 Follow this layout:
-Slide 1: O Desafio (The Problem)
-Slide 2: A Solução (The Solution)
-Slide 3: Diferenciais Técnicos (Key Features)
-Slide 4: Produtividade / ROI (Impact)
-Slide 5: Conclusão / Next Steps
+Slide 1: ${currentLang === 'en' ? 'The Challenge (O Desafio)' : 'O Desafio'}
+Slide 2: ${currentLang === 'en' ? 'The Solution (A Solução)' : 'A Solução'}
+Slide 3: ${currentLang === 'en' ? 'Key Features (Diferenciais)' : 'Diferenciais Técnicos'}
+Slide 4: ${currentLang === 'en' ? 'ROI & Impact (Impacto)' : 'Produtividade / ROI'}
+Slide 5: ${currentLang === 'en' ? 'Conclusion / Next Steps' : 'Conclusão / Próximos Passos'}
 
 Example Format:
 [
   {
-    "title": "O Desafio",
-    "content": ["Processos manuais que gastam tempo", "Vazamento de dados corporativos"]
+    "title": "${currentLang === 'en' ? 'The Challenge' : 'O Desafio'}",
+    "content": [${currentLang === 'en' ? '"Manual processes wasting time", "Corporate data leakage"' : '"Processos manuais que gastam tempo", "Vazamento de dados corporativos"'}]
   }
 ]
 Output ONLY the clean JSON array. Do not include markdown ticks, descriptions, or comments.`;
@@ -4756,7 +4951,20 @@ function copyRoiReport() {
     const strategicBrief = document.getElementById('roi-ai-summary').innerText;
     const noteTitleText = document.getElementById('impact-note-title').innerText;
     
-    const reportText = `🏆 RELATÓRIO DE PRODUTIVIDADE
+    const reportText = currentLang === 'en' 
+        ? `🏆 PRODUCTIVITY REPORT
+=====================================================
+Analyzed Note: ${noteTitleText}
+Impact Metrics with SmartNotes AI:
+- Monthly Time Savings: ${hoursSaved}
+- Time Saved per Task: ${reduction}
+- Productivity Days Recovered/Year: ${annualDays}
+
+Strategic Value Analysis:
+"${strategicBrief}"
+=====================================================
+Generated 100% locally and securely by SmartNotes AI.`
+        : `🏆 RELATÓRIO DE PRODUTIVIDADE
 =====================================================
 Nota Analisada: ${noteTitleText}
 Métricas de Impacto com SmartNotes AI:
@@ -4775,5 +4983,973 @@ Gerado de forma 100% Local e Segura pelo SmartNotes AI.`;
         console.error("Clipboard copy failed", err);
     });
 }
+
+/* ==========================================================================
+   PRODUCTIVITY ENHANCEMENTS AND NEW FEATURES IMPLEMENTATION
+   ========================================================================== */
+
+// Global variables for new features
+let currentView = 'editor'; // 'editor' or 'kanban'
+let pomoTimer = null;
+let pomoTimeLeft = 25 * 60;
+let pomoIsActive = false;
+let pomoCurrentSession = 'focus'; // 'focus' or 'break'
+let pomoFocusTime = 25;
+let pomoBreakTime = 5;
+let activeAutocomplete = null; // 'wikilinks' or 'slash'
+
+// 1. View Toggler (Editor/Kanban)
+function toggleView() {
+    const editorWorkspace = document.getElementById('editor-workspace');
+    const kanbanWorkspace = document.getElementById('kanban-workspace');
+    const toggleViewBtn = document.getElementById('toggle-view-btn');
+    const formatToolbar = document.querySelector('.format-toolbar');
+    const aiToolbar = document.querySelector('.ai-toolbar');
+    
+    if (!editorWorkspace || !kanbanWorkspace || !toggleViewBtn) return;
+    
+    if (currentView === 'editor') {
+        currentView = 'kanban';
+        editorWorkspace.style.display = 'none';
+        kanbanWorkspace.style.display = 'block';
+        if (formatToolbar) formatToolbar.style.display = 'none';
+        if (aiToolbar) aiToolbar.style.display = 'none';
+        
+        toggleViewBtn.setAttribute('data-i18n', 'viewEditor');
+        renderKanbanBoard();
+    } else {
+        currentView = 'editor';
+        editorWorkspace.style.display = 'block';
+        kanbanWorkspace.style.display = 'none';
+        if (formatToolbar) formatToolbar.style.display = 'flex';
+        if (aiToolbar) aiToolbar.style.display = 'flex';
+        
+        toggleViewBtn.setAttribute('data-i18n', 'viewKanban');
+        
+        // Re-load active note into editor
+        if (activeNoteId) {
+            selectNote(activeNoteId);
+        }
+    }
+    updateUiLanguage();
+}
+
+// 2. Kanban Board Rendering and Drag-and-Drop
+function renderKanbanBoard() {
+    const kanbanBoard = document.getElementById('kanban-board');
+    if (!kanbanBoard) return;
+    
+    kanbanBoard.innerHTML = '';
+    
+    const columns = [
+        { id: 'todo', titleKey: 'kanbanColumnTodo', statusTags: ['todo', 'a fazer', 'backlog'] },
+        { id: 'doing', titleKey: 'kanbanColumnDoing', statusTags: ['doing', 'em progresso', 'fazendo', 'investigando'] },
+        { id: 'done', titleKey: 'kanbanColumnDone', statusTags: ['done', 'concluido', 'concluído', 'aprovado'] },
+        { id: 'uncategorized', titleKey: 'kanbanColumnUncategorized', statusTags: [] }
+    ];
+    
+    // Group notes by column status
+    const colNotesMap = { todo: [], doing: [], done: [], uncategorized: [] };
+    
+    notes.forEach(note => {
+        let placed = false;
+        if (note.tags && note.tags.length > 0) {
+            for (const tag of note.tags) {
+                const tagName = tag.name.toLowerCase();
+                for (const col of columns) {
+                    if (col.statusTags.includes(tagName)) {
+                        colNotesMap[col.id].push(note);
+                        placed = true;
+                        break;
+                    }
+                }
+                if (placed) break;
+            }
+        }
+        if (!placed) {
+            colNotesMap.uncategorized.push(note);
+        }
+    });
+    
+    columns.forEach(col => {
+        const colNotes = colNotesMap[col.id];
+        
+        const colEl = document.createElement('div');
+        colEl.className = 'kanban-column';
+        colEl.dataset.columnId = col.id;
+        
+        colEl.innerHTML = `
+            <div class="kanban-column-header">
+                <span data-i18n="${col.titleKey}">${i18n[currentLang][col.titleKey]}</span>
+                <span class="kanban-card-count" id="count-${col.id}">${colNotes.length}</span>
+            </div>
+            <div class="kanban-cards-container" data-column-id="${col.id}"></div>
+        `;
+        
+        const cardsContainer = colEl.querySelector('.kanban-cards-container');
+        
+        colNotes.forEach(note => {
+            const card = document.createElement('div');
+            card.className = 'kanban-card';
+            card.draggable = true;
+            card.dataset.noteId = note.id;
+            card.style.borderLeft = `4px solid ${note.color || 'var(--primary-color)'}`;
+            
+            const textContent = note.content ? note.content.replace(/<[^>]*>/g, '').trim() : '';
+            const previewText = textContent.substring(0, 80) + (textContent.length > 80 ? '...' : '');
+            
+            card.innerHTML = `
+                <div class="kanban-card-title">${note.title || i18n[currentLang].noteTitlePlaceholder}</div>
+                <div class="kanban-card-preview">${previewText || '<i>Vazia</i>'}</div>
+                <div class="kanban-card-footer">
+                    <div class="kanban-card-tags">
+                        ${(note.tags || []).map(t => `<span class="kanban-card-tag" style="background: ${t.color}">${t.name}</span>`).join('')}
+                    </div>
+                    <button class="kanban-card-edit-btn" data-note-id="${note.id}">${currentLang === 'en' ? 'Edit' : 'Editar'}</button>
+                </div>
+            `;
+            
+            // Drag and drop event listeners on card
+            card.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', note.id);
+                card.classList.add('dragging');
+            });
+            
+            card.addEventListener('dragend', () => {
+                card.classList.remove('dragging');
+            });
+            
+            // Edit button handler
+            card.querySelector('.kanban-card-edit-btn').onclick = (e) => {
+                e.stopPropagation();
+                currentView = 'kanban'; // force toggleView to swap back to editor
+                toggleView();
+                selectNote(note.id);
+            };
+            
+            cardsContainer.appendChild(card);
+        });
+        
+        // Drag over column container
+        cardsContainer.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            colEl.classList.add('drag-over');
+        });
+        
+        cardsContainer.addEventListener('dragleave', () => {
+            colEl.classList.remove('drag-over');
+        });
+        
+        cardsContainer.addEventListener('drop', (e) => {
+            e.preventDefault();
+            colEl.classList.remove('drag-over');
+            
+            const noteId = e.dataTransfer.getData('text/plain');
+            const note = notes.find(n => n.id === noteId);
+            if (!note) return;
+            
+            // Update tags based on column drop target
+            const statusTagNames = ['todo', 'a fazer', 'backlog', 'doing', 'em progresso', 'fazendo', 'investigando', 'done', 'concluido', 'concluído', 'aprovado'];
+            
+            // Remove previous status tags
+            if (note.tags) {
+                note.tags = note.tags.filter(t => !statusTagNames.includes(t.name.toLowerCase()));
+            } else {
+                note.tags = [];
+            }
+            
+            // Add new status tag
+            if (col.id === 'todo') {
+                note.tags.push({ name: currentLang === 'en' ? 'Todo' : 'A Fazer', color: '#ef4444' });
+            } else if (col.id === 'doing') {
+                note.tags.push({ name: currentLang === 'en' ? 'Doing' : 'Em Progresso', color: '#3b82f6' });
+            } else if (col.id === 'done') {
+                note.tags.push({ name: currentLang === 'en' ? 'Done' : 'Concluído', color: '#10b981' });
+            }
+            
+            localStorage.setItem('smartnotes_notes', JSON.stringify(notes));
+            renderKanbanBoard();
+            buildGraphData();
+        });
+        
+        kanbanBoard.appendChild(colEl);
+    });
+    
+    updateUiLanguage();
+}
+
+// 3. WikiLinks and Slash Commands Autocomplete
+function handleEditorSuggestionsInput(e) {
+    const selection = window.getSelection();
+    if (!selection.rangeCount) return;
+    const range = selection.getRangeAt(0);
+    const textNode = range.startContainer;
+    
+    if (textNode.nodeType !== Node.TEXT_NODE) {
+        closeWikiLinksSuggestions();
+        closeSlashSuggestions();
+        return;
+    }
+    
+    const text = textNode.textContent || "";
+    const offset = range.startOffset;
+    
+    // Check WikiLinks "[["
+    const textBeforeCursor = text.substring(0, offset);
+    const lastDoubleBracket = textBeforeCursor.lastIndexOf('[[');
+    const lastDoubleBracketClose = textBeforeCursor.lastIndexOf(']]');
+    
+    if (lastDoubleBracket !== -1 && lastDoubleBracket > lastDoubleBracketClose) {
+        const query = textBeforeCursor.substring(lastDoubleBracket + 2);
+        if (!query.includes('\n')) {
+            openWikiLinksSuggestions(query, range);
+            return;
+        }
+    }
+    closeWikiLinksSuggestions();
+    
+    // Check Slash Commands "/"
+    const lastSlash = textBeforeCursor.lastIndexOf('/');
+    if (lastSlash !== -1 && (lastSlash === 0 || /\s/.test(textBeforeCursor[lastSlash - 1]))) {
+        const query = textBeforeCursor.substring(lastSlash + 1);
+        if (!/\s/.test(query) && !query.includes('\n')) {
+            openSlashSuggestions(query, range);
+            return;
+        }
+    }
+    closeSlashSuggestions();
+}
+
+function openWikiLinksSuggestions(query, range) {
+    const popover = document.getElementById('wikilinks-suggestions');
+    if (!popover) return;
+    
+    activeAutocomplete = 'wikilinks';
+    popover.innerHTML = '';
+    
+    const lowercaseQuery = query.toLowerCase().trim();
+    const filteredNotes = notes.filter(n => n.id !== activeNoteId && (n.title || "").toLowerCase().includes(lowercaseQuery));
+    
+    if (filteredNotes.length === 0) {
+        popover.style.display = 'none';
+        return;
+    }
+    
+    filteredNotes.forEach((note, index) => {
+        const item = document.createElement('div');
+        item.className = 'suggestion-item' + (index === 0 ? ' active' : '');
+        item.dataset.index = index;
+        item.dataset.noteTitle = note.title;
+        item.innerHTML = `
+            <span>📄 ${note.title}</span>
+            <span class="item-sub">${note.tags && note.tags.length > 0 ? note.tags[0].name : ''}</span>
+        `;
+        
+        item.onclick = () => {
+            selectWikiLinkSuggestion(note.title, range);
+        };
+        popover.appendChild(item);
+    });
+    
+    positionPopover(popover, range);
+}
+
+function selectWikiLinkSuggestion(title, range) {
+    const textNode = range.startContainer;
+    const offset = range.startOffset;
+    const text = textNode.textContent || "";
+    const lastDoubleBracket = text.substring(0, offset).lastIndexOf('[[');
+    
+    if (lastDoubleBracket !== -1) {
+        const replacementRange = document.createRange();
+        replacementRange.setStart(textNode, lastDoubleBracket);
+        replacementRange.setEnd(textNode, offset);
+        
+        const linkText = `[[${title}]] `;
+        insertHtmlAtCaret(linkText, replacementRange);
+    }
+    closeWikiLinksSuggestions();
+}
+
+function closeWikiLinksSuggestions() {
+    const popover = document.getElementById('wikilinks-suggestions');
+    if (popover) {
+        popover.style.display = 'none';
+        if (activeAutocomplete === 'wikilinks') activeAutocomplete = null;
+    }
+}
+
+function openSlashSuggestions(query, range) {
+    const popover = document.getElementById('slash-commands-suggestions');
+    if (!popover) return;
+    
+    activeAutocomplete = 'slash';
+    popover.innerHTML = '';
+    
+    const commands = [
+        { name: '/vulnerability', label: '🔴 Relatório de Vulnerabilidade', desc: 'Template de auditoria de segurança' },
+        { name: '/minutes', label: '🎙️ Ata de Reunião', desc: 'Estrutura formal de reuniões' },
+        { name: '/table', label: '📊 Tabela', desc: 'Tabela simples 2x2' },
+        { name: '/code', label: '💻 Bloco de Código', desc: 'Área pré-formatada de código' },
+        { name: '/hr', label: '➖ Linha Horizontal', desc: 'Linha separadora' },
+        { name: '/ai-summarize', label: '🪄 Resumo Automático', desc: 'Dispara a IA para resumir nota' }
+    ];
+    
+    const lowercaseQuery = query.toLowerCase().trim();
+    const filtered = commands.filter(c => c.name.includes(lowercaseQuery) || c.label.toLowerCase().includes(lowercaseQuery));
+    
+    if (filtered.length === 0) {
+        popover.style.display = 'none';
+        return;
+    }
+    
+    filtered.forEach((cmd, index) => {
+        const item = document.createElement('div');
+        item.className = 'suggestion-item' + (index === 0 ? ' active' : '');
+        item.dataset.index = index;
+        item.dataset.cmdName = cmd.name;
+        item.innerHTML = `
+            <div>
+                <strong style="display: block;">${cmd.label}</strong>
+                <span style="font-size: 0.65rem; opacity: 0.6;">${cmd.desc}</span>
+            </div>
+        `;
+        
+        item.onclick = () => {
+            selectSlashSuggestion(cmd.name, range);
+        };
+        popover.appendChild(item);
+    });
+    
+    positionPopover(popover, range);
+}
+
+function selectSlashSuggestion(cmdName, range) {
+    const textNode = range.startContainer;
+    const offset = range.startOffset;
+    const text = textNode.textContent || "";
+    const lastSlash = text.substring(0, offset).lastIndexOf('/');
+    
+    if (lastSlash !== -1) {
+        const replacementRange = document.createRange();
+        replacementRange.setStart(textNode, lastSlash);
+        replacementRange.setEnd(textNode, offset);
+        
+        let htmlToInsert = '';
+        if (cmdName === '/vulnerability') {
+            htmlToInsert = `
+                <table style="width: 100%; border-collapse: collapse; margin: 10px 0; border: 1px solid var(--border-color); font-size: 0.85rem;">
+                    <thead>
+                        <tr style="background-color: rgba(239, 68, 68, 0.08);">
+                            <th style="border: 1px solid var(--border-color); padding: 8px;">Severidade</th>
+                            <th style="border: 1px solid var(--border-color); padding: 8px;">Vulnerabilidade</th>
+                            <th style="border: 1px solid var(--border-color); padding: 8px;">Risco</th>
+                            <th style="border: 1px solid var(--border-color); padding: 8px;">Correção</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid var(--border-color); padding: 8px; color: #ef4444; font-weight: bold;">🔴 Crítico</td>
+                            <td style="border: 1px solid var(--border-color); padding: 8px; font-weight: 600;">Descrição do Bug...</td>
+                            <td style="border: 1px solid var(--border-color); padding: 8px;">Explicação do Risco...</td>
+                            <td style="border: 1px solid var(--border-color); padding: 8px;">Sanitização e patches...</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>&nbsp;</div>
+            `;
+        } else if (cmdName === '/minutes') {
+            htmlToInsert = `
+                <h2>🎙️ Ata de Reunião</h2>
+                <p><b>Data:</b> ${new Date().toLocaleDateString()} | <b>Participantes:</b> [Nomes]</p>
+                <hr style="border: none; border-top: 1px solid var(--border-color); margin: 1rem 0;">
+                <h3>📝 Pauta Geral</h3>
+                <p>Escreva os tópicos abordados...</p>
+                <h3>📋 Plano de Ação</h3>
+                <table style="width: 100%; border-collapse: collapse; margin: 10px 0; border: 1px solid var(--border-color);">
+                    <thead>
+                        <tr style="background-color: rgba(192, 132, 252, 0.08);">
+                            <th style="border: 1px solid var(--border-color); padding: 8px;">Tarefa</th>
+                            <th style="border: 1px solid var(--border-color); padding: 8px;">Dono</th>
+                            <th style="border: 1px solid var(--border-color); padding: 8px;">Prazo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid var(--border-color); padding: 8px;">Ação recomendada...</td>
+                            <td style="border: 1px solid var(--border-color); padding: 8px;">Responsável...</td>
+                            <td style="border: 1px solid var(--border-color); padding: 8px;">Data limite...</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>&nbsp;</div>
+            `;
+        } else if (cmdName === '/table') {
+            htmlToInsert = `
+                <table style="width: 100%; border-collapse: collapse; margin: 10px 0; border: 1px solid var(--border-color);">
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid var(--border-color); padding: 8px;">Cabeçalho 1</th>
+                            <th style="border: 1px solid var(--border-color); padding: 8px;">Cabeçalho 2</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid var(--border-color); padding: 8px;">Dado 1</td>
+                            <td style="border: 1px solid var(--border-color); padding: 8px;">Dado 2</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>&nbsp;</div>
+            `;
+        } else if (cmdName === '/code') {
+            htmlToInsert = `
+                <pre style="background: rgba(0,0,0,0.15); padding: 10px; border-radius: var(--border-radius-sm); border: 1px solid var(--border-color); font-family: monospace; overflow-x: auto;"><code>// Insira seu código aqui</code></pre>
+                <div>&nbsp;</div>
+            `;
+        } else if (cmdName === '/hr') {
+            htmlToInsert = `<hr style="border: none; border-top: 1px solid var(--border-color); margin: 1.5rem 0;"><div>&nbsp;</div>`;
+        } else if (cmdName === '/ai-summarize') {
+            htmlToInsert = ` `; // Trigger AI summary
+            runQuickAction('summarize');
+        }
+        
+        insertHtmlAtCaret(htmlToInsert, replacementRange);
+    }
+    closeSlashSuggestions();
+}
+
+function closeSlashSuggestions() {
+    const popover = document.getElementById('slash-commands-suggestions');
+    if (popover) {
+        popover.style.display = 'none';
+        if (activeAutocomplete === 'slash') activeAutocomplete = null;
+    }
+}
+
+function positionPopover(popover, range) {
+    const rect = range.getBoundingClientRect();
+    let top = rect.bottom + window.scrollY;
+    let left = rect.left + window.scrollX;
+    
+    if (rect.width === 0 && rect.height === 0) {
+        const parent = range.startContainer.parentElement;
+        if (parent) {
+            const parentBox = parent.getBoundingClientRect();
+            top = parentBox.bottom + window.scrollY;
+            left = parentBox.left + window.scrollX;
+        }
+    }
+    
+    popover.style.top = `${top + 5}px`;
+    popover.style.left = `${left}px`;
+    popover.style.display = 'flex';
+}
+
+function handleAutocompleteSuggestionsKeydown(e) {
+    if (!activeAutocomplete) return;
+    
+    const popoverId = activeAutocomplete === 'wikilinks' ? 'wikilinks-suggestions' : 'slash-commands-suggestions';
+    const popover = document.getElementById(popoverId);
+    if (!popover || popover.style.display === 'none') return;
+    
+    const items = popover.querySelectorAll('.suggestion-item');
+    if (items.length === 0) return;
+    
+    let activeItem = popover.querySelector('.suggestion-item.active');
+    let activeIndex = activeItem ? parseInt(activeItem.dataset.index) : 0;
+    
+    if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        items[activeIndex].classList.remove('active');
+        activeIndex = (activeIndex + 1) % items.length;
+        items[activeIndex].classList.add('active');
+        items[activeIndex].scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        items[activeIndex].classList.remove('active');
+        activeIndex = (activeIndex - 1 + items.length) % items.length;
+        items[activeIndex].classList.add('active');
+        items[activeIndex].scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (activeItem) {
+            activeItem.click();
+        }
+    } else if (e.key === 'Escape') {
+        e.preventDefault();
+        closeWikiLinksSuggestions();
+        closeSlashSuggestions();
+    }
+}
+
+function insertHtmlAtCaret(html, rangeToRemove) {
+    if (rangeToRemove) {
+        rangeToRemove.deleteContents();
+    }
+    
+    const el = document.createElement("div");
+    el.innerHTML = html;
+    const frag = document.createDocumentFragment();
+    let node;
+    let lastNode;
+    while ((node = el.firstChild)) {
+        lastNode = frag.appendChild(node);
+    }
+    
+    const selection = window.getSelection();
+    if (!selection.rangeCount) return;
+    const range = selection.getRangeAt(0);
+    range.insertNode(frag);
+    
+    if (lastNode) {
+        const newRange = range.cloneRange();
+        newRange.setStartAfter(lastNode);
+        newRange.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(newRange);
+    }
+    
+    updateActiveNote();
+}
+
+// 4. Pomodoro Timer Focus Mode Logic
+function initPomodoro() {
+    const playBtn = document.getElementById('pomodoro-play-btn');
+    const skipBtn = document.getElementById('pomodoro-skip-btn');
+    const resetBtn = document.getElementById('pomodoro-reset-btn');
+    const settingsToggle = document.getElementById('pomodoro-settings-toggle');
+    const focusTimeInput = document.getElementById('pomodoro-focus-time');
+    const breakTimeInput = document.getElementById('pomodoro-break-time');
+    
+    if (playBtn) {
+        playBtn.onclick = () => {
+            if (pomoIsActive) {
+                pausePomo();
+            } else {
+                startPomo();
+            }
+        };
+    }
+    
+    if (skipBtn) {
+        skipBtn.onclick = () => {
+            switchPomoSession();
+        };
+    }
+    
+    if (resetBtn) {
+        resetBtn.onclick = () => {
+            resetPomo();
+        };
+    }
+    
+    if (settingsToggle) {
+        settingsToggle.onclick = () => {
+            const panel = document.getElementById('pomodoro-settings-panel');
+            if (panel) {
+                panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
+            }
+        };
+    }
+    
+    const handleSettingsChange = () => {
+        pomoFocusTime = Math.max(1, parseInt(focusTimeInput.value) || 25);
+        pomoBreakTime = Math.max(1, parseInt(breakTimeInput.value) || 5);
+        resetPomo();
+    };
+    
+    if (focusTimeInput) focusTimeInput.onchange = handleSettingsChange;
+    if (breakTimeInput) breakTimeInput.onchange = handleSettingsChange;
+    
+    updatePomoDisplay();
+}
+
+function startPomo() {
+    pomoIsActive = true;
+    const playBtn = document.getElementById('pomodoro-play-btn');
+    if (playBtn) {
+        playBtn.textContent = '⏸';
+        playBtn.title = i18n[currentLang].pomodoroPause;
+        playBtn.setAttribute('data-i18n-title', 'pomodoroPause');
+    }
+    
+    const widget = document.getElementById('zen-pomodoro-widget');
+    if (widget) {
+        widget.classList.add(pomoCurrentSession === 'focus' ? 'focus-active' : 'break-active');
+        widget.classList.remove(pomoCurrentSession === 'focus' ? 'break-active' : 'focus-active');
+    }
+    
+    // Audio integration: Trigger lofi sound on focus start if not playing
+    if (pomoCurrentSession === 'focus' && !activeSounds.lofi) {
+        toggleSound('lofi');
+        const lofiVol = document.querySelector('.sound-vol[data-track="lofi"]');
+        if (lofiVol) lofiVol.value = 0.3;
+        volumeControls.lofi = 0.3;
+        if (soundNodes.lofi) {
+            soundNodes.lofi.gain.value = 0.3;
+        }
+    }
+    
+    pomoTimer = setInterval(() => {
+        tickPomo();
+    }, 1000);
+}
+
+function pausePomo() {
+    pomoIsActive = false;
+    const playBtn = document.getElementById('pomodoro-play-btn');
+    if (playBtn) {
+        playBtn.textContent = '▶';
+        playBtn.title = i18n[currentLang].pomodoroStart;
+        playBtn.setAttribute('data-i18n-title', 'pomodoroStart');
+    }
+    
+    clearInterval(pomoTimer);
+}
+
+function resetPomo() {
+    pausePomo();
+    pomoCurrentSession = 'focus';
+    pomoTimeLeft = pomoFocusTime * 60;
+    
+    const widget = document.getElementById('zen-pomodoro-widget');
+    if (widget) {
+        widget.classList.remove('focus-active', 'break-active');
+    }
+    
+    updatePomoDisplay();
+}
+
+function tickPomo() {
+    if (pomoTimeLeft > 0) {
+        pomoTimeLeft--;
+        updatePomoDisplay();
+    } else {
+        playPomoSound();
+        switchPomoSession();
+    }
+}
+
+function switchPomoSession() {
+    pausePomo();
+    if (pomoCurrentSession === 'focus') {
+        pomoCurrentSession = 'break';
+        pomoTimeLeft = pomoBreakTime * 60;
+        showToast(currentLang === 'en' ? "Focus session completed! Take a break." : "Sessão de foco concluída! Faça uma pausa.", 'success');
+    } else {
+        pomoCurrentSession = 'focus';
+        pomoTimeLeft = pomoFocusTime * 60;
+        showToast(currentLang === 'en' ? "Break completed! Time to focus." : "Pausa concluída! Hora de focar.", 'success');
+    }
+    
+    const widget = document.getElementById('zen-pomodoro-widget');
+    if (widget) {
+        widget.classList.add(pomoCurrentSession === 'focus' ? 'focus-active' : 'break-active');
+        widget.classList.remove(pomoCurrentSession === 'focus' ? 'break-active' : 'focus-active');
+    }
+    
+    updatePomoDisplay();
+    startPomo();
+}
+
+function updatePomoDisplay() {
+    const mins = Math.floor(pomoTimeLeft / 60);
+    const secs = pomoTimeLeft % 60;
+    const display = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    
+    const displayEl = document.getElementById('pomodoro-timer-display');
+    if (displayEl) displayEl.textContent = display;
+    
+    const titleEl = document.getElementById('pomodoro-session-title');
+    if (titleEl) {
+        if (pomoCurrentSession === 'focus') {
+            titleEl.setAttribute('data-i18n', 'pomodoroFocus');
+        } else {
+            titleEl.setAttribute('data-i18n', 'pomodoroBreak');
+        }
+    }
+    updateUiLanguage();
+}
+
+function playPomoSound() {
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
+        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.15); // A5
+        osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.8); // A4
+        
+        gain.gain.setValueAtTime(0.5, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2);
+        
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 1.3);
+    } catch (e) {
+        console.error("Failed to play Pomodoro sound:", e);
+    }
+}
+
+// 5. Advanced PDF Print layouts formatting
+function initPdfExport() {
+    const pdfConfirmBtn = document.getElementById('pdf-confirm-export-btn');
+    const closePdfBtn = document.getElementById('close-pdf-export-btn');
+    
+    if (pdfConfirmBtn) {
+        pdfConfirmBtn.onclick = () => {
+            const template = document.querySelector('input[name="pdf-template"]:checked')?.value || 'default';
+            doAdvancedPdfPrint(template);
+        };
+    }
+    
+    if (closePdfBtn) {
+        closePdfBtn.onclick = () => {
+            const modal = document.getElementById('pdf-export-options-modal');
+            if (modal) modal.style.display = 'none';
+        };
+    }
+}
+
+function showPdfExportModal() {
+    const modal = document.getElementById('pdf-export-options-modal');
+    if (modal) {
+        modal.style.display = 'flex';
+        modal.classList.add('active');
+    }
+}
+
+function doAdvancedPdfPrint(template) {
+    const activeNote = notes.find(n => n.id === activeNoteId);
+    if (!activeNote) return;
+    
+    // Hide pdf modal
+    const modal = document.getElementById('pdf-export-options-modal');
+    if (modal) modal.style.display = 'none';
+    
+    // Remove old wrapper if exists
+    let oldWrapper = document.getElementById('print-wrapper');
+    if (oldWrapper) oldWrapper.remove();
+    
+    // Create new print wrapper
+    const wrapper = document.createElement('div');
+    wrapper.id = 'print-wrapper';
+    
+    const noteTitle = activeNote.title || i18n[currentLang].noteTitlePlaceholder;
+    const noteHtml = activeNote.content || '';
+    
+    if (template === 'minutes') {
+        // Meeting Minutes Template
+        wrapper.innerHTML = `
+            <div class="print-header">
+                <div class="print-logo">SmartNotes <span>AI</span></div>
+                <div style="font-size: 0.8rem; text-align: right; color: #64748b;">
+                    ATA OFICIAL DE REUNIÃO<br>
+                    Data: ${new Date().toLocaleDateString()}
+                </div>
+            </div>
+            
+            <table class="print-meta-table">
+                <tr>
+                    <th style="width: 25%;">Assunto / Projeto</th>
+                    <td>${noteTitle}</td>
+                </tr>
+                <tr>
+                    <th>Data e Hora</th>
+                    <td>${new Date().toLocaleString()}</td>
+                </tr>
+                <tr>
+                    <th>Participantes</th>
+                    <td>[  ] Gerência  |  [  ] Auditoria  |  [  ] Desenvolvimento  |  [  ] QA</td>
+                </tr>
+            </table>
+            
+            <h1 class="print-title">${noteTitle}</h1>
+            <div class="print-body">${noteHtml}</div>
+            
+            <div class="print-footer-signatures">
+                <div class="sig-line">Relator / Secretário</div>
+                <div class="sig-line">Presidente / Líder da Reunião</div>
+            </div>
+        `;
+    } else if (template === 'roi') {
+        // ROI Impact Report Template
+        const hoursSaved = document.getElementById('impact-card-saved-hours')?.innerText || '18h';
+        const reduction = document.getElementById('impact-card-percent')?.innerText || '91%';
+        const annualDays = document.getElementById('impact-card-annual')?.innerText || '27 dias';
+        const strategicBrief = document.getElementById('roi-ai-summary')?.innerText || '';
+        
+        wrapper.innerHTML = `
+            <div class="print-header">
+                <div class="print-logo">SmartNotes <span>AI</span></div>
+                <div style="font-size: 0.8rem; text-align: right; color: #b91c1c; font-weight: 700;">
+                    RELATÓRIO EXECUTIVO DE ROI & AUDITORIA<br>
+                    Segurança de Dados Local
+                </div>
+            </div>
+            
+            <div style="background: #f8fafc; border-left: 4px solid #10b981; padding: 15px; margin-bottom: 20px; border-radius: 4px;">
+                <h3 style="margin-top: 0; font-size: 0.95rem; font-weight: 700; color: #1e293b;">INDICADORES DE ROI E PRODUTIVIDADE</h3>
+                <table class="print-meta-table" style="margin-bottom: 0; margin-top: 10px;">
+                    <tr style="text-align: center; font-weight: bold;">
+                        <th style="text-align: center;">Horas Salvas / Mês</th>
+                        <th style="text-align: center;">Redução de Tempo</th>
+                        <th style="text-align: center;">Produtividade Anual</th>
+                    </tr>
+                    <tr style="text-align: center; font-size: 1.2rem; color: #1e1b4b;">
+                        <td>${hoursSaved}</td>
+                        <td>${reduction}</td>
+                        <td>${annualDays}</td>
+                    </tr>
+                </table>
+            </div>
+            
+            ${strategicBrief ? `
+            <div style="background: #faf5ff; border-left: 4px solid #8b5cf6; padding: 15px; margin-bottom: 20px; border-radius: 4px; font-style: italic;">
+                <h4 style="margin-top: 0; font-size: 0.8rem; font-weight: 700; color: #581c87; text-transform: uppercase;">Resumo Executivo AI</h4>
+                <p style="margin: 0; font-size: 0.9rem; line-height: 1.5; color: #3b0764;">"${strategicBrief}"</p>
+            </div>
+            ` : ''}
+            
+            <h1 class="print-title">${noteTitle}</h1>
+            <div class="print-body">${noteHtml}</div>
+            
+            <div class="print-footer-signatures" style="margin-top: 6rem;">
+                <div class="sig-line">Responsável pela Análise</div>
+                <div class="sig-line">Aprovação Executiva</div>
+            </div>
+        `;
+    } else {
+        // Standard Template
+        wrapper.innerHTML = `
+            <h1 class="print-title">${noteTitle}</h1>
+            <div class="print-body">${noteHtml}</div>
+        `;
+    }
+    
+    document.body.appendChild(wrapper);
+    window.print();
+    
+    // Clean up after print dialog finishes
+    setTimeout(() => {
+        if (wrapper) wrapper.remove();
+    }, 1000);
+}
+
+// 6. Shortcuts Help Drawer Panel Wires
+function initQuickGuide() {
+    const showGuideBtn = document.getElementById('show-guide-btn');
+    const closeGuideBtn = document.getElementById('close-guide-btn');
+    const closeGuideFooterBtn = document.getElementById('close-guide-footer-btn');
+    const panel = document.getElementById('quick-guide-panel');
+    
+    if (showGuideBtn && panel) {
+        showGuideBtn.onclick = (e) => {
+            e.stopPropagation();
+            panel.style.display = 'flex';
+        };
+    }
+    
+    const closePanel = () => {
+        if (panel) panel.style.display = 'none';
+    };
+    
+    if (closeGuideBtn) closeGuideBtn.onclick = closePanel;
+    if (closeGuideFooterBtn) closeGuideFooterBtn.onclick = closePanel;
+    
+    // Close on clicking outside
+    document.addEventListener('click', (e) => {
+        if (panel && panel.style.display === 'flex') {
+            if (!panel.contains(e.target) && e.target !== showGuideBtn) {
+                closePanel();
+            }
+        }
+        
+        // Also close autocomplete popovers on outer click
+        const wikiPopover = document.getElementById('wikilinks-suggestions');
+        if (wikiPopover && !wikiPopover.contains(e.target)) {
+            closeWikiLinksSuggestions();
+        }
+        const slashPopover = document.getElementById('slash-commands-suggestions');
+        if (slashPopover && !slashPopover.contains(e.target)) {
+            closeSlashSuggestions();
+        }
+    });
+}
+
+// 7. Pomodoro Timer state toggle inside Zen Mode Hooks
+function hookPomodoroTimerToZenMode(isZen) {
+    const pomoWidget = document.getElementById('zen-pomodoro-widget');
+    if (pomoWidget) {
+        if (isZen) {
+            pomoWidget.style.display = 'block';
+            pomoCurrentSession = 'focus';
+            pomoTimeLeft = pomoFocusTime * 60;
+            updatePomoDisplay();
+        } else {
+            pomoWidget.style.display = 'none';
+            pausePomo();
+        }
+    }
+}
+
+// Initialize all DOM bindings for productivity enhancements
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. View Toggler Event
+    const toggleViewBtn = document.getElementById('toggle-view-btn');
+    if (toggleViewBtn) {
+        toggleViewBtn.onclick = toggleView;
+    }
+    
+    // 2. Editor key event listeners for WikiLinks and Slash commands
+    if (noteContent) {
+        noteContent.addEventListener('input', handleEditorSuggestionsInput);
+        noteContent.addEventListener('keydown', handleAutocompleteSuggestionsKeydown);
+    }
+    
+    // 3. Initialize Pomodoro
+    initPomodoro();
+    
+    // 4. Hook Pomodoro Widget to Zen Mode toggles
+    const origToggleZenMode = window.toggleZenMode;
+    if (typeof origToggleZenMode === 'function') {
+        window.toggleZenMode = function() {
+            origToggleZenMode();
+            const isZen = document.body.classList.contains('zen-focus-mode');
+            hookPomodoroTimerToZenMode(isZen);
+        };
+    }
+    
+    const origExitZenMode = window.exitZenMode;
+    if (typeof origExitZenMode === 'function') {
+        window.exitZenMode = function() {
+            origExitZenMode();
+            hookPomodoroTimerToZenMode(false);
+        };
+    }
+    
+    // 5. Initialize PDF export modal hooks
+    initPdfExport();
+    // Wrap the export-pdf-btn click listener
+    const exportPdfBtn = document.getElementById('export-pdf-btn');
+    if (exportPdfBtn) {
+        // Remove direct window.print call by cloning and replacing button
+        const newExportPdfBtn = exportPdfBtn.cloneNode(true);
+        exportPdfBtn.parentNode.replaceChild(newExportPdfBtn, exportPdfBtn);
+        newExportPdfBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showPdfExportModal();
+        });
+    }
+    
+    // 6. Initialize Quick Guide drawer
+    initQuickGuide();
+});
+
 
 

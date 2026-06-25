@@ -76,6 +76,9 @@
                             </svg>
                             <span class="lang-label">EN</span>
                         </button>
+                        <button id="show-guide-btn" class="btn-icon-only toolbar-btn" title="Shortcuts & Gestures Help" data-i18n-title="quickGuideTitle">
+                            💡
+                        </button>
                     </div>
                 </div>
                 <button id="new-note-btn" class="btn btn-primary" data-i18n="newNote">+ New Note</button>
@@ -138,6 +141,9 @@
                             <button id="close-reader-btn" class="close-reader-btn-header" title="Close Reader">✕</button>
                         </div>
 
+                        <!-- View Toggle Button (Editor/Kanban) -->
+                        <button id="toggle-view-btn" class="btn btn-secondary toggle-view-btn" data-i18n="viewKanban">📋 Kanban View</button>
+
                         <!-- Consolidated Export Dropdown -->
                         <div class="export-dropdown-wrapper">
                             <button id="export-dropdown-btn" class="btn btn-secondary dropdown-trigger-btn" title="Export Note" data-i18n="exportMenuBtn">📤 Export</button>
@@ -184,14 +190,14 @@
             
             <!-- Text Formatting Toolbar (Premium Rich Text) -->
             <div class="format-toolbar">
-                <button class="format-btn" data-command="bold" title="Bold"><b>B</b></button>
-                <button class="format-btn" data-command="italic" title="Italic"><i>I</i></button>
-                <button class="format-btn" data-command="underline" title="Underline"><u>U</u></button>
-                <button class="format-btn" data-command="strikeThrough" title="Strikethrough"><del>S</del></button>
+                <button class="format-btn" data-command="bold" title="Bold" data-i18n-title="titleBold"><b>B</b></button>
+                <button class="format-btn" data-command="italic" title="Italic" data-i18n-title="titleItalic"><i>I</i></button>
+                <button class="format-btn" data-command="underline" title="Underline" data-i18n-title="titleUnderline"><u>U</u></button>
+                <button class="format-btn" data-command="strikeThrough" title="Strikethrough" data-i18n-title="titleStrike"><del>S</del></button>
                 
                 <span class="format-separator"></span>
                 
-                <select id="font-select" class="format-select" title="Font">
+                <select id="font-select" class="format-select" title="Font" data-i18n-title="titleFont">
                     <option value="Arial, sans-serif">Arial</option>
                     <option value="'Times New Roman', Times, serif">Times New Roman</option>
                     <option value="'Courier New', Courier, monospace">Courier New</option>
@@ -207,31 +213,31 @@
                     <option value="'Fira Code', monospace">Fira Code</option>
                 </select>
                 
-                <select id="size-select" class="format-select" title="Size">
-                    <option value="3" selected>Medium</option>
-                    <option value="2">Small</option>
-                    <option value="4">Large</option>
-                    <option value="5">Extra Large</option>
+                <select id="size-select" class="format-select" title="Size" data-i18n-title="titleSize">
+                    <option value="3" selected data-i18n="sizeMedium">Medium</option>
+                    <option value="2" data-i18n="sizeSmall">Small</option>
+                    <option value="4" data-i18n="sizeLarge">Large</option>
+                    <option value="5" data-i18n="sizeExtraLarge">Extra Large</option>
                 </select>
                 
                 <span class="format-separator"></span>
                 
-                <button class="format-btn" data-command="justifyLeft" title="Align Left">
+                <button class="format-btn" data-command="justifyLeft" title="Align Left" data-i18n-title="titleAlignLeft">
                     <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M3 15h18v-2H3v2zm0 4h18v-2H3v2zm0-8h18V9H3v2zm0-6v2h18V5H3z"/></svg>
                 </button>
-                <button class="format-btn" data-command="justifyCenter" title="Align Center">
+                <button class="format-btn" data-command="justifyCenter" title="Align Center" data-i18n-title="titleAlignCenter">
                     <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M7 15h10v-2H7v2zm-4 4h18v-2H3v2zm4-8h10V9H7v2zM3 5v2h18V5H3z"/></svg>
                 </button>
-                <button class="format-btn" data-command="justifyRight" title="Align Right">
+                <button class="format-btn" data-command="justifyRight" title="Align Right" data-i18n-title="titleAlignRight">
                     <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M3 21h18v-2H3v2zM3 3v2h18V3H3zm0 10h18v-2H3v2zM3 9h18V7H3v2zm0 8h18v-2H3v2z"/></svg>
                 </button>
                 
                 <span class="format-separator"></span>
                 
-                <button class="format-btn" data-command="insertUnorderedList" title="Bulleted List">
+                <button class="format-btn" data-command="insertUnorderedList" title="Bulleted List" data-i18n-title="titleListBullet">
                     <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"/></svg>
                 </button>
-                <button class="format-btn" data-command="insertOrderedList" title="Numbered List">
+                <button class="format-btn" data-command="insertOrderedList" title="Numbered List" data-i18n-title="titleListNumber">
                     <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M2 17h2v.5H3v1h1v.5H2v1h3v-4H2v1zm1-9h1V4H2v1h1v3zm-1 3h1.8L2 13.1v.9h3v-1H3.2L5 10.9V10H2v1zm5-6v2h14V5H7zm0 14h14v-2H7v2zm0-6h14v-2H7v2z"/></svg>
                 </button>
                 
@@ -239,7 +245,7 @@
                 
                 <!-- Foreground and Background Colors -->
                 <div class="color-picker-wrapper" style="display: inline-flex; position: relative;">
-                    <button class="format-btn" id="color-fore-btn" title="Text Color" style="display: flex; flex-direction: column; line-height: 1; padding-top: 2px;">
+                    <button class="format-btn" id="color-fore-btn" title="Text Color" data-i18n-title="titleTextColor" style="display: flex; flex-direction: column; line-height: 1; padding-top: 2px;">
                         <span style="font-weight: bold;">A</span>
                         <span id="color-fore-indicator" style="width: 12px; height: 3px; background: #f8fafc; border-radius: 1px; margin-top: 1px;"></span>
                     </button>
@@ -263,7 +269,7 @@
                     </div>
                 </div>
                 <div class="color-picker-wrapper" style="display: inline-flex; position: relative;">
-                    <button class="format-btn" id="color-back-btn" title="Highlight Color" style="display: flex; flex-direction: column; line-height: 1; padding-top: 2px;">
+                    <button class="format-btn" id="color-back-btn" title="Highlight Color" data-i18n-title="titleHighlightColor" style="display: flex; flex-direction: column; line-height: 1; padding-top: 2px;">
                         <span style="font-weight: bold; background: #06b6d4; color: #080c14; padding: 0 2px; border-radius: 2px; font-size: 0.75rem;">A</span>
                         <span id="color-back-indicator" style="width: 12px; height: 3px; background: transparent; border-radius: 1px; margin-top: 1px;"></span>
                     </button>
@@ -290,21 +296,28 @@
                 
                 <span class="format-separator"></span>
                 
-                <button class="format-btn" data-command="removeFormat" title="Clear Formatting">
+                <button class="format-btn" data-command="removeFormat" title="Clear Formatting" data-i18n-title="titleClearFormat">
                     <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M12.244 4H19v2h-4.041l-2.715 2.715L15 11.43l-1.414 1.414-2.715-2.715-2.029 2.029 3.586 3.586L10.999 17.16l-3.586-3.586-2.029 2.029L4 14.189l2.029-2.029-2.715-2.715L4.728 8.03l2.715 2.715 2.029-2.029-2.029-2.029L8.857 5.3l2.029 2.029L12.244 4zM19 18v2H5v-2h14z"/></svg>
                 </button>
                 
             </div>
             
             <div class="editor-body">
-                <div class="editor-workspace">
+                <div class="editor-workspace" id="editor-workspace">
                     <!-- Selection Tip Banner -->
                     <div class="selection-tip-banner" id="selection-tip-banner">
                         <span class="tip-icon">💡</span>
                         <span class="tip-text" data-i18n="selectionTip">Tip: Select a specific text range in the note to format, read aloud, or run AI actions only on that part. Otherwise, actions apply to the entire note.</span>
                         <button class="close-tip-btn" id="close-tip-btn" title="Dismiss tip" data-i18n-title="dismissTipTitle">✕</button>
                     </div>
-                    <div id="note-content" contenteditable="true" class="rich-editor" placeholder="Start writing your note here..." data-i18n-placeholder="editorPlaceholder"></div>
+                    <div id="note-content" contenteditable="true" class="rich-editor" placeholder="Start writing your note here... (type '/' for templates or '[[' to link notes)" data-i18n-placeholder="editorDynamicPlaceholder"></div>
+                </div>
+                
+                <!-- Kanban View Board -->
+                <div class="kanban-workspace" id="kanban-workspace" style="display: none;">
+                    <div class="kanban-board" id="kanban-board">
+                        <!-- Columns populated dynamically -->
+                    </div>
                 </div>
             </div>
             
@@ -325,10 +338,10 @@
             </div>
 
             <!-- Toggle border arrows for desktop collapse -->
-            <button id="desktop-sidebar-toggle" class="desktop-border-toggle-btn" title="Toggle Sidebar">
+            <button id="desktop-sidebar-toggle" class="desktop-border-toggle-btn" title="Toggle Sidebar" data-i18n-title="toggleSidebarTitle">
                 <span class="arrow-icon">◀</span>
             </button>
-            <button id="desktop-chat-toggle" class="desktop-border-toggle-btn" title="Toggle Assistant">
+            <button id="desktop-chat-toggle" class="desktop-border-toggle-btn" title="Toggle Assistant" data-i18n-title="toggleAssistantTitle">
                 <span class="arrow-icon">▶</span>
             </button>
         </main>
@@ -430,13 +443,13 @@
                 </div>
                 <div class="graph-filters" style="display: flex; gap: 0.75rem; align-items: center;">
                     <label class="graph-filter-label" style="display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; cursor: pointer; color: var(--text-secondary); user-select: none;">
-                        <input type="checkbox" id="graph-filter-notes" checked style="accent-color: var(--primary-color); cursor: pointer;"> Notes
+                        <input type="checkbox" id="graph-filter-notes" checked style="accent-color: var(--primary-color); cursor: pointer;"> <span data-i18n="graphFilterNotes">Notes</span>
                     </label>
                     <label class="graph-filter-label" style="display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; cursor: pointer; color: var(--text-secondary); user-select: none;">
-                        <input type="checkbox" id="graph-filter-tags" checked style="accent-color: var(--primary-color); cursor: pointer;"> Tags
+                        <input type="checkbox" id="graph-filter-tags" checked style="accent-color: var(--primary-color); cursor: pointer;"> <span data-i18n="graphFilterTags">Tags</span>
                     </label>
                     <label class="graph-filter-label" style="display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; cursor: pointer; color: var(--text-secondary); user-select: none;">
-                        <input type="checkbox" id="graph-filter-links" checked style="accent-color: var(--primary-color); cursor: pointer;"> Connections
+                        <input type="checkbox" id="graph-filter-links" checked style="accent-color: var(--primary-color); cursor: pointer;"> <span data-i18n="graphFilterConnections">Connections</span>
                     </label>
                 </div>
             </div>
@@ -444,9 +457,9 @@
             <div class="canvas-container">
                 <canvas id="graph-canvas"></canvas>
                 <div class="graph-controls">
-                    <button id="graph-zoom-in" class="graph-control-btn" title="Aumentar Zoom">＋</button>
-                    <button id="graph-zoom-out" class="graph-control-btn" title="Diminuir Zoom">－</button>
-                    <button id="graph-zoom-reset" class="graph-control-btn" title="Centralizar Grafo">⟲</button>
+                    <button id="graph-zoom-in" class="graph-control-btn" title="Zoom In" data-i18n-title="graphZoomIn">＋</button>
+                    <button id="graph-zoom-out" class="graph-control-btn" title="Zoom Out" data-i18n-title="graphZoomOut">－</button>
+                    <button id="graph-zoom-reset" class="graph-control-btn" title="Center Graph" data-i18n-title="graphZoomReset">⟲</button>
                 </div>
                 <div id="graph-tooltip" class="graph-tooltip" style="display: none; position: absolute; pointer-events: none; z-index: 100;"></div>
             </div>
@@ -496,11 +509,118 @@
         </div>
     </div>
 
+    <!-- WikiLinks Floating Autocomplete Popover -->
+    <div id="wikilinks-suggestions" class="autocomplete-suggestions" style="display: none;"></div>
+    
+    <!-- Slash Commands Floating Autocomplete Popover -->
+    <div id="slash-commands-suggestions" class="autocomplete-suggestions" style="display: none;"></div>
+
+    <!-- Quick Shortcuts & Gestures Guide Panel (Drawer) -->
+    <div id="quick-guide-panel" class="quick-guide-panel" style="display: none;">
+        <div class="guide-header">
+            <h3 data-i18n="quickGuideTitle">💡 Shortcuts & Gestures</h3>
+            <button id="close-guide-btn" class="close-guide-btn">✕</button>
+        </div>
+        <div class="guide-content">
+            <div class="guide-item">
+                <div class="guide-key">/</div>
+                <div class="guide-info">
+                    <h4 data-i18n="quickGuideShortcutSlash">Command Menu</h4>
+                    <p data-i18n="quickGuideShortcutSlashDesc">Type '/' on an empty block to insert vulnerability tables, meeting minutes headers, and HTML layouts.</p>
+                </div>
+            </div>
+            <div class="guide-item">
+                <div class="guide-key">[[</div>
+                <div class="guide-info">
+                    <h4 data-i18n="quickGuideShortcutLinks">WikiLinks Notes</h4>
+                    <p data-i18n="quickGuideShortcutLinksDesc">Type '[[' inside the editor to search and link another note dynamically. Links are connected in the graph.</p>
+                </div>
+            </div>
+            <div class="guide-item">
+                <div class="guide-key">Right Click (Grafo)</div>
+                <div class="guide-info">
+                    <h4 data-i18n="quickGuideGraphGestureRight">Pin Graph Node</h4>
+                    <p data-i18n="quickGuideGraphGestureRightDesc">Right-click a node inside the Knowledge Graph to freeze/pin it. Right-click again to release.</p>
+                </div>
+            </div>
+            <div class="guide-item">
+                <div class="guide-key">Double Click (Grafo)</div>
+                <div class="guide-info">
+                    <h4 data-i18n="quickGuideGraphGestureDouble">Double-click nodes</h4>
+                    <p data-i18n="quickGuideGraphGestureDoubleDesc">Double-click a note node to open it, or a tag node to filter your active list in the sidebar.</p>
+                </div>
+            </div>
+            <div class="guide-item">
+                <div class="guide-key">Modo Zen</div>
+                <div class="guide-info">
+                    <h4 data-i18n="quickGuideZenMode">Zen & Pomodoro</h4>
+                    <p data-i18n="quickGuideZenModeDesc">Activating Zen Focus Mode launches focus white noises and the Pomodoro timer in the bottom-right.</p>
+                </div>
+            </div>
+        </div>
+        <div class="guide-footer">
+            <button id="close-guide-footer-btn" class="btn btn-secondary" style="width: 100%;" data-i18n="quickGuideClose">Close Guide</button>
+        </div>
+    </div>
+
+    <!-- Zen Mode Floating Pomodoro Widget -->
+    <div id="zen-pomodoro-widget" class="zen-pomodoro-widget" style="display: none;">
+        <div class="widget-header">
+            <span id="pomodoro-session-title" data-i18n="pomodoroFocus">Focus Session</span>
+            <button id="pomodoro-settings-toggle" title="Settings" data-i18n-title="pomodoroSettings">⚙️</button>
+        </div>
+        <div class="pomodoro-timer-display" id="pomodoro-timer-display">25:00</div>
+        <div class="pomodoro-settings-panel" id="pomodoro-settings-panel" style="display: none;">
+            <div class="settings-field-row">
+                <span style="font-size: 0.65rem;">Focus (min):</span>
+                <input type="number" id="pomodoro-focus-time" min="1" max="60" value="25">
+            </div>
+            <div class="settings-field-row">
+                <span style="font-size: 0.65rem;">Break (min):</span>
+                <input type="number" id="pomodoro-break-time" min="1" max="60" value="5">
+            </div>
+        </div>
+        <div class="pomodoro-controls">
+            <button id="pomodoro-play-btn" class="pomo-control-btn" data-i18n-title="pomodoroStart" title="Start Timer">▶</button>
+            <button id="pomodoro-skip-btn" class="pomo-control-btn" title="Skip Session" data-i18n-title="pomodoroSkip">⏭</button>
+            <button id="pomodoro-reset-btn" class="pomo-control-btn" data-i18n-title="pomodoroReset" title="Reset Timer">⟲</button>
+        </div>
+    </div>
+
+    <!-- PDF Export Options Modal -->
+    <div id="pdf-export-options-modal" class="custom-modal">
+        <div class="modal-content pdf-export-modal-content" style="max-width: 380px; padding: 1.5rem; border-radius: var(--border-radius-lg);">
+            <button id="close-pdf-export-btn" class="close-modal-btn">✕</button>
+            <h3 data-i18n="pdfExportOptionsTitle" style="margin-bottom: 1.25rem; font-size: 1.1rem; font-weight: 700; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">PDF Export Options</h3>
+            <div class="pdf-export-options-list" style="display: flex; flex-direction: column; gap: 0.75rem; text-align: left; margin-bottom: 1.25rem;">
+                <label class="pdf-template-option" style="display: flex; align-items: center; gap: 0.6rem; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: var(--border-radius-md); cursor: pointer; background: rgba(255,255,255,0.02); transition: border-color 0.2s;">
+                    <input type="radio" name="pdf-template" value="default" checked style="accent-color: var(--primary-color);">
+                    <div>
+                        <strong data-i18n="pdfTemplateDefault" style="font-size: 0.85rem; display: block;">Standard Document</strong>
+                    </div>
+                </label>
+                <label class="pdf-template-option" style="display: flex; align-items: center; gap: 0.6rem; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: var(--border-radius-md); cursor: pointer; background: rgba(255,255,255,0.02); transition: border-color 0.2s;">
+                    <input type="radio" name="pdf-template" value="minutes" style="accent-color: var(--primary-color);">
+                    <div>
+                        <strong data-i18n="pdfTemplateMinutes" style="font-size: 0.85rem; display: block;">Meeting Minutes (Ata)</strong>
+                    </div>
+                </label>
+                <label class="pdf-template-option" style="display: flex; align-items: center; gap: 0.6rem; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: var(--border-radius-md); cursor: pointer; background: rgba(255,255,255,0.02); transition: border-color 0.2s;">
+                    <input type="radio" name="pdf-template" value="roi" style="accent-color: var(--primary-color);">
+                    <div>
+                        <strong data-i18n="pdfTemplateROI" style="font-size: 0.85rem; display: block;">ROI Executive Report</strong>
+                    </div>
+                </label>
+            </div>
+            <button id="pdf-confirm-export-btn" class="btn btn-primary" style="width: 100%; padding: 0.6rem; font-weight: 600;" data-i18n="pdfExportBtn">Export PDF</button>
+        </div>
+    </div>
+
     <!-- Zen Mode Floating Audio Widget -->
     <div id="zen-audio-widget" class="zen-audio-widget" style="display: none;">
         <div class="widget-header">
             <span data-i18n="zenSoundsLabel">Ambient Sounds</span>
-            <button id="zen-sound-close-btn" title="Exit Zen Mode">✕</button>
+            <button id="zen-sound-close-btn" title="Exit Zen Mode" data-i18n-title="exitZenTitle">✕</button>
         </div>
         <div class="sound-tracks">
             <div class="sound-track-row">
@@ -519,7 +639,7 @@
     </div>
 
     <!-- Show Zen Sounds Floating Button -->
-    <button id="show-zen-sounds-btn" class="show-zen-sounds-btn" style="display: none;" title="Show Ambient Sounds">🎵</button>
+    <button id="show-zen-sounds-btn" class="show-zen-sounds-btn" style="display: none;" title="Show Ambient Sounds" data-i18n-title="showAmbientSoundsTitle">🎵</button>
 
     <!-- Exit Zen Mode Floating Button -->
     <button id="exit-zen-btn" class="exit-zen-btn" style="display: none;" data-i18n="exitZenBtn">🧘 Sair do Modo Zen</button>
@@ -550,9 +670,9 @@
             </div>
             
             <div class="pitch-controls">
-                <button id="pitch-prev-btn" class="btn btn-secondary">◀ Anterior</button>
+                <button id="pitch-prev-btn" class="btn btn-secondary" data-i18n="pitchPrev">◀ Anterior</button>
                 <div id="pitch-dots" class="pitch-dots"></div>
-                <button id="pitch-next-btn" class="btn btn-primary" style="background: var(--primary-gradient); border: none;">Próximo ▶</button>
+                <button id="pitch-next-btn" class="btn btn-primary" style="background: var(--primary-gradient); border: none;" data-i18n="pitchNext">Próximo ▶</button>
             </div>
             
             <div class="pitch-footer">
@@ -566,34 +686,34 @@
     <div id="roi-modal" class="custom-modal roi-modal" style="display: none;">
         <div class="modal-content roi-modal-content">
             <button id="close-roi-btn" class="close-modal-btn">✕</button>
-            <h3 style="margin-bottom: 1.5rem; font-size: 1.35rem; font-weight: 700; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">⏱️ Calculadora de Impacto & ROI</h3>
+            <h3 style="margin-bottom: 1.5rem; font-size: 1.35rem; font-weight: 700; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" data-i18n="roiModalTitle">⏱️ Calculadora de Impacto & ROI</h3>
             
             <div class="roi-layout">
                 <div class="roi-inputs">
                     <div class="settings-field">
-                        <label for="roi-time-manual" style="font-weight: 600;">Tempo Manual Antes da IA (Minutos/Tarefa):</label>
+                        <label for="roi-time-manual" style="font-weight: 600;" data-i18n="roiManualTimeLabel">Tempo Manual Antes da IA (Minutos/Tarefa):</label>
                         <input type="range" id="roi-time-manual" min="5" max="480" step="5" value="60" class="tts-slider">
                         <span id="roi-time-manual-val" class="roi-val-badge">60 min</span>
                     </div>
                     
                     <div class="settings-field" style="margin-top: 1rem;">
-                        <label for="roi-frequency" style="font-weight: 600;">Frequência de Execução:</label>
+                        <label for="roi-frequency" style="font-weight: 600;" data-i18n="roiFrequencyLabel">Frequência de Execução:</label>
                         <select id="roi-frequency" class="tts-select">
-                            <option value="20" selected>Diária (20x por mês)</option>
-                            <option value="4">Semanal (4x por mês)</option>
-                            <option value="1">Mensal (1x por mês)</option>
+                            <option value="20" selected data-i18n="roiFreqDaily">Diária (20x por mês)</option>
+                            <option value="4" data-i18n="roiFreqWeekly">Semanal (4x por mês)</option>
+                            <option value="1" data-i18n="roiFreqMonthly">Mensal (1x por mês)</option>
                         </select>
                     </div>
                     
                     <div class="settings-field" style="margin-top: 1rem;">
-                        <label for="roi-time-ai" style="font-weight: 600;">Tempo Estimado com IA (Minutos/Tarefa):</label>
+                        <label for="roi-time-ai" style="font-weight: 600;" data-i18n="roiAiTimeLabel">Tempo Estimado com IA (Minutos/Tarefa):</label>
                         <input type="range" id="roi-time-ai" min="1" max="30" step="1" value="5" class="tts-slider">
                         <span id="roi-time-ai-val" class="roi-val-badge">5 min</span>
                     </div>
                     
                     <div class="roi-strategic-brief">
-                        <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem; font-size: 0.85rem; text-transform: uppercase; color: var(--primary-purple); letter-spacing: 1px;">Análise Estratégica da IA Local:</h4>
-                        <div id="roi-ai-summary" class="roi-ai-summary-box">
+                        <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem; font-size: 0.85rem; text-transform: uppercase; color: var(--primary-purple); letter-spacing: 1px;" data-i18n="roiStrategicAnalysisTitle">Análise Estratégica da IA Local:</h4>
+                        <div id="roi-ai-summary" class="roi-ai-summary-box" data-i18n="roiStrategicAnalysisLoading">
                             Carregando análise estratégica da produtividade...
                         </div>
                     </div>
@@ -605,31 +725,31 @@
                         <div class="impact-card-glow-green"></div>
                         <div class="impact-card-glow-purple"></div>
                         <div class="impact-card-header">
-                            <span class="badge">🏆 RELATÓRIO DE PRODUTIVIDADE</span>
+                            <span class="badge" data-i18n="roiReportBadge">🏆 RELATÓRIO DE PRODUTIVIDADE</span>
                             <div class="brand-logo" style="color: var(--primary-purple);">SmartNotes <span class="green-text" style="color: var(--primary-green); font-weight: 800;">AI</span></div>
                         </div>
                         <div class="impact-card-body">
                             <h2 id="impact-card-saved-hours">18h</h2>
-                            <p class="impact-lead">Economizadas por Mês</p>
+                            <p class="impact-lead" data-i18n="roiSavedPerMonthLabel">Economizadas por Mês</p>
                             <div class="impact-divider"></div>
                             <div class="impact-details">
                                 <div class="detail-col">
                                     <span class="metric" id="impact-card-percent">91%</span>
-                                    <span class="label">Redução de Tempo</span>
+                                    <span class="label" data-i18n="roiTimeReductionLabel">Redução de Tempo</span>
                                 </div>
                                 <div class="detail-col">
                                     <span class="metric" id="impact-card-annual">27 dias</span>
-                                    <span class="label">Produtividade Anual</span>
+                                    <span class="label" data-i18n="roiAnnualProdLabel">Produtividade Anual</span>
                                 </div>
                             </div>
                         </div>
                         <div class="impact-card-footer">
-                            <span class="cert-text">Certificado de Eficiência AI-First</span>
+                            <span class="cert-text" data-i18n="roiCertText">Certificado de Eficiência AI-First</span>
                             <span id="impact-note-title" class="note-title-badge">SmartNotes AI</span>
                         </div>
                     </div>
                     
-                    <button id="copy-roi-btn" class="btn btn-primary" style="margin-top: 1.25rem; width: 100%; font-weight: 600; background: var(--primary-gradient); border: none;">
+                    <button id="copy-roi-btn" class="btn btn-primary" style="margin-top: 1.25rem; width: 100%; font-weight: 600; background: var(--primary-gradient); border: none;" data-i18n="roiCopyReportBtn">
                         💾 Copiar Relatório de ROI
                     </button>
                 </div>
