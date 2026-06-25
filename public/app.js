@@ -3333,10 +3333,11 @@ function runGraphPhysics(width, height) {
         }
     }
     
+    const nodeMap = new Map(graphNodes.map(n => [n.id, n]));
     graphLinks.forEach(link => {
         if (!isGraphLinkVisible(link)) return;
-        const nodeA = graphNodes.find(n => n.id === link.source);
-        const nodeB = graphNodes.find(n => n.id === link.target);
+        const nodeA = nodeMap.get(link.source);
+        const nodeB = nodeMap.get(link.target);
         if (!nodeA || !nodeB) return;
         
         const dx = nodeB.x - nodeA.x;
@@ -3399,10 +3400,11 @@ function drawGraph(ctx, width, height) {
     const searchQuery = document.getElementById('graph-search-input')?.value.toLowerCase().trim() || "";
     
     // 1. Draw Links
+    const nodeMap = new Map(graphNodes.map(n => [n.id, n]));
     graphLinks.forEach(link => {
         if (!isGraphLinkVisible(link)) return;
-        const nodeA = graphNodes.find(n => n.id === link.source);
-        const nodeB = graphNodes.find(n => n.id === link.target);
+        const nodeA = nodeMap.get(link.source);
+        const nodeB = nodeMap.get(link.target);
         if (nodeA && nodeB) {
             ctx.beginPath();
             ctx.moveTo(nodeA.x, nodeA.y);
