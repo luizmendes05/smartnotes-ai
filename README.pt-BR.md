@@ -36,7 +36,6 @@ A aplicação conta com **Português (Brasil) como idioma padrão** para confort
 * **🕸️ Web Scraper (Scrapling)**: Extrai o conteúdo limpo de URLs da web (com fallback integrado), cria uma nova nota automaticamente e imprime um resumo da página no chat.
 * **Resumo de Vídeos do YouTube**: Extrai e resume legendas nativas do YouTube sem chaves externas de API, caindo para raspagem de metadados se a legenda não existir.
 * **🔊 Leitor de Áudio (TTS)**: Vozes neurais de alta fidelidade (Azure TTS) ou fallback via Web Speech API do navegador, com controles de velocidade e volume em um modal dedicado.
-* **🎙️ Gravação de Voz (Ditado)**: Digitação por voz proeminente integrada na barra superior usando Web Speech Recognition.
 
 ### 5. Zen Focus & Visualização de Grafos 🧘📊
 * **🧘 Modo Zen Focus**: Canvas livre de distrações com sons ambientes MP3 em loop (Chuva, Floresta, Lo-fi) e controles deslizantes de volume.

@@ -2073,19 +2073,6 @@ body.light-theme .editor-playback-bar {
     }
 }
 
-/* Dictation button active pulsing state */
-.format-btn#dictate-btn.active {
-    background: rgba(239, 68, 68, 0.15);
-    color: #ef4444;
-    border-color: rgba(239, 68, 68, 0.35);
-    animation: pulse-red-mic 1.5s infinite ease-in-out;
-}
-
-@keyframes pulse-red-mic {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-    70% { transform: scale(1.08); box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
-    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-}
 
 /* Mobile Overlay & Responsive drawer elements */
 .mobile-overlay {
@@ -2410,39 +2397,8 @@ body.light-theme .cancel-ai-btn:hover {
 }
 
 /* ==========================================================================
-   Voice Dictation & Zen Focus Mode Prominence Button Styling
+   Zen Focus Mode Prominence Button Styling
    ========================================================================== */
-.dictate-header-btn {
-    background: linear-gradient(135deg, rgba(239, 68, 68, 0.12) 0%, rgba(220, 38, 38, 0.22) 100%) !important;
-    border: 1px solid rgba(239, 68, 68, 0.45) !important;
-    color: #fca5a5 !important;
-    font-weight: 700 !important;
-    box-shadow: 0 0 10px rgba(239, 68, 68, 0.1);
-    transition: var(--transition-smooth);
-}
-
-.dictate-header-btn:hover {
-    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.3) 100%) !important;
-    border-color: rgba(239, 68, 68, 0.8) !important;
-    color: #fee2e2 !important;
-    box-shadow: 0 0 15px rgba(239, 68, 68, 0.25);
-    transform: translateY(-1px);
-}
-
-.dictate-header-btn.active {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
-    border-color: #ef4444 !important;
-    color: #ffffff !important;
-    box-shadow: 0 0 20px rgba(239, 68, 68, 0.6) !important;
-    animation: pulse-red-mic-header 1.5s infinite ease-in-out !important;
-}
-
-@keyframes pulse-red-mic-header {
-    0% { transform: scale(1); box-shadow: 0 0 12px rgba(239, 68, 68, 0.6); }
-    70% { transform: scale(1.04); box-shadow: 0 0 20px rgba(239, 68, 68, 0.2); }
-    100% { transform: scale(1); box-shadow: 0 0 12px rgba(239, 68, 68, 0.6); }
-}
-
 .zen-header-btn {
     background: linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(99, 102, 241, 0.22) 100%) !important;
     border: 1px solid rgba(139, 92, 246, 0.45) !important;
@@ -2467,19 +2423,6 @@ body.light-theme .cancel-ai-btn:hover {
     box-shadow: 0 0 20px rgba(139, 92, 246, 0.6) !important;
 }
 
-/* Light theme support for these elements */
-body.light-theme .dictate-header-btn {
-    background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(220, 38, 38, 0.15) 100%) !important;
-    border: 1px solid rgba(239, 68, 68, 0.35) !important;
-    color: #dc2626 !important;
-    box-shadow: 0 0 8px rgba(239, 68, 68, 0.05);
-}
-
-body.light-theme .dictate-header-btn:hover {
-    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(220, 38, 38, 0.22) 100%) !important;
-    border-color: rgba(239, 68, 68, 0.7) !important;
-    color: #b91c1c !important;
-}
 
 body.light-theme .zen-header-btn {
     background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(99, 102, 241, 0.15) 100%) !important;
@@ -3948,35 +3891,4 @@ body.light-theme .guide-key {
     }
 }
 
-/* Dictation Button Header Styling */
-.dictate-btn-header {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.dictate-btn-header.active {
-    background: rgba(239, 68, 68, 0.15) !important;
-    border-color: #ef4444 !important;
-    color: #ef4444 !important;
-    animation: dictate-pulse 1.5s infinite ease-in-out;
-}
-
-body.light-theme .dictate-btn-header.active {
-    background: rgba(239, 68, 68, 0.08) !important;
-}
-
-@keyframes dictate-pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
-    }
-    70% {
-        box-shadow: 0 0 0 6px rgba(239, 68, 68, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
-    }
-}
 

@@ -36,7 +36,6 @@ The application **defaults to Portuguese (Brazil)** for regional comfort and fea
 * **🕸️ Web Scraper (Scrapling)**: Extracts clean web content from URLs using an adaptive scraping engine (with urllib fallback), automatically creates a new note, and prints an AI summary in chat.
 * **Real YouTube Summarizer**: Extracts and decodes YouTube captions on the Node.js backend (no third-party keys required), falling back to description scraping if captions are unavailable.
 * **🔊 Audio Reader (TTS)**: Streams high-fidelity neural voices (Azure TTS) or utilizes browser-native Web Speech API fallback, featuring volume, speed rate, and voice controls in a settings modal.
-* **🎙️ Voice Dictation**: High-prominence dictate button using Web Speech Recognition with multi-language support.
 
 ### 5. Zen Focus & Graph Visualization 🧘📊
 * **🧘 Zen Focus Mode**: Minimizes writing canvas distractions with high-quality MP3 ambient loop layers (Rain, Forest, Lo-fi) and volume controls.

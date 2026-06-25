@@ -176,7 +176,6 @@ const i18n = {
         tagWork: "Work",
         tagStudy: "Study",
         tagPersonal: "Personal",
-        dictateBtnTitle: "Start dictation (Voice typing)",
         scraperUrlPlaceholder: "Webpage link to scrape...",
         scraperBtnTitle: "Scrape webpage",
         scraperBtnText: "🕸️ Scrape Web",
@@ -198,7 +197,6 @@ const i18n = {
         removeHighlightTitle: "Remove Highlight",
         cancelAiText: "⏹️ Stop AI",
         stopAiTitle: "Stop AI Assistant",
-        dictateBtnText: "🎙️ Dictate",
         zenBtnText: "🧘 Zen Mode",
         soundRain: "🌧️ Rain",
         soundForest: "🌲 Forest",
@@ -390,7 +388,6 @@ const i18n = {
         tagWork: "Trabalho",
         tagStudy: "Estudos",
         tagPersonal: "Pessoal",
-        dictateBtnTitle: "Iniciar ditado (Digitação por voz)",
         scraperUrlPlaceholder: "Link da página web...",
         scraperBtnTitle: "Capturar página web",
         scraperBtnText: "🕸️ Capturar Web",
@@ -412,7 +409,6 @@ const i18n = {
         removeHighlightTitle: "Remover Destaque",
         cancelAiText: "⏹️ Parar IA",
         stopAiTitle: "Parar Assistente de IA",
-        dictateBtnText: "🎙️ Gravar Voz",
         zenBtnText: "🧘 Modo Zen",
         soundRain: "🌧️ Chuva",
         soundForest: "🌲 Floresta",
@@ -1843,14 +1839,6 @@ function setupEventListeners() {
     // Initialize TTS options and check connectivity
     initTts();
 
-    // Dictation Event Listener
-    const dictateBtn = document.getElementById('dictate-btn');
-    if (dictateBtn) {
-        dictateBtn.addEventListener('mousedown', (e) => {
-            e.preventDefault(); // Retain editor focus and selection
-        });
-        dictateBtn.addEventListener('click', toggleDictation);
-    }
 
     // Responsive event listeners (Mobile Drawer & Desktop Collapse)
     const mobileSidebarToggle = document.getElementById('mobile-sidebar-toggle');
@@ -2780,16 +2768,6 @@ function updateUiLanguage() {
     }
     updateTtsStatusBadge();
 
-    // Translate dictate button tooltip and text
-    const dictateBtn = document.getElementById('dictate-btn');
-    if (dictateBtn) {
-        dictateBtn.title = isDictating
-            ? (currentLang === 'en' ? "Stop Dictation" : "Parar Ditado")
-            : (currentLang === 'en' ? "Start Dictation" : "Iniciar Ditado");
-        dictateBtn.innerHTML = isDictating
-            ? (currentLang === 'en' ? "⏹️ Stop" : "⏹️ Parar")
-            : (currentLang === 'en' ? "🎙️ Dictate" : "🎙️ Gravar");
-    }
 
     const toggleReaderBtn = document.getElementById('toggle-reader-btn');
     if (toggleReaderBtn) {
@@ -4130,115 +4108,6 @@ function stopTtsPlay() {
     currentUtterance = null;
 }
 
-// --- SPEECH RECOGNITION (DICTATION / SPEECH-TO-TEXT) ---
-let recognition = null;
-let isDictating = false;
-
-function initDictation() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-        console.warn("Speech Recognition API not supported in this browser.");
-        return;
-    }
-
-    recognition = new SpeechRecognition();
-    recognition.continuous = true;
-    recognition.interimResults = true;
-    recognition.lang = currentLang === 'en' ? 'en-US' : 'pt-BR';
-
-    recognition.onresult = (event) => {
-        let finalTranscript = '';
-        for (let i = event.resultIndex; i < event.results.length; ++i) {
-            if (event.results[i].isFinal) {
-                finalTranscript += event.results[i][0].transcript;
-            }
-        }
-
-        if (finalTranscript) {
-            noteContent.focus();
-            restoreSelection();
-            // Insert text at current cursor location
-            document.execCommand('insertText', false, finalTranscript + ' ');
-            saveSelection();
-            updateActiveNote();
-        }
-    };
-
-    recognition.onend = () => {
-        isDictating = false;
-        updateDictateButtonState();
-    };
-
-    recognition.onerror = (event) => {
-        console.error("Speech Recognition error:", event.error);
-        isDictating = false;
-        updateDictateButtonState();
-        
-        let errMsg = event.error;
-        if (event.error === 'not-allowed') {
-            errMsg = currentLang === 'en' 
-                ? "Microphone access denied. Enable it in browser settings." 
-                : "Acesso ao microfone negado. Habilite nas configurações do navegador.";
-        } else if (event.error === 'service-not-allowed') {
-            errMsg = currentLang === 'en'
-                ? "Speech service blocked (HTTP non-secure origin or offline)."
-                : "Serviço de voz bloqueado (origem HTTP não segura ou offline).";
-        } else if (event.error === 'no-speech') {
-            errMsg = currentLang === 'en'
-                ? "No speech detected."
-                : "Nenhuma fala detectada.";
-        } else {
-            errMsg = (currentLang === 'en' ? "Voice typing error: " : "Erro na digitação de voz: ") + event.error;
-        }
-        showToast(errMsg, "error");
-    };
-}
-
-function toggleDictation() {
-    if (!recognition) {
-        initDictation();
-    }
-
-    if (!recognition) {
-        showToast(currentLang === 'en'
-            ? "Speech Recognition is not supported by your browser. Use Google Chrome or Microsoft Edge."
-            : "A digitação por voz não é suportada pelo seu navegador. Use o Google Chrome ou Microsoft Edge.", "error");
-        return;
-    }
-
-    // Update active language recognition
-    recognition.lang = currentLang === 'en' ? 'en-US' : 'pt-BR';
-
-    if (isDictating) {
-        recognition.stop();
-        isDictating = false;
-        showToast(currentLang === 'en' ? "🎙️ Dictation stopped" : "🎙️ Ditado finalizado", "success");
-    } else {
-        noteContent.focus();
-        restoreSelection();
-        try {
-            recognition.start();
-            isDictating = true;
-            showToast(currentLang === 'en' ? "🎙️ Listening... Speak into the microphone." : "🎙️ Ouvindo... Fale no microfone.", "info");
-        } catch (e) {
-            console.warn("Failed to start speech recognition:", e);
-        }
-    }
-    updateDictateButtonState();
-}
-
-function updateDictateButtonState() {
-    const dictateBtn = document.getElementById('dictate-btn');
-    if (dictateBtn) {
-        dictateBtn.classList.toggle('active', isDictating);
-        dictateBtn.title = isDictating
-            ? (currentLang === 'en' ? "Stop Dictation" : "Parar Ditado")
-            : (currentLang === 'en' ? "Start Dictation" : "Iniciar Ditado");
-        dictateBtn.innerHTML = isDictating
-            ? (currentLang === 'en' ? "⏹️ Stop" : "⏹️ Parar")
-            : (currentLang === 'en' ? "🎙️ Dictate" : "🎙️ Gravar");
-    }
-}
 
 // --- UNDO AND REDO ENGINE FOR MANUALLY TYPED AND AI PROGRAMMATIC UPDATES ---
 
