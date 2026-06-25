@@ -106,6 +106,14 @@ const i18n = {
         statusModified: "Modified",
         statusFontChanged: "Font changed",
         statusSizeChanged: "Size changed",
+        statusBlockChanged: "Paragraph style changed",
+        titleBlock: "Paragraph Style",
+        blockNormal: "Normal Text",
+        blockH1: "Heading 1 (Title)",
+        blockH2: "Heading 2 (Subtitle)",
+        blockH3: "Heading 3",
+        blockQuote: "Quote",
+        blockCode: "Code Block",
         statusColorChanged: "Color changed",
         statusHighlightChanged: "Highlight changed",
         statusLoading: "AI processing...",
@@ -318,6 +326,14 @@ const i18n = {
         statusModified: "Modificado",
         statusFontChanged: "Fonte alterada",
         statusSizeChanged: "Tamanho alterado",
+        statusBlockChanged: "Estilo de parágrafo alterado",
+        titleBlock: "Estilo do Parágrafo",
+        blockNormal: "Texto Normal",
+        blockH1: "Título 1 (Cabeçalho)",
+        blockH2: "Título 2 (Subtítulo)",
+        blockH3: "Título 3",
+        blockQuote: "Citação",
+        blockCode: "Bloco de Código",
         statusColorChanged: "Cor alterada",
         statusHighlightChanged: "Destaque alterado",
         statusLoading: "IA processando...",
@@ -1352,12 +1368,41 @@ function setupEventListeners() {
         });
     }
     
-    const sizeSelect = document.getElementById('size-select');
-    if (sizeSelect) {
-        sizeSelect.addEventListener('change', (e) => {
+    const blockSelect = document.getElementById('block-select');
+    if (blockSelect) {
+        blockSelect.addEventListener('change', (e) => {
             pushHistory();
             restoreSelection();
-            document.execCommand('fontSize', false, e.target.value);
+            let tag = e.target.value;
+            document.execCommand('formatBlock', false, `<${tag}>`);
+            saveSelection();
+            showStatus(i18n[currentLang].statusBlockChanged || "Style changed");
+            updateActiveNote();
+            noteContent.focus();
+        });
+    }
+    
+    const sizeInput = document.getElementById('size-input');
+    if (sizeInput) {
+        sizeInput.addEventListener('change', (e) => {
+            let val = parseInt(e.target.value);
+            if (isNaN(val) || val <= 0) val = 18;
+            e.target.value = val;
+            
+            pushHistory();
+            restoreSelection();
+            
+            const sizeVal = `${val}px`;
+            
+            document.execCommand('fontSize', false, '7');
+            const fontEls = noteContent.querySelectorAll('font[size="7"]');
+            fontEls.forEach(fontEl => {
+                const span = document.createElement('span');
+                span.style.fontSize = sizeVal;
+                span.innerHTML = fontEl.innerHTML;
+                fontEl.parentNode.replaceChild(span, fontEl);
+            });
+            
             saveSelection();
             showStatus(i18n[currentLang].statusSizeChanged);
             updateActiveNote();
@@ -2794,13 +2839,15 @@ function updateUiLanguage() {
         langBtn.title = currentLang === 'en' ? 'Switch to Portuguese' : 'Alternar para Inglês';
     }
     
-    // Translate size-select options
-    const sizeSelect = document.getElementById('size-select');
-    if (sizeSelect && sizeSelect.options.length >= 4) {
-        sizeSelect.options[0].text = i18n[currentLang].sizeMedium;
-        sizeSelect.options[1].text = i18n[currentLang].sizeSmall;
-        sizeSelect.options[2].text = i18n[currentLang].sizeLarge;
-        sizeSelect.options[3].text = i18n[currentLang].sizeExtraLarge;
+    // Translate block-select options
+    const blockSelect = document.getElementById('block-select');
+    if (blockSelect && blockSelect.options.length >= 6) {
+        blockSelect.options[0].text = i18n[currentLang].blockNormal;
+        blockSelect.options[1].text = i18n[currentLang].blockH1;
+        blockSelect.options[2].text = i18n[currentLang].blockH2;
+        blockSelect.options[3].text = i18n[currentLang].blockH3;
+        blockSelect.options[4].text = i18n[currentLang].blockQuote;
+        blockSelect.options[5].text = i18n[currentLang].blockCode;
     }
     
     // Translate active Pomodoro play button title dynamically

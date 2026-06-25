@@ -197,13 +197,13 @@
                 <span class="format-separator"></span>
                 
                 <select id="font-select" class="format-select" title="Font" data-i18n-title="titleFont">
-                    <option value="Arial, sans-serif">Arial</option>
+                    <option value="Arial, sans-serif" selected>Arial</option>
                     <option value="'Times New Roman', Times, serif">Times New Roman</option>
                     <option value="'Courier New', Courier, monospace">Courier New</option>
                     <option value="Verdana, Geneva, sans-serif">Verdana</option>
                     <option value="'Trebuchet MS', Helvetica, sans-serif">Trebuchet MS</option>
                     <option value="Georgia, serif">Georgia</option>
-                    <option value="'Plus Jakarta Sans', sans-serif" selected>Plus Jakarta Sans</option>
+                    <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</option>
                     <option value="'Inter', sans-serif">Inter</option>
                     <option value="'Poppins', sans-serif">Poppins</option>
                     <option value="'Montserrat', sans-serif">Montserrat</option>
@@ -212,12 +212,28 @@
                     <option value="'Fira Code', monospace">Fira Code</option>
                 </select>
                 
-                <select id="size-select" class="format-select" title="Size" data-i18n-title="titleSize">
-                    <option value="3" selected data-i18n="sizeMedium">Medium</option>
-                    <option value="2" data-i18n="sizeSmall">Small</option>
-                    <option value="4" data-i18n="sizeLarge">Large</option>
-                    <option value="5" data-i18n="sizeExtraLarge">Extra Large</option>
+                <select id="block-select" class="format-select" title="Paragraph Style" data-i18n-title="titleBlock">
+                    <option value="div" selected data-i18n="blockNormal">Normal Text</option>
+                    <option value="h1" data-i18n="blockH1">Heading 1</option>
+                    <option value="h2" data-i18n="blockH2">Heading 2</option>
+                    <option value="h3" data-i18n="blockH3">Heading 3</option>
+                    <option value="blockquote" data-i18n="blockQuote">Quote</option>
+                    <option value="pre" data-i18n="blockCode">Code Block</option>
                 </select>
+                
+                <input type="text" id="size-input" list="font-sizes" class="format-select" style="width: 55px; text-align: center;" value="18" title="Font Size" data-i18n-title="titleSize">
+                <datalist id="font-sizes">
+                    <option value="12"></option>
+                    <option value="14"></option>
+                    <option value="16"></option>
+                    <option value="18"></option>
+                    <option value="20"></option>
+                    <option value="24"></option>
+                    <option value="28"></option>
+                    <option value="32"></option>
+                    <option value="36"></option>
+                    <option value="48"></option>
+                </datalist>
                 
                 <span class="format-separator"></span>
                 
