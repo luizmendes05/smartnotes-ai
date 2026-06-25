@@ -220,20 +220,19 @@
                     <option value="blockquote" data-i18n="blockQuote">Quote</option>
                     <option value="pre" data-i18n="blockCode">Code Block</option>
                 </select>
-                
-                <input type="text" id="size-input" list="font-sizes" class="format-select" style="width: 55px; text-align: center;" value="18" title="Font Size" data-i18n-title="titleSize">
-                <datalist id="font-sizes">
-                    <option value="12"></option>
-                    <option value="14"></option>
-                    <option value="16"></option>
-                    <option value="18"></option>
-                    <option value="20"></option>
-                    <option value="24"></option>
-                    <option value="28"></option>
-                    <option value="32"></option>
-                    <option value="36"></option>
-                    <option value="48"></option>
-                </datalist>
+                <select id="size-select" class="format-select" title="Font Size" data-i18n-title="titleSize">
+                    <option value="12px">12</option>
+                    <option value="14px">14</option>
+                    <option value="16px">16</option>
+                    <option value="18px" selected>18</option>
+                    <option value="20px">20</option>
+                    <option value="24px">24</option>
+                    <option value="28px">28</option>
+                    <option value="32px">32</option>
+                    <option value="36px">36</option>
+                    <option value="48px">48</option>
+                    <option value="custom" data-i18n="sizeCustom">Outro...</option>
+                </select>
                 
                 <span class="format-separator"></span>
                 

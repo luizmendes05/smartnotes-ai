@@ -108,6 +108,7 @@ const i18n = {
         statusSizeChanged: "Size changed",
         statusBlockChanged: "Paragraph style changed",
         titleBlock: "Paragraph Style",
+        sizeCustom: "Custom...",
         blockNormal: "Normal Text",
         blockH1: "Heading 1 (Title)",
         blockH2: "Heading 2 (Subtitle)",
@@ -328,6 +329,7 @@ const i18n = {
         statusSizeChanged: "Tamanho alterado",
         statusBlockChanged: "Estilo de parágrafo alterado",
         titleBlock: "Estilo do Parágrafo",
+        sizeCustom: "Outro...",
         blockNormal: "Texto Normal",
         blockH1: "Título 1 (Cabeçalho)",
         blockH2: "Título 2 (Subtítulo)",
@@ -1382,17 +1384,44 @@ function setupEventListeners() {
         });
     }
     
-    const sizeInput = document.getElementById('size-input');
-    if (sizeInput) {
-        sizeInput.addEventListener('change', (e) => {
-            let val = parseInt(e.target.value);
-            if (isNaN(val) || val <= 0) val = 18;
-            e.target.value = val;
+    const sizeSelect = document.getElementById('size-select');
+    if (sizeSelect) {
+        sizeSelect.addEventListener('change', (e) => {
+            let sizeVal = e.target.value;
+            
+            if (sizeVal === 'custom') {
+                const promptMsg = currentLang === 'en' 
+                    ? 'Enter custom font size (px):' 
+                    : 'Digite o tamanho de fonte personalizado (px):';
+                const input = prompt(promptMsg, '18');
+                if (input === null) {
+                    // Revert to 18px on cancel
+                    sizeSelect.value = '18px';
+                    return;
+                }
+                
+                let val = parseInt(input);
+                if (isNaN(val) || val <= 0) {
+                    showToast(currentLang === 'en' ? 'Invalid size!' : 'Tamanho inválido!', 'error');
+                    sizeSelect.value = '18px';
+                    return;
+                }
+                
+                sizeVal = `${val}px`;
+                
+                // Add the custom option to select list if not present
+                let existingOpt = Array.from(sizeSelect.options).find(opt => opt.value === sizeVal);
+                if (!existingOpt) {
+                    existingOpt = document.createElement('option');
+                    existingOpt.value = sizeVal;
+                    existingOpt.textContent = val;
+                    sizeSelect.insertBefore(existingOpt, sizeSelect.options[sizeSelect.options.length - 1]);
+                }
+                sizeSelect.value = sizeVal;
+            }
             
             pushHistory();
             restoreSelection();
-            
-            const sizeVal = `${val}px`;
             
             document.execCommand('fontSize', false, '7');
             const fontEls = noteContent.querySelectorAll('font[size="7"]');
@@ -2848,6 +2877,15 @@ function updateUiLanguage() {
         blockSelect.options[3].text = i18n[currentLang].blockH3;
         blockSelect.options[4].text = i18n[currentLang].blockQuote;
         blockSelect.options[5].text = i18n[currentLang].blockCode;
+    }
+    
+    // Translate size-select Custom option
+    const sizeSelect = document.getElementById('size-select');
+    if (sizeSelect && sizeSelect.options.length > 0) {
+        const lastOpt = sizeSelect.options[sizeSelect.options.length - 1];
+        if (lastOpt && lastOpt.value === 'custom') {
+            lastOpt.text = i18n[currentLang].sizeCustom || (currentLang === 'en' ? 'Custom...' : 'Outro...');
+        }
     }
     
     // Translate active Pomodoro play button title dynamically
