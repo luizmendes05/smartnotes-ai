@@ -1,0 +1,203 @@
+openapi: 3.0.3
+info:
+  title: SmartNotes AI Backend API Specification
+  description: Contrato de API local para integração de serviços de IA, Scrapes, transcrições e TTS do SmartNotes AI.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3001
+    description: Servidor Express local do SmartNotes AI
+paths:
+  /api/log:
+    post:
+      summary: Registra logs do console do navegador no console do backend.
+      operationId: logBrowserConsole
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - level
+                - message
+              properties:
+                level:
+                  type: string
+                  enum: [log, error, info, warn]
+                  description: Nível de severidade do log.
+                message:
+                  type: string
+                  description: O conteúdo da mensagem de log.
+      responses:
+        '200':
+          description: Log registrado com sucesso no console do backend.
+
+  /api/ai:
+    post:
+      summary: Envia uma requisição de prompt para a IA local (Foundry Local / Ollama).
+      operationId: callLocalAI
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - prompt
+              properties:
+                prompt:
+                  type: string
+                  description: O texto enviado para a IA.
+                model:
+                  type: string
+                  default: qwen3-0.6b
+                  enum: [qwen3-0.6b, phi-4-mini, deepseek-r1-1.5b, gpt-oss-20b]
+                  description: Identificador do modelo de IA local.
+                systemInstruction:
+                  type: string
+                  description: Instrução de sistema para formatar o comportamento e tom da IA.
+      responses:
+        '200':
+          description: Resposta gerada com sucesso pela IA.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  text:
+                    type: string
+                    description: O texto de resposta gerado pelo modelo local (com blocos <think> removidos).
+        '400':
+          description: Requisição inválida (falta de prompt).
+        '499':
+          description: Requisição cancelada pelo cliente prematuramente.
+        '500':
+          description: Erro interno no processamento ou na comunicação com a IA local.
+
+  /api/pdf-transcript:
+    post:
+      summary: Extrai texto puro de um arquivo PDF codificado em Base64.
+      operationId: parsePdf
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - fileData
+              properties:
+                fileData:
+                  type: string
+                  description: Arquivo PDF codificado no formato Base64.
+      responses:
+        '200':
+          description: PDF extraído e parseado com sucesso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  text:
+                    type: string
+                    description: Todo o texto bruto extraído de dentro do PDF.
+        '400':
+          description: Dados do arquivo ausentes na requisição.
+        '500':
+          description: Falha crítica na extração de texto do PDF.
+
+  /api/scrape:
+    get:
+      summary: Captura o conteúdo em markdown e metadados de um site externo usando python scraper.
+      operationId: scrapeWebpage
+      parameters:
+        - name: url
+          in: query
+          required: true
+          schema:
+            type: string
+          description: O link completo da página web a ser capturada.
+      responses:
+        '200':
+          description: Página web capturada com sucesso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                    description: O título da página web.
+                  content:
+                    type: string
+                    description: O conteúdo útil da página web convertido para Markdown.
+        '400':
+          description: URL ausente nos parâmetros de consulta.
+        '500':
+          description: Falha na execução do web scraper local.
+
+  /api/youtube-transcript:
+    get:
+      summary: Obtém a transcrição (legendas) de um vídeo do YouTube com base no link ou ID.
+      operationId: getYoutubeTranscript
+      parameters:
+        - name: url
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Link completo do vídeo do YouTube ou o ID do vídeo (11 caracteres).
+      responses:
+        '200':
+          description: Transcrição extraída com sucesso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transcript:
+                    type: string
+                    description: Todo o texto concatenado das legendas do vídeo.
+        '400':
+          description: Link ou ID do vídeo ausente nos parâmetros.
+        '500':
+          description: Erro na busca de dados ou legendas indisponíveis no vídeo do YouTube.
+
+  /api/tts:
+    post:
+      summary: Transforma o texto enviado em áudio MP3 utilizando os serviços de fala da Azure.
+      operationId: synthesizeSpeech
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - text
+              properties:
+                text:
+                  type: string
+                  description: O texto que deve ser lido em voz alta.
+                voice:
+                  type: string
+                  default: en-US-JennyNeural
+                  description: O identificador de voz do Azure AI Speech.
+                lang:
+                  type: string
+                  default: en-US
+                  description: Código i18n do idioma de destino.
+      responses:
+        '200':
+          description: Áudio MP3 gerado com sucesso.
+          content:
+            audio/mpeg:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Conteúdo de texto ausente.
+        '501':
+          description: Serviço de fala da Azure não configurado no backend (chave ausente).
+        '500':
+          description: Falha na síntese de áudio.
