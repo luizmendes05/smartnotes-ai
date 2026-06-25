@@ -2919,6 +2919,7 @@ function closeGraphModal() {
 }
 
 function buildGraphData() {
+    const oldNodesMap = new Map(graphNodes.map(n => [n.id, n]));
     graphNodes = [];
     graphLinks = [];
     
@@ -2929,17 +2930,20 @@ function buildGraphData() {
         if (note.tags) {
             note.tags.forEach(tag => {
                 const tagKey = tag.name.toLowerCase();
+                const nodeId = 'tag_' + tagKey;
+                const oldNode = oldNodesMap.get(nodeId);
                 if (!tagMap.has(tagKey)) {
                     tagMap.set(tagKey, {
-                        id: 'tag_' + tagKey,
+                        id: nodeId,
                         type: 'tag',
                         label: tag.name,
                         color: tag.color,
                         notesCount: 0,
-                        x: Math.random() * 500 + 100,
-                        y: Math.random() * 300 + 100,
-                        vx: 0,
-                        vy: 0
+                        x: oldNode ? oldNode.x : Math.random() * 500 + 100,
+                        y: oldNode ? oldNode.y : Math.random() * 300 + 100,
+                        vx: oldNode ? oldNode.vx : 0,
+                        vy: oldNode ? oldNode.vy : 0,
+                        isPinned: oldNode ? oldNode.isPinned : false
                     });
                 }
                 tagMap.get(tagKey).notesCount++;
@@ -2965,14 +2969,17 @@ function buildGraphData() {
         const wordCount = textContent ? textContent.split(/\s+/).length : 0;
         const noteSize = Math.min(18, 8 + Math.min(10, wordCount / 100));
 
+        const oldNode = oldNodesMap.get(note.id);
+
         graphNodes.push({
             id: note.id,
             type: 'note',
             label: note.title,
-            x: Math.random() * 500 + 100,
-            y: Math.random() * 300 + 100,
-            vx: 0,
-            vy: 0,
+            x: oldNode ? oldNode.x : Math.random() * 500 + 100,
+            y: oldNode ? oldNode.y : Math.random() * 300 + 100,
+            vx: oldNode ? oldNode.vx : 0,
+            vy: oldNode ? oldNode.vy : 0,
+            isPinned: oldNode ? oldNode.isPinned : false,
             color: noteColor,
             size: noteSize
         });
@@ -3073,6 +3080,9 @@ function initGraphSimulation() {
         const { mouseX, mouseY } = getMouseCoords(e);
         
         if (draggedNode) {
+            draggedNode.isPinned = true;
+            draggedNode.vx = 0;
+            draggedNode.vy = 0;
             draggedNode.x = mouseX;
             draggedNode.y = mouseY;
         } else if (isDraggingCanvas) {
@@ -3156,6 +3166,29 @@ function initGraphSimulation() {
         }
     };
 
+    // Right click on node toggles pinned state
+    canvas.oncontextmenu = (e) => {
+        const { mouseX, mouseY } = getMouseCoords(e);
+        
+        for (const node of graphNodes) {
+            if (!isGraphNodeVisible(node)) continue;
+            const dist = Math.hypot(node.x - mouseX, node.y - mouseY);
+            if (dist < node.size * 1.8) {
+                e.preventDefault();
+                node.isPinned = !node.isPinned;
+                if (!node.isPinned) {
+                    // Give it a tiny velocity so physics starts moving it
+                    node.vx = (Math.random() - 0.5) * 2;
+                    node.vy = (Math.random() - 0.5) * 2;
+                } else {
+                    node.vx = 0;
+                    node.vy = 0;
+                }
+                break;
+            }
+        }
+    };
+
     // Zoom on wheel scroll
     canvas.onwheel = (e) => {
         e.preventDefault();
@@ -3223,6 +3256,7 @@ function initGraphSimulation() {
                 node.y = Math.random() * (rect.height - 200) + 100;
                 node.vx = 0;
                 node.vy = 0;
+                node.isPinned = false; // Reset pinned state
             });
         };
     }
@@ -3287,11 +3321,11 @@ function runGraphPhysics(width, height) {
                 const fx = force * (dx / dist);
                 const fy = force * (dy / dist);
                 
-                if (nodeA !== draggedNode) {
+                if (nodeA !== draggedNode && !nodeA.isPinned) {
                     nodeA.vx -= fx;
                     nodeA.vy -= fy;
                 }
-                if (nodeB !== draggedNode) {
+                if (nodeB !== draggedNode && !nodeB.isPinned) {
                     nodeB.vx += fx;
                     nodeB.vy += fy;
                 }
@@ -3314,11 +3348,11 @@ function runGraphPhysics(width, height) {
         const fx = force * (dx / dist);
         const fy = force * (dy / dist);
         
-        if (nodeA !== draggedNode) {
+        if (nodeA !== draggedNode && !nodeA.isPinned) {
             nodeA.vx += fx;
             nodeA.vy += fy;
         }
-        if (nodeB !== draggedNode) {
+        if (nodeB !== draggedNode && !nodeB.isPinned) {
             nodeB.vx -= fx;
             nodeB.vy -= fy;
         }
@@ -3326,7 +3360,11 @@ function runGraphPhysics(width, height) {
     
     graphNodes.forEach(node => {
         if (!isGraphNodeVisible(node)) return;
-        if (node === draggedNode) return;
+        if (node === draggedNode || node.isPinned) {
+            node.vx = 0;
+            node.vy = 0;
+            return;
+        }
         
         if (width > 40 && height > 40) {
             const dx = centerX - node.x;
@@ -3448,6 +3486,18 @@ function drawGraph(ctx, width, height) {
         
         ctx.arc(node.x, node.y, finalSize, 0, Math.PI * 2);
         ctx.fill();
+        
+        // Draw outline/ring if node is pinned
+        if (node.isPinned) {
+            ctx.save();
+            ctx.shadowBlur = 0;
+            ctx.strokeStyle = isLightTheme ? '#1e1b4b' : '#ffffff';
+            ctx.lineWidth = 1.8;
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, finalSize + 3, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.restore();
+        }
         
         // Node label
         ctx.shadowBlur = 0;
