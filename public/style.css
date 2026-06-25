@@ -1628,21 +1628,46 @@ body.light-theme .tag-picker-popover {
 /* Zen Focus Mode */
 body.zen-focus-mode .sidebar,
 body.zen-focus-mode .chat-panel,
-body.zen-focus-mode .ai-toolbar {
+body.zen-focus-mode .ai-toolbar,
+body.zen-focus-mode .desktop-border-toggle-btn,
+body.zen-focus-mode .mobile-toggle-btn,
+body.zen-focus-mode .editor-header-actions,
+body.zen-focus-mode .tag-manager-bar {
     display: none !important;
 }
 body.zen-focus-mode .app-container {
     grid-template-columns: 100% !important;
 }
 body.zen-focus-mode .main-editor {
-    max-width: 800px;
+    max-width: 850px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 0 1rem;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+body.zen-focus-mode .editor-header {
+    border-bottom: none !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    padding: 5rem 2rem 0 2rem !important;
+}
+body.zen-focus-mode .title-input {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    letter-spacing: -1px;
+}
+body.zen-focus-mode .editor-body {
+    padding: 1rem 2rem 2rem 2rem !important;
 }
 body.zen-focus-mode .format-toolbar {
-    opacity: 0.05;
+    opacity: 0.02;
+    border-bottom: none !important;
+    background: transparent !important;
     transition: opacity 0.3s ease;
+    justify-content: center;
 }
 body.zen-focus-mode .format-toolbar:hover {
     opacity: 1;
