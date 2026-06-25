@@ -4173,11 +4173,24 @@ function initDictation() {
         console.error("Speech Recognition error:", event.error);
         isDictating = false;
         updateDictateButtonState();
+        
+        let errMsg = event.error;
         if (event.error === 'not-allowed') {
-            showToast(currentLang === 'en' 
+            errMsg = currentLang === 'en' 
                 ? "Microphone access denied. Enable it in browser settings." 
-                : "Acesso ao microfone negado. Habilite nas configurações do navegador.", "error");
+                : "Acesso ao microfone negado. Habilite nas configurações do navegador.";
+        } else if (event.error === 'service-not-allowed') {
+            errMsg = currentLang === 'en'
+                ? "Speech service blocked (HTTP non-secure origin or offline)."
+                : "Serviço de voz bloqueado (origem HTTP não segura ou offline).";
+        } else if (event.error === 'no-speech') {
+            errMsg = currentLang === 'en'
+                ? "No speech detected."
+                : "Nenhuma fala detectada.";
+        } else {
+            errMsg = (currentLang === 'en' ? "Voice typing error: " : "Erro na digitação de voz: ") + event.error;
         }
+        showToast(errMsg, "error");
     };
 }
 
