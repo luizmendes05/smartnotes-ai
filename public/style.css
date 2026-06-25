@@ -754,6 +754,74 @@ body.light-theme .format-toolbar {
     transform: scaleY(1.3);
 }
 
+/* Color Picker Dropdowns */
+.color-menu-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    background: rgba(15, 23, 42, 0.85); /* Glassmorphism background */
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: 0.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 100;
+    box-shadow: var(--shadow-lg);
+    width: 140px;
+    backdrop-filter: blur(12px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.color-menu-dropdown.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+}
+body.light-theme .color-menu-dropdown {
+    background: rgba(255, 255, 255, 0.85);
+}
+.color-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.4rem;
+}
+.color-menu-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: transform var(--transition-fast);
+}
+body.light-theme .color-menu-dot {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+}
+.color-menu-dot:hover {
+    transform: scale(1.25);
+}
+.color-menu-custom-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: var(--border-radius-sm);
+    padding: 0.25rem;
+    font-size: 0.7rem;
+    cursor: pointer;
+    width: 100%;
+    transition: var(--transition-fast);
+}
+body.light-theme .color-menu-custom-btn {
+    background: rgba(0, 0, 0, 0.03);
+}
+.color-menu-custom-btn:hover {
+    background: var(--primary-gradient);
+    color: #ffffff;
+    border-color: transparent;
+}
+
 /* Collapsible AI Quick Actions Toolbar with Staggered Entrance */
 .ai-toolbar {
     border-top: 1px solid var(--border-color);

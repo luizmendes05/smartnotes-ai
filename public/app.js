@@ -208,7 +208,16 @@ const i18n = {
         ttsActiveLabel: "🔊 Audio Reader",
         ttsSettingsTitle: "Voice & Audio",
         exportMenuBtn: "📤 Export",
-        exitZenBtn: "🧘 Exit Zen Mode"
+        exitZenBtn: "🧘 Exit Zen Mode",
+        backupExportBtn: "⚙️ Export Backup",
+        backupExportBtnTitle: "Export all notes as a JSON backup file",
+        backupImportBtn: "📥 Import Backup",
+        backupImportBtnTitle: "Import notes from a JSON backup file",
+        colorDefaultTitle: "Default Text Color",
+        colorNoneTitle: "No Highlight",
+        toastBackupExportSuccess: "Backup file downloaded successfully!",
+        toastBackupImportSuccess: "Backup imported successfully! Reloading...",
+        toastBackupImportError: "Failed to parse backup file. Please select a valid SmartNotes JSON backup."
     },
     pt: {
         newNote: "+ Nova Nota",
@@ -330,7 +339,16 @@ const i18n = {
         ttsActiveLabel: "🔊 Leitor de Voz",
         ttsSettingsTitle: "Voz & Áudio",
         exportMenuBtn: "📤 Exportar",
-        exitZenBtn: "🧘 Sair do Modo Zen"
+        exitZenBtn: "🧘 Sair do Modo Zen",
+        backupExportBtn: "⚙️ Exportar Backup",
+        backupExportBtnTitle: "Exportar todas as notas para um arquivo JSON de backup",
+        backupImportBtn: "📥 Importar Backup",
+        backupImportBtnTitle: "Importar notas de um arquivo JSON de backup",
+        colorDefaultTitle: "Cor de Texto Padrão",
+        colorNoneTitle: "Sem Destaque",
+        toastBackupExportSuccess: "Arquivo de backup baixado com sucesso!",
+        toastBackupImportSuccess: "Backup importado com sucesso! Recarregando...",
+        toastBackupImportError: "Falha ao ler o arquivo de backup. Selecione um arquivo JSON de backup válido do SmartNotes."
     }
 };
 
@@ -894,19 +912,96 @@ function setupEventListeners() {
         });
     });
     
-    // Text Color Custom Button
+    // Text Color Custom Button & Dropdown Menu
     const colorForeBtn = document.getElementById('color-fore-btn');
     const colorForeInput = document.getElementById('color-fore');
     const colorForeIndicator = document.getElementById('color-fore-indicator');
+    const colorForeMenu = document.getElementById('color-fore-menu');
+    const colorForeCustomBtn = document.getElementById('color-fore-custom-btn');
     
-    if (colorForeBtn && colorForeInput) {
-        colorForeBtn.addEventListener('mousedown', (e) => {
+    // Text Highlight Color Custom Button & Dropdown Menu
+    const colorBackBtn = document.getElementById('color-back-btn');
+    const colorBackInput = document.getElementById('color-back');
+    const colorBackIndicator = document.getElementById('color-back-indicator');
+    const colorBackMenu = document.getElementById('color-back-menu');
+    const colorBackCustomBtn = document.getElementById('color-back-custom-btn');
+    
+    // Helper to close all color menus
+    const closeColorMenus = () => {
+        if (colorForeMenu) colorForeMenu.classList.remove('open');
+        if (colorBackMenu) colorBackMenu.classList.remove('open');
+    };
+    
+    // Close color menus when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.color-picker-wrapper')) {
+            closeColorMenus();
+        }
+    });
+    
+    // Prevent focus loss when clicking inside the color dropdown menus
+    if (colorForeMenu) {
+        colorForeMenu.addEventListener('mousedown', (e) => {
             e.preventDefault();
         });
+    }
+    if (colorBackMenu) {
+        colorBackMenu.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+        });
+    }
+    
+    // 1. Text Color Functionality
+    if (colorForeBtn && colorForeMenu) {
         colorForeBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            colorForeInput.click(); // Trigger native color selector
+            e.stopPropagation();
+            const isOpen = colorForeMenu.classList.contains('open');
+            closeColorMenus();
+            if (!isOpen) {
+                colorForeMenu.classList.add('open');
+            }
         });
+        
+        // Preset Colors Click Listener
+        colorForeMenu.querySelectorAll('.color-menu-dot').forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const color = dot.dataset.color;
+                pushHistory();
+                restoreSelection();
+                document.execCommand('foreColor', false, color);
+                saveSelection();
+                if (colorForeIndicator) {
+                    colorForeIndicator.style.background = color;
+                }
+                showStatus(i18n[currentLang].statusColorChanged);
+                updateActiveNote();
+                closeColorMenus();
+                noteContent.focus();
+            });
+        });
+        
+        // Custom Color Button Click Listener
+        if (colorForeCustomBtn && colorForeInput) {
+            colorForeCustomBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeColorMenus();
+                colorForeInput.click();
+            });
+        }
+        
+        // Live Preview on dragging custom color picker
+        colorForeInput.addEventListener('input', (e) => {
+            const color = e.target.value;
+            restoreSelection();
+            document.execCommand('foreColor', false, color);
+            if (colorForeIndicator) {
+                colorForeIndicator.style.background = color;
+            }
+        });
+        
+        // Commit color on picker close/change
         colorForeInput.addEventListener('change', (e) => {
             const color = e.target.value;
             pushHistory();
@@ -922,24 +1017,77 @@ function setupEventListeners() {
         });
     }
     
-    // Text Highlight Color Custom Button
-    const colorBackBtn = document.getElementById('color-back-btn');
-    const colorBackInput = document.getElementById('color-back');
-    const colorBackIndicator = document.getElementById('color-back-indicator');
-    
-    if (colorBackBtn && colorBackInput) {
-        colorBackBtn.addEventListener('mousedown', (e) => {
-            e.preventDefault();
-        });
+    // 2. Highlight Color Functionality
+    if (colorBackBtn && colorBackMenu) {
         colorBackBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            colorBackInput.click();
+            e.stopPropagation();
+            const isOpen = colorBackMenu.classList.contains('open');
+            closeColorMenus();
+            if (!isOpen) {
+                colorBackMenu.classList.add('open');
+            }
         });
+        
+        // Preset Highlight Colors Click Listener
+        colorBackMenu.querySelectorAll('.color-menu-dot').forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const color = dot.dataset.color;
+                pushHistory();
+                restoreSelection();
+                
+                // Remove highlight if transparent, else apply color
+                if (color === 'transparent') {
+                    if (!document.execCommand('hiliteColor', false, 'transparent')) {
+                        document.execCommand('backColor', false, 'transparent');
+                    }
+                } else {
+                    if (!document.execCommand('hiliteColor', false, color)) {
+                        document.execCommand('backColor', false, color);
+                    }
+                }
+                
+                saveSelection();
+                if (colorBackIndicator) {
+                    colorBackIndicator.style.background = color;
+                }
+                showStatus(i18n[currentLang].statusHighlightChanged);
+                updateActiveNote();
+                closeColorMenus();
+                noteContent.focus();
+            });
+        });
+        
+        // Custom Color Button Click Listener
+        if (colorBackCustomBtn && colorBackInput) {
+            colorBackCustomBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeColorMenus();
+                colorBackInput.click();
+            });
+        }
+        
+        // Live Preview on dragging custom color picker
+        colorBackInput.addEventListener('input', (e) => {
+            const color = e.target.value;
+            restoreSelection();
+            if (!document.execCommand('hiliteColor', false, color)) {
+                document.execCommand('backColor', false, color);
+            }
+            if (colorBackIndicator) {
+                colorBackIndicator.style.background = color;
+            }
+        });
+        
+        // Commit color on picker close/change
         colorBackInput.addEventListener('change', (e) => {
             const color = e.target.value;
             pushHistory();
             restoreSelection();
-            document.execCommand('backColor', false, color);
+            if (!document.execCommand('hiliteColor', false, color)) {
+                document.execCommand('backColor', false, color);
+            }
             saveSelection();
             if (colorBackIndicator) {
                 colorBackIndicator.style.background = color;
@@ -947,6 +1095,92 @@ function setupEventListeners() {
             showStatus(i18n[currentLang].statusHighlightChanged);
             updateActiveNote();
             noteContent.focus();
+        });
+    }
+    
+    // Remove Highlight Button Hookup (shortcut)
+    const removeHighlightBtn = document.getElementById('remove-highlight-btn');
+    if (removeHighlightBtn) {
+        removeHighlightBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            pushHistory();
+            restoreSelection();
+            if (!document.execCommand('hiliteColor', false, 'transparent')) {
+                document.execCommand('backColor', false, 'transparent');
+            }
+            saveSelection();
+            if (colorBackIndicator) {
+                colorBackIndicator.style.background = 'transparent';
+            }
+            showStatus(i18n[currentLang].statusHighlightChanged);
+            updateActiveNote();
+            noteContent.focus();
+        });
+    }
+    
+    // 3. Backup & Restore Functionality
+    const backupExportBtn = document.getElementById('backup-export-btn');
+    const backupImportBtn = document.getElementById('backup-import-btn');
+    const backupImportFile = document.getElementById('backup-import-file');
+    
+    if (backupExportBtn) {
+        backupExportBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const savedNotes = localStorage.getItem('smartnotes_notes');
+            if (!savedNotes || savedNotes === '[]') {
+                showToast(currentLang === 'en' ? 'No notes to backup!' : 'Nenhuma nota para exportar backup!', 'warning');
+                return;
+            }
+            try {
+                const notesArr = JSON.parse(savedNotes);
+                const blob = new Blob([JSON.stringify(notesArr, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '_');
+                a.href = url;
+                a.download = `smartnotes_backup_${dateStr}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showToast(i18n[currentLang].toastBackupExportSuccess || 'Backup exported successfully!', 'success');
+            } catch (err) {
+                console.error(err);
+                showToast(currentLang === 'en' ? 'Error exporting backup!' : 'Erro ao exportar backup!', 'error');
+            }
+        });
+    }
+    
+    if (backupImportBtn && backupImportFile) {
+        backupImportBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            backupImportFile.click();
+        });
+        
+        backupImportFile.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                try {
+                    const parsed = JSON.parse(evt.target.result);
+                    if (Array.isArray(parsed)) {
+                        localStorage.setItem('smartnotes_notes', JSON.stringify(parsed));
+                        showToast(i18n[currentLang].toastBackupImportSuccess || 'Backup imported successfully! Reloading...', 'success');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1500);
+                    } else {
+                        showToast(i18n[currentLang].toastBackupImportError || 'Invalid backup file format!', 'error');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    showToast(i18n[currentLang].toastBackupImportError || 'Failed to read backup file!', 'error');
+                }
+            };
+            reader.readAsText(file);
+            backupImportFile.value = '';
         });
     }
     
@@ -2204,6 +2438,9 @@ function saveSelection() {
 
 function restoreSelection() {
     if (lastSelectionRange) {
+        if (document.activeElement !== noteContent) {
+            noteContent.focus();
+        }
         const sel = window.getSelection();
         sel.removeAllRanges();
         sel.addRange(lastSelectionRange);
