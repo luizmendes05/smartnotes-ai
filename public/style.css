@@ -3893,4 +3893,18 @@ body.light-theme .guide-key {
     }
 }
 
+/* Custom editor horizontal line styling */
+.editor-hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 1.5rem 0;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.editor-hr:hover {
+    border-top-color: #8b5cf6 !important;
+    box-shadow: 0 1px 0 0 #8b5cf6;
+}
+
+
 

@@ -1029,6 +1029,15 @@ function setupEventListeners() {
         registerTypingHistory(e);
         handleAutocompleteKeydown(e);
     });
+    noteContent.addEventListener('click', (e) => {
+        if (e.target.tagName === 'HR') {
+            const selection = window.getSelection();
+            const range = document.createRange();
+            range.selectNode(e.target);
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }
+    });
     document.addEventListener('keydown', handleGlobalUndoRedo);
     document.addEventListener('keydown', handleGlobalEscKey);
     
@@ -5322,7 +5331,7 @@ function selectSlashSuggestion(cmdName, range) {
                 <div>&nbsp;</div>
             `;
         } else if (cmdName === '/hr') {
-            htmlToInsert = `<hr style="border: none; border-top: 1px solid var(--border-color); margin: 1.5rem 0;"><div>&nbsp;</div>`;
+            htmlToInsert = `<hr class="editor-hr" contenteditable="false" style="border: none; border-top: 1px solid var(--border-color); margin: 1.5rem 0;"><div>&nbsp;</div>`;
         } else if (cmdName === '/ai-summarize') {
             htmlToInsert = ` `; // Trigger AI summary
             runQuickAction('summarize');
