@@ -2777,10 +2777,15 @@ function updateUiLanguage() {
     }
     updateTtsStatusBadge();
 
-    // Translate dictate button tooltip
+    // Translate dictate button tooltip and text
     const dictateBtn = document.getElementById('dictate-btn');
     if (dictateBtn) {
-        dictateBtn.title = i18n[currentLang].dictateBtnTitle;
+        dictateBtn.title = isDictating
+            ? (currentLang === 'en' ? "Stop Dictation" : "Parar Ditado")
+            : (currentLang === 'en' ? "Start Dictation" : "Iniciar Ditado");
+        dictateBtn.innerHTML = isDictating
+            ? (currentLang === 'en' ? "⏹️ Stop" : "⏹️ Parar")
+            : (currentLang === 'en' ? "🎙️ Dictate" : "🎙️ Gravar");
     }
 
     const toggleReaderBtn = document.getElementById('toggle-reader-btn');
@@ -4213,6 +4218,9 @@ function updateDictateButtonState() {
         dictateBtn.title = isDictating
             ? (currentLang === 'en' ? "Stop Dictation" : "Parar Ditado")
             : (currentLang === 'en' ? "Start Dictation" : "Iniciar Ditado");
+        dictateBtn.innerHTML = isDictating
+            ? (currentLang === 'en' ? "⏹️ Stop" : "⏹️ Parar")
+            : (currentLang === 'en' ? "🎙️ Dictate" : "🎙️ Gravar");
     }
 }
 
