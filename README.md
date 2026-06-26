@@ -99,6 +99,8 @@ winget install Python.Python.3
 
 # Install Foundry Local AI
 winget install Microsoft.FoundryLocal
+
+# NOTE: Restart your terminal window to reload the system environment PATH variables.
 ```
 
 #### 2. macOS (Terminal - using Homebrew)
@@ -123,15 +125,30 @@ sudo apt install -y nodejs
 # Install Python 3 + Pip
 sudo apt update && sudo apt install -y python3 python3-pip
 
-# Install Foundry Local AI CLI (Linux x64)
-# (For ARM64, download foundry-0.10.1-linux-arm64.tar.gz instead)
-curl -L -O https://github.com/microsoft/Foundry-Local/releases/download/cli-preview-0.10.1/foundry-0.10.1-linux-x64.tar.gz
+# Install Foundry Local AI CLI (Automatically detects architecture)
+ARCH=$(uname -m)
+if [ "$ARCH" = "x86_64" ]; then
+  FILE="foundry-0.10.1-linux-x64.tar.gz"
+elif [ "$ARCH" = "aarch64" ] || [ "$ARCH" = "arm64" ]; then
+  FILE="foundry-0.10.1-linux-arm64.tar.gz"
+else
+  echo "Unsupported architecture: $ARCH"
+  exit 1
+fi
 
-# Extract the archive
-tar -xzf foundry-0.10.1-linux-x64.tar.gz
+# Download binary
+curl -L -O "https://github.com/microsoft/Foundry-Local/releases/download/cli-preview-0.10.1/$FILE"
 
-# Add the binary folder to your PATH (to make it permanent, add this line to your ~/.bashrc or ~/.zshrc)
-export PATH="$PATH:$PWD/foundry-0.10.1-linux-x64/lib"
+# Extract to a globally accessible folder
+sudo mkdir -p /opt/foundry-local
+sudo tar -xzf "$FILE" -C /opt/foundry-local --strip-components=1
+
+# Create a global wrapper script so 'foundry' is available everywhere
+cat << 'EOF' | sudo tee /usr/local/bin/foundry > /dev/null
+#!/bin/bash
+exec /opt/foundry-local/lib/foundry "$@"
+EOF
+sudo chmod +x /usr/local/bin/foundry
 
 # Verify the installation
 foundry --version
