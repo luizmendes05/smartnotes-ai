@@ -148,8 +148,9 @@ tar -xzf "$FILE" -C "$HOME/foundry-local" --strip-components=1
 echo 'export PATH="$HOME/foundry-local/lib:$PATH"' >> ~/.bashrc
 # (For zsh users, run this instead: echo 'export PATH="$HOME/foundry-local/lib:$PATH"' >> ~/.zshrc)
 
-# Apply changes to your current active terminal session
+# Apply changes and clear bash command cache to prevent using system-cached paths
 export PATH="$HOME/foundry-local/lib:$PATH"
+hash -r
 
 # Verify the installation (should print version from any folder)
 foundry --version
