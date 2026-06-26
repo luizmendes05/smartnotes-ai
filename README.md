@@ -123,10 +123,18 @@ sudo apt install -y nodejs
 # Install Python 3 + Pip
 sudo apt update && sudo apt install -y python3 python3-pip
 
-# Install Foundry Local AI (using Homebrew for Linux)
-# If you need to install Homebrew first: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew tap microsoft/foundrylocal
-brew install foundrylocal
+# Install Foundry Local AI CLI (Linux x64)
+# (For ARM64, download foundry-0.10.1-linux-arm64.tar.gz instead)
+curl -L -O https://github.com/microsoft/Foundry-Local/releases/download/cli-preview-0.10.1/foundry-0.10.1-linux-x64.tar.gz
+
+# Extract the archive
+tar -xzf foundry-0.10.1-linux-x64.tar.gz
+
+# Add the binary folder to your PATH (to make it permanent, add this line to your ~/.bashrc or ~/.zshrc)
+export PATH="$PATH:$PWD/foundry-0.10.1-linux-x64/lib"
+
+# Verify the installation
+foundry --version
 ```
 
 ### Step 1: Configure Local AI (Foundry)
