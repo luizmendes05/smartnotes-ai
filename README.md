@@ -119,7 +119,8 @@ brew install foundrylocal
 #### 3. Linux (Terminal - e.g., Ubuntu/Debian)
 ```bash
 # Update package list and install Node.js + NPM
-curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+# (Uses -k to bypass SSL errors if you are behind a corporate firewall/proxy)
+curl -fsSL -k https://deb.nodesource.com/setup_20.x | sudo bash -
 sudo apt install -y nodejs
 
 # Install Python 3 + Pip
@@ -136,8 +137,8 @@ else
   exit 1
 fi
 
-# Download binary package
-curl -L -O "https://github.com/microsoft/Foundry-Local/releases/download/cli-preview-0.10.1/$FILE"
+# Download binary package (using -k to bypass SSL verification if needed)
+curl -L -O -k "https://github.com/microsoft/Foundry-Local/releases/download/cli-preview-0.10.1/$FILE"
 
 # Extract to a local directory in your home directory (no sudo required)
 mkdir -p "$HOME/foundry-local"
