@@ -144,12 +144,12 @@ curl -L -O -k "https://github.com/microsoft/Foundry-Local/releases/download/cli-
 mkdir -p "$HOME/foundry-local"
 tar -xzf "$FILE" -C "$HOME/foundry-local" --strip-components=1
 
-# Add the binary path permanently to your shell profile (for bash)
-echo 'export PATH="$PATH:$HOME/foundry-local/lib"' >> ~/.bashrc
-# (For zsh users, run this instead: echo 'export PATH="$PATH:$HOME/foundry-local/lib"' >> ~/.zshrc)
+# Add the binary path permanently to your shell profile, prepending it to avoid collisions with other tools named 'foundry'
+echo 'export PATH="$HOME/foundry-local/lib:$PATH"' >> ~/.bashrc
+# (For zsh users, run this instead: echo 'export PATH="$HOME/foundry-local/lib:$PATH"' >> ~/.zshrc)
 
 # Apply changes to your current active terminal session
-export PATH="$PATH:$HOME/foundry-local/lib"
+export PATH="$HOME/foundry-local/lib:$PATH"
 
 # Verify the installation (should print version from any folder)
 foundry --version

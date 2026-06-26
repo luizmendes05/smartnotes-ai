@@ -144,12 +144,12 @@ curl -L -O -k "https://github.com/microsoft/Foundry-Local/releases/download/cli-
 mkdir -p "$HOME/foundry-local"
 tar -xzf "$FILE" -C "$HOME/foundry-local" --strip-components=1
 
-# Adicionar a pasta do executável ao PATH permanentemente (para bash)
-echo 'export PATH="$PATH:$HOME/foundry-local/lib"' >> ~/.bashrc
-# (Para usuários do zsh, execute este comando no lugar: echo 'export PATH="$PATH:$HOME/foundry-local/lib"' >> ~/.zshrc)
+# Adicionar a pasta do executável ao PATH permanentemente, adicionando no início para evitar colisão com outros utilitários chamados 'foundry'
+echo 'export PATH="$HOME/foundry-local/lib:$PATH"' >> ~/.bashrc
+# (Para usuários do zsh, execute este comando no lugar: echo 'export PATH="$HOME/foundry-local/lib:$PATH"' >> ~/.zshrc)
 
 # Aplicar as mudanças na sessão do terminal ativa
-export PATH="$PATH:$HOME/foundry-local/lib"
+export PATH="$HOME/foundry-local/lib:$PATH"
 
 # Verificar a instalação (deve funcionar de qualquer pasta)
 foundry --version
