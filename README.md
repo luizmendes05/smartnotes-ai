@@ -136,21 +136,21 @@ else
   exit 1
 fi
 
-# Download binary
+# Download binary package
 curl -L -O "https://github.com/microsoft/Foundry-Local/releases/download/cli-preview-0.10.1/$FILE"
 
-# Extract to a globally accessible folder
-sudo mkdir -p /opt/foundry-local
-sudo tar -xzf "$FILE" -C /opt/foundry-local --strip-components=1
+# Extract to a local directory in your home directory (no sudo required)
+mkdir -p "$HOME/foundry-local"
+tar -xzf "$FILE" -C "$HOME/foundry-local" --strip-components=1
 
-# Create a global wrapper script so 'foundry' is available everywhere
-cat << 'EOF' | sudo tee /usr/local/bin/foundry > /dev/null
-#!/bin/bash
-exec /opt/foundry-local/lib/foundry "$@"
-EOF
-sudo chmod +x /usr/local/bin/foundry
+# Add the binary path permanently to your shell profile (for bash)
+echo 'export PATH="$PATH:$HOME/foundry-local/lib"' >> ~/.bashrc
+# (For zsh users, run this instead: echo 'export PATH="$PATH:$HOME/foundry-local/lib"' >> ~/.zshrc)
 
-# Verify the installation
+# Apply changes to your current active terminal session
+export PATH="$PATH:$HOME/foundry-local/lib"
+
+# Verify the installation (should print version from any folder)
 foundry --version
 ```
 
