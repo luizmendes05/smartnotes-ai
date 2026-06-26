@@ -121,10 +121,10 @@ brew install --cask ollama
 ```bash
 # Atualizar a lista de pacotes e instalar Node.js + NPM
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-sudo apt-get install -y nodejs
+sudo apt install -y nodejs
 
 # Instalar o Python 3 + Pip
-sudo apt-get update && sudo apt-get install -y python3 python3-pip
+sudo apt update && sudo apt install -y python3 python3-pip
 
 # Instalar o Ollama (runner de IA local padrão para Linux)
 curl -fsSL https://ollama.com/install.sh | sh
