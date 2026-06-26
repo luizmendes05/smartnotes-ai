@@ -85,10 +85,50 @@ smartnotes-ai/
 
 ## 🚀 Guia de Instalação e Execução
 
-### Pré-requisitos
-1. **Node.js** instalado na sua máquina (v18 ou superior).
-2. **Python** instalado (se for utilizar o raspador de páginas Scrapling).
-3. **Foundry Local AI** (ou qualquer outro runner local de LLM) instalado e rodando.
+### Pré-requisitos (Guia de Instalação via CLI)
+
+Você precisará do **Node.js**, **Python** e **Foundry Local AI** (ou **Ollama** como alternativa de runner de IA local) instalados em seu sistema. Você pode instalar todos eles diretamente através da sua linha de comando:
+
+#### 1. Windows (PowerShell / Prompt de Comando)
+```powershell
+# Instalar o Node.js (Versão LTS estável)
+winget install OpenJS.NodeJS.LTS
+
+# Instalar o Python 3
+winget install Python.Python.3
+
+# Instalar o Foundry Local AI (ou Ollama: winget install Ollama.Ollama)
+winget install Microsoft.FoundryLocal
+```
+
+#### 2. macOS (Terminal - usando Homebrew)
+```bash
+# Instalar o Node.js
+brew install node
+
+# Instalar o Python 3
+brew install python
+
+# Instalar o Foundry Local AI
+brew tap microsoft/foundrylocal
+brew install foundrylocal
+
+# (Alternativo) Instalar o Ollama
+brew install --cask ollama
+```
+
+#### 3. Linux (Terminal - ex: Ubuntu/Debian)
+```bash
+# Atualizar a lista de pacotes e instalar Node.js + NPM
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+# Instalar o Python 3 + Pip
+sudo apt-get update && sudo apt-get install -y python3 python3-pip
+
+# Instalar o Ollama (runner de IA local padrão para Linux)
+curl -fsSL https://ollama.com/install.sh | sh
+```
 
 ### Passo 1: Configurar a IA Local (Foundry)
 Configure o Foundry para escutar na porta `3000` e inicie o serviço:

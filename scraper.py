@@ -6,6 +6,7 @@ from html.parser import HTMLParser
 
 # Try importing scrapling
 try:
+    # pyrefly: ignore [missing-import]
     from scrapling import Fetcher
     HAS_SCRAPLING = True
 except ImportError:

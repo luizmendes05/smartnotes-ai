@@ -85,10 +85,50 @@ smartnotes-ai/
 
 ## 🚀 Installation & Running Guide
 
-### Prerequisites
-1. **Node.js** installed on your system (v18 or higher).
-2. **Python** installed (if using Scrapling Web Scraper).
-3. **Foundry Local AI** (or any local LLM runner) installed and running.
+### Prerequisites (CLI Installation Guide)
+
+You need **Node.js**, **Python**, and **Foundry Local AI** (or **Ollama** as a local LLM alternative) installed on your system. You can install all of them directly from your command line:
+
+#### 1. Windows (PowerShell / Command Prompt)
+```powershell
+# Install Node.js (LTS version)
+winget install OpenJS.NodeJS.LTS
+
+# Install Python 3
+winget install Python.Python.3
+
+# Install Foundry Local AI (or Ollama: winget install Ollama.Ollama)
+winget install Microsoft.FoundryLocal
+```
+
+#### 2. macOS (Terminal - using Homebrew)
+```bash
+# Install Node.js
+brew install node
+
+# Install Python 3
+brew install python
+
+# Install Foundry Local AI
+brew tap microsoft/foundrylocal
+brew install foundrylocal
+
+# (Alternative) Install Ollama
+brew install --cask ollama
+```
+
+#### 3. Linux (Terminal - e.g., Ubuntu/Debian)
+```bash
+# Update package list and install Node.js + NPM
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+# Install Python 3 + Pip
+sudo apt-get update && sudo apt-get install -y python3 python3-pip
+
+# Install Ollama (standard local LLM runner for Linux)
+curl -fsSL https://ollama.com/install.sh | sh
+```
 
 ### Step 1: Configure Local AI (Foundry)
 Configure Local AI to run on port `3000` and start the server:
