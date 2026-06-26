@@ -87,7 +87,7 @@ smartnotes-ai/
 
 ### Pré-requisitos (Guia de Instalação via CLI)
 
-Você precisará do **Node.js**, **Python** e **Foundry Local AI** (ou **Ollama** como alternativa de runner de IA local) instalados em seu sistema. Você pode instalar todos eles diretamente através da sua linha de comando:
+Você precisará do **Node.js**, **Python** e **Foundry Local AI** instalados em seu sistema. Você pode instalar todos eles diretamente através da sua linha de comando:
 
 #### 1. Windows (PowerShell / Prompt de Comando)
 ```powershell
@@ -97,7 +97,7 @@ winget install OpenJS.NodeJS.LTS
 # Instalar o Python 3
 winget install Python.Python.3
 
-# Instalar o Foundry Local AI (ou Ollama: winget install Ollama.Ollama)
+# Instalar o Foundry Local AI
 winget install Microsoft.FoundryLocal
 ```
 
@@ -112,9 +112,6 @@ brew install python
 # Instalar o Foundry Local AI
 brew tap microsoft/foundrylocal
 brew install foundrylocal
-
-# (Alternativo) Instalar o Ollama
-brew install --cask ollama
 ```
 
 #### 3. Linux (Terminal - ex: Ubuntu/Debian)
@@ -126,8 +123,10 @@ sudo apt install -y nodejs
 # Instalar o Python 3 + Pip
 sudo apt update && sudo apt install -y python3 python3-pip
 
-# Instalar o Ollama (runner de IA local padrão para Linux)
-curl -fsSL https://ollama.com/install.sh | sh
+# Instalar o Foundry Local AI (usando o Homebrew para Linux)
+# Se precisar instalar o Homebrew antes: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew tap microsoft/foundrylocal
+brew install foundrylocal
 ```
 
 ### Passo 1: Configurar a IA Local (Foundry)
