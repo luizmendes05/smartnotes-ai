@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SmartNotes AI - Premium Design System (Slate Gray & Neon Cyan/Teal)
+   SmartNotes AI - Sistema de Design Premium (Slate Gray & Neon Cyan/Teal)
    ========================================================================== */
 
 /* Global Configurations & Style Variables (DARK THEME - Neon Green & Purple) */
@@ -67,7 +67,7 @@ body.light-theme {
     --shadow-lg: 0 16px 40px rgba(23, 17, 36, 0.1);
 }
 
-/* --- RESET & SETUP --- */
+/* --- RESET E CONFIGURAÇÃO --- */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -85,7 +85,7 @@ body {
     transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* Modernized 3-Column Grid Layout */
+/* Layout de Grade Modernizado de 3 Colunas */
 .app-container {
     --sidebar-width: 280px;
     --chat-width: 360px;
@@ -100,7 +100,7 @@ body {
     position: relative; /* Creates context for absolute children */
 }
 
-/* Minimalist Scrollbars with Blur Effects */
+/* Barras de Rolagem Minimalistas com Efeitos de Blur */
 ::-webkit-scrollbar {
     width: 5px;
     height: 5px;
@@ -1409,7 +1409,7 @@ body.light-theme .msg-action-btn {
 }
 
 /* ==========================================================================
-   Productivity Enhancements & Premium Features (PDF, Search, Tags, Zen, Graph)
+   Melhorias de Produtividade e Recursos Premium (PDF, Busca, Tags, Zen, Grafo)
    ========================================================================== */
 
 /* Search bar styling */

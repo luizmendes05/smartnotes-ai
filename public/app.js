@@ -43,13 +43,13 @@
 })();
 
 
-// --- APPLICATION STATE ---
+// --- ESTADO DA APLICAÇÃO ---
 let notes = [];
 let activeNoteId = null;
-let lastSelectionRange = null; // Stores the active selection range to prevent focus loss
+let lastSelectionRange = null; // Armazena o intervalo de seleção ativo para evitar perda de foco
 let currentLang = localStorage.getItem('smartnotes_lang') || 'pt'; // Default language is Portuguese (pt)
 
-// --- EXTENDED APPLICATION STATE ---
+// --- ESTADO ESTENDIDO DA APLICAÇÃO ---
 let notesSearchQuery = "";
 let activeTagFilter = null; // Holds active tag name for filtering
 let selectedTagColor = "#3b82f6"; // Default color preset selected for tag creation
@@ -66,7 +66,7 @@ let localDictionary = new Set();
 let tagSuggestionsList = [];
 let activeTagSuggestionIndex = -1;
 
-// Zen Mode Audio Context & Nodes (Procedural Audio Synthesis)
+// Contexto de Áudio e Nós do Modo Zen (Síntese Procedimental de Áudio)
 let audioCtx = null;
 let rainAudio = null;
 let forestAudio = null;
@@ -75,7 +75,7 @@ let activeSounds = { rain: false, forest: false, lofi: false };
 let soundNodes = { rain: null, forest: null };
 let volumeControls = { rain: 0.5, forest: 0.5, lofi: 0.5 };
 
-// Knowledge Graph Simulation State
+// Estado da Simulação do Grafo de Conhecimento
 let isGraphModalOpen = false;
 let graphNodes = [];
 let graphLinks = [];
@@ -86,7 +86,7 @@ let canvasOffsetX = 0;
 let canvasOffsetY = 0;
 let graphPhysicsInterval = null;
 
-// Translation Dictionary (i18n)
+// Dicionário de Tradução (i18n)
 const i18n = {
     en: {
         newNote: "+ New Note",
@@ -378,7 +378,7 @@ const i18n = {
         toastYtConnecting: "🎥 Conectando ao YouTube para extrair transcrição (Video ID: {id})...",
         toastYtDownloading: "Baixando legenda e analisando áudio...",
         toastYtTranscriptSuccess: "📊 Transcrição real extraída! Enviando texto ({words} palavras) para o modelo local gerar o resumo estruturado...",
-        toastYtFetchError: "Não foi possível conectar ao servidor do backend. Certifique-se de iniciar a aplicação pelo terminal rodando o comando 'node server.js' (porta 3001).",
+        toastYtFetchError: "Não foi possível conectar ao servidor do backend. Certifique-se de iniciar a aplicação rodando o comando 'npm start' (porta 3001).",
         toastYtServerError: "Erro do servidor (Status HTTP {status}). Verifique se o servidor backend está ativo na porta 3001.",
         toastYtFormatError: "O servidor não retornou um formato JSON válido.",
         toastAiProcessing: "Processando requisição localmente...",
@@ -532,7 +532,7 @@ const i18n = {
     }
 };
 
-// Dynamically determine backend base API URL to support intranets/local network hosts
+// Determina dinamicamente a URL base da API do backend para suportar intranets/hosts de rede local
 const getApiBaseUrl = () => {
     // If the index.html is loaded directly from a local or remote web server,
     // we use the current window location origin so it supports dynamic ports.
@@ -544,7 +544,7 @@ const getApiBaseUrl = () => {
 };
 const API_BASE_URL = getApiBaseUrl();
 
-// --- DOM ELEMENTS ---
+// --- ELEMENTOS DO DOM ---
 const notesList = document.getElementById('notes-list');
 const newNoteBtn = document.getElementById('new-note-btn');
 const noteTitle = document.getElementById('note-title');
@@ -571,13 +571,13 @@ const ttsVolSlider = document.getElementById('tts-vol-slider');
 const ttsStatusBadge = document.getElementById('tts-status-badge');
 const exportPatchBtn = document.getElementById('export-patch-btn');
 
-// --- APPLICATION INITIALIZATION ---
+// --- INICIALIZAÇÃO DA APLICAÇÃO ---
 document.addEventListener('DOMContentLoaded', () => {
     loadNotesFromStorage();
     updateLocalDictionary();
     loadThemeFromStorage();
     setupEventListeners();
-    updateUiLanguage(); // Sync initial language settings
+    updateUiLanguage(); // Sincroniza as configurações de idioma iniciais
     checkSelectionTipBannerStatus();
     
     if (notes.length === 0) {
@@ -588,7 +588,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// --- THEME AND NOTE STORAGE MANAGEMENT ---
+// --- GERENCIAMENTO DE TEMA E ARMAZENAMENTO DE NOTAS ---
 
 function loadThemeFromStorage() {
     const savedTheme = localStorage.getItem('smartnotes_theme');
@@ -674,7 +674,7 @@ function selectNote(id) {
         
         initNoteHistory();
         
-        // Update active styling in sidebar list
+        // Atualiza o estilo ativo na lista da sidebar
         document.querySelectorAll('.note-item').forEach(item => {
             if (item.dataset.id === id) {
                 item.classList.add('active');
@@ -732,7 +732,7 @@ function updateActiveNote() {
     }
 }
 
-// --- SIDEBAR UI RENDERER ---
+// --- RENDERIZADOR DA UI DA SIDEBAR ---
 
 function renderNotesList() {
     notesList.innerHTML = '';
@@ -855,7 +855,7 @@ function renderNotesList() {
         deleteBtn.innerHTML = '🗑️';
         deleteBtn.title = i18n[currentLang].confirmDeleteTitle;
         deleteBtn.addEventListener('click', async (e) => {
-            e.stopPropagation(); // Avoid selecting the note when clicking delete
+            e.stopPropagation(); // Evita selecionar a nota ao clicar em excluir
             const confirmed = await showCustomConfirm(
                 i18n[currentLang].confirmDeleteTitle,
                 i18n[currentLang].confirmDeleteMsg.replace('{title}', note.title)
@@ -1006,7 +1006,7 @@ function adaptNoteColorsToTheme() {
     }
 }
 
-// --- EVENT LISTENERS ---
+// --- OUVINTES DE EVENTOS ---
 
 function setupEventListeners() {
     newNoteBtn.addEventListener('click', () => createNewNote());
@@ -1026,7 +1026,7 @@ function setupEventListeners() {
         ytBtn.addEventListener('click', handleYoutubeSummarize);
     }
     
-    // Auto-save on typing title or content
+    // Salva automaticamente ao digitar o título ou conteúdo
     noteTitle.addEventListener('input', () => {
         showStatus(i18n[currentLang].statusSaving);
         updateActiveNote();
@@ -1075,21 +1075,21 @@ function setupEventListeners() {
         }, 50);
     });
     
-    // Selection Range Listeners inside rich editor
+    // Ouvintes de Intervalo de Seleção dentro do editor rich text
     noteContent.addEventListener('keyup', saveSelection);
     noteContent.addEventListener('mouseup', saveSelection);
     noteContent.addEventListener('focus', saveSelection);
     
-    // Rich Text Formatting Buttons
+    // Botões de Formatação de Rich Text
     document.querySelectorAll('.format-btn').forEach(btn => {
         btn.addEventListener('mousedown', (e) => {
-            e.preventDefault(); // Retain editor selection focus
+            e.preventDefault(); // Mantém o foco de seleção do editor
         });
         
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             
-            // Skip custom color action buttons
+            // Pula botões de ação de cores personalizadas
             if (btn.id === 'color-fore-btn' || btn.id === 'color-back-btn') {
                 return;
             }
@@ -1105,14 +1105,14 @@ function setupEventListeners() {
         });
     });
     
-    // Text Color Custom Button & Dropdown Menu
+    // Botão Personalizado de Cor de Texto & Dropdown Menu
     const colorForeBtn = document.getElementById('color-fore-btn');
     const colorForeInput = document.getElementById('color-fore');
     const colorForeIndicator = document.getElementById('color-fore-indicator');
     const colorForeMenu = document.getElementById('color-fore-menu');
     const colorForeCustomBtn = document.getElementById('color-fore-custom-btn');
     
-    // Text Highlight Color Custom Button & Dropdown Menu
+    // Botão Personalizado de Cor de Destaque de Texto & Dropdown Menu
     const colorBackBtn = document.getElementById('color-back-btn');
     const colorBackInput = document.getElementById('color-back');
     const colorBackIndicator = document.getElementById('color-back-indicator');
@@ -1439,10 +1439,10 @@ function setupEventListeners() {
         });
     }
     
-    // AI Toolbar Action Buttons
+    // Botões de Ação da Barra de Ferramentas de IA
     aiActionBtns.forEach(btn => {
         btn.addEventListener('mousedown', (e) => {
-            e.preventDefault(); // Retain editor selection
+            e.preventDefault(); // Mantém a seleção do editor
         });
         btn.addEventListener('click', () => {
             restoreSelection();
@@ -1450,7 +1450,7 @@ function setupEventListeners() {
         });
     });
     
-    // Assistant Chat Sender
+    // Envio de Chat do Assistente
     chatSendBtn.addEventListener('click', () => {
         sendChatMessage();
     });
@@ -1480,7 +1480,7 @@ function setupEventListeners() {
         });
     }
 
-    // Clear Chat Button
+    // Botão de Limpar Chat
     const clearChatBtn = document.getElementById('clear-chat-btn');
     if (clearChatBtn) {
         clearChatBtn.addEventListener('click', clearChat);
@@ -2027,7 +2027,7 @@ function setupEventListeners() {
     const removeHighlightBtn = document.getElementById('remove-highlight-btn');
     if (removeHighlightBtn) {
         removeHighlightBtn.addEventListener('mousedown', (e) => {
-            e.preventDefault(); // Retain editor selection focus
+            e.preventDefault(); // Mantém o foco de seleção do editor
         });
         removeHighlightBtn.addEventListener('click', () => {
             pushHistory();
@@ -2124,7 +2124,7 @@ function setupEventListeners() {
     }
 }
 
-// --- LOCAL AI CONNECTOR BRIDGE ---
+// --- PONTE DE CONEXÃO COM A IA LOCAL ---
 
 function setAiGeneratingState(isGenerating) {
     const sendBtn = document.getElementById('chat-send-btn');
@@ -2213,7 +2213,7 @@ function ensureChatPanelOpen() {
     }
 }
 
-// Handles toolbar AI quick actions (summarize, improve, translate, etc.)
+// Trata ações rápidas de IA da barra de ferramentas (resumir, melhorar, traduzir, etc.)
 async function handleAiAction(actionType) {
     const selection = window.getSelection();
     let savedRange = null;
@@ -2370,7 +2370,7 @@ async function handleAiAction(actionType) {
     }
 }
 
-// Sends chat messaging with current note text attached as reference context
+// Envia mensagem de chat com o texto da nota atual anexado como contexto de referência
 async function sendChatMessage() {
     const userPrompt = chatInput.value.trim();
     if (!userPrompt) return;
@@ -2408,7 +2408,7 @@ async function sendChatMessage() {
     }
 }
 
-// --- CHAT INTERACTION HELPERS ---
+// --- AUXILIARES DE INTERAÇÃO DO CHAT ---
 
 function appendMessage(sender, text, isLoading = false, showCreateNoteBtn = true) {
     const messageId = Date.now().toString();
@@ -2468,7 +2468,7 @@ function removeMessage(id) {
     }
 }
 
-// --- YOUTUBE SUMMARY ROUTINE ---
+// --- ROTINA DE RESUMO DO YOUTUBE ---
 
 async function handleYoutubeSummarize() {
     const ytUrlInput = document.getElementById('yt-url');
@@ -2609,7 +2609,7 @@ function insertMessageIntoNote(text) {
 }
 
 
-// --- DIALOGS AND CUSTOM PREMIUM NOTIFICATION SYSTEM (TOASTS) ---
+// --- DIÁLOGOS E SISTEMA PREMIUM DE NOTIFICAÇÕES (TOASTS) ---
 
 function showCustomConfirm(title, message) {
     return new Promise((resolve) => {
@@ -2677,7 +2677,7 @@ function showToast(message, type = 'info') {
     }, 3200);
 }
 
-// --- UTILITY FORMATTING & RANGE FUNCTIONS ---
+// --- FUNÇÕES UTILIÁRIAS DE FORMATAÇÃO E INTERVALOS ---
 
 function saveSelection() {
     const sel = window.getSelection();
@@ -2786,7 +2786,7 @@ function markdownToHtml(text) {
     return html;
 }
 
-// --- INTERNATIONALIZATION ROUTINES (i18n) ---
+// --- ROTINAS DE INTERNACIONALIZAÇÃO (i18n) ---
 
 function updateUiLanguage() {
     // Translate text elements
@@ -2916,9 +2916,9 @@ function toggleLanguage() {
     showStatus(i18n[currentLang].statusSaved);
 }
 
-// --- PRODUCTIVITY ENHANCEMENTS AND NEW FEATURES LOGIC ---
+// --- MELHORIAS DE PRODUTIVIDADE E LÓGICA DE NOVOS RECURSOS ---
 
-// 1. Stats Counter
+// 1. Contador de Estatísticas
 function updateStats() {
     const text = noteContent.innerText || "";
     const cleanText = text.trim();
@@ -2934,7 +2934,7 @@ function updateStats() {
     }
 }
 
-// 2. Note Exporter
+// 2. Exportador de Notas
 function copyCleanNoteHtml() {
     const htmlContent = getCleanEditorHtml();
     // Copy to clipboard
@@ -2945,7 +2945,7 @@ function copyCleanNoteHtml() {
     });
 }
 
-// 3. Tag Categorization System
+// 3. Sistema de Categorização por Tags
 function addTagToActiveNote(name, color) {
     if (!activeNoteId) return;
     const activeNote = notes.find(n => n.id === activeNoteId);
@@ -3040,7 +3040,7 @@ function clearTagFilter() {
     renderNotesList();
 }
 
-// 4. Zen Focus Mode
+// 4. Modo Zen Foco
 function toggleZenMode() {
     document.body.classList.toggle('zen-focus-mode');
     const isZen = document.body.classList.contains('zen-focus-mode');
@@ -3172,7 +3172,7 @@ function adjustAmbientVolume(track, vol) {
     }
 }
 
-// 6. Physics Graph Layout (Obsidian-style)
+// 6. Layout de Grafo de Física (Estilo Obsidian)
 function openGraphModal() {
     isGraphModalOpen = true;
     const modal = document.getElementById('graph-view-modal');
@@ -3803,7 +3803,7 @@ function drawGraph(ctx, width, height) {
     ctx.restore();
 }
 
-// 7. PDF Upload Handler
+// 7. Manipulador de Upload de PDF
 async function handlePdfUpload(file) {
     const loadingId = appendMessage('assistant', i18n[currentLang].statusLoading, true);
     

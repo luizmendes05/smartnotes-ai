@@ -66,6 +66,12 @@ The app integrates with local runners and features an auto-loader that restarts 
 
 ```text
 smartnotes-ai/
+├── backend/                # Express backend & Python web scraper
+│   ├── server.js           # Express backend server (YouTube scraper & local AI router)
+│   └── scraper.py          # Python web scraper script utilizing Scrapling
+├── docs/                   # Specifications and API documents
+│   ├── openapi.yaml        # OpenAPI specification for the API
+│   └── specification.md    # Project technical specification
 ├── public/                 # Public static directory containing the Frontend
 │   ├── index.html          # HTML interface (Semantic HTML5 with i18n hooks)
 │   ├── style.css           # Styling system (CSS3 with English comments)
@@ -75,8 +81,6 @@ smartnotes-ai/
 ├── .gitignore              # Ignores local environment files and node packages
 ├── iniciar_servidor.bat    # Windows batch script for rapid startup
 ├── package.json            # Node.js project manifest and dependencies
-├── scraper.py              # Python web scraper script utilizing Scrapling
-├── server.js               # Express backend server (YouTube scraper & local AI router)
 ├── README.md               # Main project documentation (English)
 └── README.pt-BR.md         # Translated documentation (Portuguese)
 ```

@@ -3,7 +3,7 @@ const path = require('path');
 
 // Dictionary of translations for codebase files (comments, console logs, descriptions, scripts)
 const fileMaps = {
-  'server.js': [
+  'backend/server.js': [
     {
       en: "// Parse incoming request bodies in JSON format",
       pt: "// Analisa corpos de requisição recebidos no formato JSON"

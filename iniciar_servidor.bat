@@ -1,11 +1,11 @@
 @echo off
 cd /d "%~dp0"
 echo ===================================================
-echo   STARTING SMARTNOTES AI BACKEND SERVER
+echo   INICIANDO O SERVIDOR BACKEND DO SMARTNOTES AI
 echo ===================================================
 echo.
-echo The Express server will run on port 3001 and bridge
-echo to your local AI on port 3000.
+echo O servidor Express rodará na porta 3001 e fará a ponte
+echo para a sua IA local na porta 3000.
 echo.
 
 set "NODE_BIN=node"
@@ -20,7 +20,7 @@ if exist "..\node_portable\node-v20.11.0-win-x64\node.exe" (
 echo Using Node executable: %NODE_BIN%
 echo.
 
-"%NODE_BIN%" server.js
+"%NODE_BIN%" backend/server.js
 if %errorlevel% neq 0 (
     echo.
     echo ❌ [ERROR] Failed to start server (Exit Code: %errorlevel%).
@@ -31,6 +31,6 @@ if %errorlevel% neq 0 (
 )
 
 echo.
-echo Server stopped.
+echo Servidor parado.
 pause
 

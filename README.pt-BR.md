@@ -66,6 +66,12 @@ A aplicação integra-se aos runners locais e recarrega modelos automaticamente 
 
 ```text
 smartnotes-ai/
+├── backend/                # Servidor Express & raspador Python
+│   ├── server.js           # Servidor backend Express (Scraper do YouTube e IA Router)
+│   └── scraper.py          # Script em Python do raspador web utilizando Scrapling
+├── docs/                   # Especificações e documentos de API
+│   ├── openapi.yaml        # Especificação OpenAPI para a API
+│   └── specification.md    # Especificação técnica do projeto
 ├── public/                 # Pasta pública contendo os arquivos do Frontend
 │   ├── index.html          # Interface visual (HTML5 semântico com hooks i18n)
 │   ├── style.css           # Estilos e design system (CSS3 comentado em inglês)
@@ -75,8 +81,6 @@ smartnotes-ai/
 ├── .gitignore              # Ignora arquivos de ambiente local e dependências
 ├── iniciar_servidor.bat    # Script em lote para inicialização rápida no Windows
 ├── package.json            # Manifesto do projeto e dependências do Node.js
-├── scraper.py              # Script em Python do raspador web utilizando Scrapling
-├── server.js               # Servidor backend Express (Scraper do YouTube e IA Router)
 ├── README.md               # Documentação principal em inglês
 └── README.pt-BR.md         # Esta documentação traduzida para Português
 ```

@@ -3,7 +3,7 @@ const express = require('express');
 const fetch = require('node-fetch');
 const path = require('path');
 
-// Polyfill DOMMatrix for pdf-parse environment compatibility in Node.js
+// Polyfill DOMMatrix para compatibilidade do pdf-parse em ambiente Node.js
 if (typeof global.DOMMatrix === 'undefined') {
     global.DOMMatrix = class DOMMatrix {};
 }
@@ -13,10 +13,10 @@ const pdfParse = require('pdf-parse');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Parse incoming request bodies in JSON format (increased limit for PDF base64 uploads)
+// Analisa corpos de requisição recebidos no formato JSON (increased limit for PDF base64 uploads)
 app.use(express.json({ limit: '10mb' }));
 
-// CORS middleware to allow requests from local developers (e.g. Live Server on 5500) or file:///
+// Middleware CORS para permitir requisições de desenvolvedores locais (ex: Live Server na 5500) ou file:///
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
@@ -27,13 +27,13 @@ app.use((req, res, next) => {
     next();
 });
 
-// Serve static frontend assets (HTML, CSS, JS) from the 'public' folder
-app.use(express.static(path.join(__dirname, 'public')));
+// Serve arquivos estáticos do frontend (HTML, CSS, JS) da pasta 'public'
+app.use(express.static(path.join(__dirname, '../public')));
 
-// Local AI Endpoint mapping to Foundry Local daemon URL
+// Mapeamento do Endpoint de IA Local para a URL do daemon do Foundry Local
 const FOUNDRY_API_URL = process.env.FOUNDRY_API_URL || 'http://127.0.0.1:3000/v1/chat/completions';
 
-// Helper function to scrape YouTube video transcript natively
+// Função utilitária para extrair transcrição de vídeo do YouTube nativamente
 async function fetchYoutubeTranscript(videoId) {
     const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
     const response = await fetch(videoUrl, {
@@ -47,7 +47,7 @@ async function fetchYoutubeTranscript(videoId) {
     }
     const html = await response.text();
     
-    // Find the ytInitialPlayerResponse payload on the page
+    // Encontra o payload do ytInitialPlayerResponse na página
     const playerResponseMatch = html.match(/ytInitialPlayerResponse\s*=\s*({.+?});/);
     if (!playerResponseMatch) {
         throw new Error("Could not load YouTube video info. Make sure the ID is correct or the video is public.");
@@ -61,23 +61,23 @@ async function fetchYoutubeTranscript(videoId) {
     const captionTracks = playerResponse.captions?.playerCaptionsTracklistRenderer?.captionTracks;
     
     if (!captionTracks || captionTracks.length === 0) {
-        console.log(`[Backend] Subtitles unavailable for video ${videoId}. Returning metadata.`);
+        console.log(`[Backend] Legendas indisponíveis para o vídeo ${videoId}. Retornando metadados.`);
         return `[Note: This video does not have subtitles available on YouTube. The following summary is based on the video title and description provided by the author]\n\nVIDEO TITLE: ${title}\n\nVIDEO DESCRIPTION:\n${description}`;
     }
     
-    // Look for Portuguese (pt) or English (en) captions, fallback to first track
+    // Procura legendas em inglês (en) ou português (pt), retrocedendo para a primeira faixa
     const track = captionTracks.find(t => t.languageCode === 'en') || captionTracks.find(t => t.languageCode === 'pt') || captionTracks[0];
     const trackUrl = track.baseUrl;
     
     const transcriptResponse = await fetch(trackUrl);
     if (!transcriptResponse.ok) {
-        console.log(`[Backend] Failed to download subtitles for ${videoId}. Using metadata.`);
+        console.log(`[Backend] Falha ao baixar legendas para ${videoId}. Usando metadados.`);
         return `[Note: Failed to download YouTube subtitles. The following summary is based on the title and description provided by the author]\n\nVIDEO TITLE: ${title}\n\nVIDEO DESCRIPTION:\n${description}`;
     }
     
     const xml = await transcriptResponse.text();
     
-    // Parse XML tags to pull plain text lines
+    // Analisa tags XML para extrair linhas de texto simples
     const textRegex = /<text[^>]*>([\s\S]*?)<\/text>/gi;
     let match;
     let transcriptText = [];
@@ -104,14 +104,14 @@ async function fetchYoutubeTranscript(videoId) {
     return transcriptText.join(' ');
 }
 
-// GET route to obtain a video's transcript
+// Rota GET para obter a transcrição de um vídeo
 app.get('/api/youtube-transcript', async (req, res) => {
     const { url } = req.query;
     if (!url) {
         return res.status(400).json({ error: 'Video URL is required.' });
     }
     
-    // Extract video ID from URL
+    // Extrai o ID do vídeo a partir da URL
     let videoId = null;
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     const match = url.match(regExp);
@@ -122,11 +122,11 @@ app.get('/api/youtube-transcript', async (req, res) => {
     }
     
     try {
-        console.log(`[Backend] Fetching transcript for video ID: ${videoId}...`);
+        console.log(`[Backend] Buscando transcrição para o ID de vídeo: ${videoId}...`);
         const text = await fetchYoutubeTranscript(videoId);
         res.json({ transcript: text });
     } catch (error) {
-        console.error('[Backend] Error getting YouTube transcript:', error.message);
+        console.error('[Backend] Erro ao obter transcrição do YouTube:', error.message);
         res.status(500).json({ error: error.message || 'Error loading video transcript.' });
     }
 });
@@ -138,7 +138,7 @@ app.post('/api/log', (req, res) => {
     res.sendStatus(200);
 });
 
-// POST route to communicate with local AI
+// Rota POST para se comunicar com a IA local
 app.post('/api/ai', async (req, res) => {
     const { prompt, model = 'qwen3-0.6b', systemInstruction } = req.body;
 
@@ -154,7 +154,7 @@ app.post('/api/ai', async (req, res) => {
         }
     });
 
-    // Map model selection to actual IDs loaded in Foundry Local
+    // Mapeia a seleção do modelo para os IDs reais carregados no Foundry Local
     let targetModel = model;
     if (model === 'qwen3-0.6b') {
         targetModel = 'qwen3-0.6b-generic-gpu';
@@ -166,7 +166,7 @@ app.post('/api/ai', async (req, res) => {
         targetModel = 'gpt-oss-20b-generic-gpu';
     }
     try {
-        console.log(`[${new Date().toISOString()}] [Backend] Sending request to Foundry Local (${targetModel})...`);
+        console.log(`[${new Date().toISOString()}] [Backend] Enviando requisição para o Foundry Local (${targetModel})...`);
         let response = await fetch(FOUNDRY_API_URL, {
             method: 'POST',
             signal: controller.signal,
@@ -191,15 +191,15 @@ app.post('/api/ai', async (req, res) => {
 
         if (!response.ok) {
             const errorText = await response.text();
-            // If model is not loaded, attempt auto-loading
+            // Se o modelo não estiver carregado, tenta o carregamento automático
             if (errorText.includes('is not loaded') || errorText.includes('load the model')) {
-                console.log(`[Backend] Model ${targetModel} is not loaded. Loading dynamically...`);
+                console.log(`[Backend] O modelo ${targetModel} não está carregado. Carregando dinamicamente...`);
                 const foundryUrl = new URL(FOUNDRY_API_URL);
                 const loadUrl = `${foundryUrl.protocol}//${foundryUrl.host}/models/load/${targetModel}`;
                 const loadRes = await fetch(loadUrl, { signal: controller.signal });
                 if (loadRes.ok) {
-                    console.log(`[Backend] Model ${targetModel} loaded successfully! Retrying request...`);
-                    // Retry original request
+                    console.log(`[Backend] Modelo ${targetModel} carregado com sucesso! Tentando novamente a requisição...`);
+                    // Tenta novamente a requisição original
                     response = await fetch(FOUNDRY_API_URL, {
                         method: 'POST',
                         signal: controller.signal,
@@ -235,7 +235,7 @@ app.post('/api/ai', async (req, res) => {
 
         const data = await response.json();
         
-        // Return only content, stripping any thinking blocks (<think>...</think>)
+        // Retorna apenas o conteúdo, removendo quaisquer blocos de pensamento (<think>...</think>)
         let aiMessage = data.choices[0].message.content || '';
         aiMessage = aiMessage
             .replace(/<think>[\s\S]*?<\/think>/g, '')
@@ -263,7 +263,7 @@ app.post('/api/ai', async (req, res) => {
     }
 });
 
-// POST route to extract text from an uploaded PDF (received as base64 in body)
+// Rota POST para extrair texto de um PDF enviado (recebido como base64 no corpo)
 app.post('/api/pdf-transcript', async (req, res) => {
     const { fileData } = req.body;
     if (!fileData) {
@@ -271,14 +271,14 @@ app.post('/api/pdf-transcript', async (req, res) => {
     }
     
     try {
-        console.log(`[Backend] Processing uploaded PDF file...`);
+        console.log(`[Backend] Processando arquivo PDF enviado...`);
         const buffer = Buffer.from(fileData, 'base64');
         const data = await pdfParse(buffer);
-        console.log(`[Backend] PDF parsed successfully! Extracted ${data.text.length} characters.`);
+        console.log(`[Backend] PDF analisado com sucesso! Extraídos ${data.text.length} caracteres.`);
         res.json({ text: data.text });
     } catch (error) {
         console.error('[Backend] Error parsing PDF:', error.message);
-        res.status(500).json({ error: 'Failed to extract text from PDF. Ensure the file is not password-protected.' });
+        res.status(500).json({ error: 'Falha ao extrair texto do PDF. Certifique-se de que o arquivo não está protegido por senha.' });
     }
 });
 
@@ -496,13 +496,13 @@ A reunião abordou a otimização de processos corporativos com o uso da intelig
 }
 
 
-// Start Express HTTP Server
+// Inicia o Servidor HTTP Express
 const startServer = (port) => {
     const server = app.listen(port, () => {
-        console.log(`\n🚀 SmartNotes AI is running!`);
-        console.log(`👉 Open in browser: http://localhost:${port}`);
+        console.log(`\n🚀 SmartNotes AI está rodando!`);
+        console.log(`👉 Abra no navegador: http://localhost:${port}`);
         const foundryUrl = new URL(FOUNDRY_API_URL);
-        console.log(`🔗 Connected to Foundry Local on: ${foundryUrl.protocol}//${foundryUrl.host}\n`);
+        console.log(`🔗 Conectado ao Foundry Local em: ${foundryUrl.protocol}//${foundryUrl.host}\n`);
         
         // Automatically open the browser to the application page
         try {

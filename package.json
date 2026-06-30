@@ -1,10 +1,10 @@
 {
   "name": "smartnotes-ai",
   "version": "1.0.0",
-  "description": "Intelligent notepad powered by local AI",
-  "main": "server.js",
+  "description": "Notepad inteligente alimentado por IA local",
+  "main": "backend/server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node backend/server.js"
   },
   "dependencies": {
     "dotenv": "^17.4.2",
