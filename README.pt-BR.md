@@ -2,7 +2,7 @@
 
 O **SmartNotes AI** é um editor de notas inteligente, minimalista e de alta performance que funciona **100% de forma local, offline e privada**. 
 
-Desenvolvido para apresentações profissionais, acompanhamento de produtividade e ambientes corporativos que prezam pela segurança de dados, o SmartNotes AI integra-se diretamente ao **Foundry Local AI** (ou qualquer outro runner local de LLM) para oferecer recursos avançados de processamento de texto, assistente de chat contextualizado, apresentações de slides, atas de reunião, calculadora de impacto/ROI, raspagem web e recursos de áudio.
+Desenvolvido para apresentações profissionais, acompanhamento de produtividade e ambientes corporativos que prezam pela segurança de dados, o SmartNotes AI integra-se diretamente ao **Foundry Local AI** (ou qualquer outro runner local de LLM) para oferecer recursos avançados de processamento de texto, assistente de chat contextualizado, apresentações de slides, atas de reunião, calculadora de impacto e produtividade, raspagem web e recursos de áudio.
 
 ---
 
@@ -26,10 +26,10 @@ A aplicação conta com **Português (Brasil) como idioma padrão** para confort
 * **Persistência e Histórico**: Preserva a seleção de texto e posição do cursor ao usar ferramentas ou IA. Inclui estatísticas de palavras/caracteres e um motor robusto de Desfazer/Refazer (Ctrl+Z / Ctrl+Y).
 
 ### 2. Ferramentas de Apresentação e Documentos (Suíte Corporativa) 🚀
-* **📊 Modo Apresentação de Slides (Pitch)**: Gera apresentações de slides estruturadas (Problema, Solução, Recursos, ROI, Próximos Passos) a partir das notas via LLMs locais. Possui controles de navegação por teclado (`Setas`/`Espaço`/`Esc`) e um **Botão Cancelar** para abortar a geração no meio do processo.
-* **⏱️ Calculadora de ROI e Produtividade**: Calcula horas economizadas no mês, percentual de redução e dias de trabalho recuperados no ano com base na frequência das tarefas. Gera um **Card de Impacto** brilhante pronto para print e solicita à IA local um briefing estratégico de 2 frases.
+* **📊 Modo Apresentação de Slides (Pitch)**: Gera apresentações de slides estruturadas (Problema, Solução, Recursos, Produtividade, Próximos Passos) a partir das notas via LLMs locais. Possui controles de navegação por teclado (`Setas`/`Espaço`/`Esc`) e um **Botão Cancelar** para abortar a geração no meio do processo.
+* **⏱️ Calculadora de Impacto e Produtividade**: Calcula horas economizadas no mês, percentual de redução e dias de trabalho recuperados no ano com base na frequência das tarefas. Gera um **Card de Impacto** brilhante pronto para print e solicita à IA local um briefing estratégico de 2 frases.
 * **🎙️ Ata de Reunião Inteligente (Gerar Ata)**: Converte anotações, transcrições ou ditados em uma ata estruturada com Sumário Geral, Principais Decisões e uma tabela markdown contendo *Ação/Tarefa, Responsável e Prazo*.
-* **📄 Exportação Avançada para PDF**: Escolha entre modelos formatados (Margens Limpas Padrão, Ata de Reunião Formal com cabeçalhos e assinatura de participantes, ou Relatório de Impacto de Segurança com ROI auto-importado) antes de imprimir ou salvar.
+* **📄 Exportação Avançada para PDF**: Escolha entre modelos formatados (Margens Limpas Padrão, Ata de Reunião Formal com cabeçalhos e assinatura de participantes, ou Relatório de Impacto de Segurança com dados de produtividade auto-importados) antes de imprimir ou salvar.
 
 ### 3. Ações Rápidas de IA & Assistente Conversacional 💬
 * **Ações Rápidas**: `Resumir` (síntese estruturada), `Melhorar Escrita` (polimento gramatical), `Traduzir` (tradução dinâmica direta), `Extrair Tópicos` (bullets), `Expandir Assunto` (escrita de continuação inline) e `Formatação Automática` (ajuste automático de parágrafos).

@@ -136,7 +136,7 @@ const i18n = {
         pitchLoading: "Preparing slide presentation with Local AI...",
         copaDropdownTitle: "⚡ AI Actions",
         pitchModeBtn: "📊 Present Pitch",
-        roiCalcBtn: "⏱️ ROI Calculator",
+        roiCalcBtn: "⏱️ Productivity Calculator",
         generateAtaBtnText: "🎙️ Meeting Minutes",
         chatHeader: "AI Assistant",
         chatStatus: "Offline (Local)",
@@ -243,7 +243,7 @@ const i18n = {
         pdfExportOptionsTitle: "PDF Export Templates",
         pdfTemplateDefault: "Standard Document",
         pdfTemplateMinutes: "Meeting Minutes (Ata)",
-        pdfTemplateROI: "ROI Executive Report",
+        pdfTemplateROI: "Executive Productivity Report",
         pdfExportBtn: "Export & Print PDF",
         quickGuideTitle: "💡 Shortcuts & Gestures",
         quickGuideShortcutSlash: "Command Menu",
@@ -293,7 +293,7 @@ const i18n = {
         pomodoroSkip: "Skip Session",
         pitchPrev: "◀ Previous",
         pitchNext: "Next ▶",
-        roiModalTitle: "⏱️ Impact & ROI Calculator",
+        roiModalTitle: "⏱️ Impact & Productivity Calculator",
         roiManualTimeLabel: "Manual Time Before AI (Minutes/Task):",
         roiFrequencyLabel: "Execution Frequency:",
         roiFreqDaily: "Daily (20x per month)",
@@ -307,7 +307,7 @@ const i18n = {
         roiTimeReductionLabel: "Time Reduction",
         roiAnnualProdLabel: "Annual Productivity",
         roiCertText: "AI-First Efficiency Certificate",
-        roiCopyReportBtn: "💾 Copy ROI Report"
+        roiCopyReportBtn: "💾 Copy Productivity Report"
     },
     pt: {
         newNote: "+ Nova Nota",
@@ -357,7 +357,7 @@ const i18n = {
         pitchLoading: "Preparando apresentação de slides com IA Local...",
         copaDropdownTitle: "⚡ Ações com IA",
         pitchModeBtn: "📊 Apresentar Pitch",
-        roiCalcBtn: "⏱️ Calculadora de ROI",
+        roiCalcBtn: "⏱️ Calculadora de Produtividade",
         generateAtaBtnText: "🎙️ Gerar Ata",
         chatHeader: "Assistente de IA",
         chatStatus: "Offline (Local)",
@@ -464,7 +464,7 @@ const i18n = {
         pdfExportOptionsTitle: "Modelos de Exportação PDF",
         pdfTemplateDefault: "Documento Padrão",
         pdfTemplateMinutes: "Ata de Reunião",
-        pdfTemplateROI: "Relatório ROI/Executivo",
+        pdfTemplateROI: "Relatório Executivo de Produtividade",
         pdfExportBtn: "Exportar & Imprimir PDF",
         quickGuideTitle: "💡 Atalhos & Gestos Rápido",
         quickGuideShortcutSlash: "Menu de Comandos",
@@ -514,7 +514,7 @@ const i18n = {
         pomodoroSkip: "Pular Sessão",
         pitchPrev: "◀ Anterior",
         pitchNext: "Próximo ▶",
-        roiModalTitle: "⏱️ Calculadora de Impacto & ROI",
+        roiModalTitle: "⏱️ Calculadora de Impacto & Produtividade",
         roiManualTimeLabel: "Tempo Manual Antes da IA (Minutos/Tarefa):",
         roiFrequencyLabel: "Frequência de Execução:",
         roiFreqDaily: "Diária (20x por mês)",
@@ -528,7 +528,7 @@ const i18n = {
         roiTimeReductionLabel: "Redução de Tempo",
         roiAnnualProdLabel: "Produtividade Anual",
         roiCertText: "Certificado de Eficiência AI-First",
-        roiCopyReportBtn: "💾 Copiar Relatório de ROI"
+        roiCopyReportBtn: "💾 Copiar Relatório de Produtividade"
     }
 };
 
@@ -4705,7 +4705,7 @@ Follow this layout:
 Slide 1: ${currentLang === 'en' ? 'The Challenge (O Desafio)' : 'O Desafio'}
 Slide 2: ${currentLang === 'en' ? 'The Solution (A Solução)' : 'A Solução'}
 Slide 3: ${currentLang === 'en' ? 'Key Features (Diferenciais)' : 'Diferenciais Técnicos'}
-Slide 4: ${currentLang === 'en' ? 'ROI & Impact (Impacto)' : 'Produtividade / ROI'}
+Slide 4: ${currentLang === 'en' ? 'Productivity & Impact' : 'Produtividade & Impacto'}
 Slide 5: ${currentLang === 'en' ? 'Conclusion / Next Steps' : 'Conclusão / Próximos Passos'}
 
 Example Format:
@@ -4768,7 +4768,7 @@ function fallbackSplitSlides(text) {
             currentLang === 'en' ? "Overview" : "Visão Geral",
             currentLang === 'en' ? "Core Problem" : "Problema Central",
             currentLang === 'en' ? "AI Strategy" : "Estratégia de IA",
-            currentLang === 'en' ? "ROI & Impact" : "Impacto & ROI",
+            currentLang === 'en' ? "Productivity & Impact" : "Impacto & Produtividade",
             currentLang === 'en' ? "Action Plan" : "Plano de Ação"
         ];
         return {
@@ -4922,8 +4922,8 @@ async function generateAiStrategicBrief() {
         const textContent = getCleanEditorHtml().replace(/<[^>]*>/g, '').trim().substring(0, 1500);
         
         const systemPrompt = currentLang === 'en' 
-            ? "You are a senior business strategist. Analyze the note content and write a very brief 2-sentence summary of the business impact and ROI of automating this topic using AI. Be concise and professional."
-            : "Você é um estrategista sênior de negócios. Analise o conteúdo da nota e escreva um resumo curtíssimo de apenas 2 frases sobre o impacto empresarial e o ROI estratégico de automatizar este processo com IA. Seja direto e profissional.";
+            ? "You are a senior business strategist. Analyze the note content and write a very brief 2-sentence summary of the business impact and productivity gains of automating this topic using AI. Be concise and professional."
+            : "Você é um estrategista sênior de negócios. Analise o conteúdo da nota e escreva um resumo curtíssimo de apenas 2 frases sobre o impacto empresarial e os ganhos de produtividade de automatizar este processo com IA. Seja direto e profissional.";
             
         const prompt = `Topic:\n\n"${textContent}"`;
         
@@ -4969,7 +4969,7 @@ Análise de Valor Estratégico:
 Gerado de forma 100% Local e Segura pelo SmartNotes AI.`;
 
     navigator.clipboard.writeText(reportText).then(() => {
-        showToast(currentLang === 'en' ? "ROI Report copied to clipboard!" : "Relatório de ROI copiado para a área de transferência!", 'success');
+        showToast(currentLang === 'en' ? "Productivity Report copied to clipboard!" : "Relatório de Produtividade copiado para a área de transferência!", 'success');
     }).catch(err => {
         console.error("Clipboard copy failed", err);
     });
@@ -5823,13 +5823,13 @@ function doAdvancedPdfPrint(template) {
             <div class="print-header">
                 <div class="print-logo">SmartNotes <span>AI</span></div>
                 <div style="font-size: 0.8rem; text-align: right; color: #b91c1c; font-weight: 700;">
-                    RELATÓRIO EXECUTIVO DE ROI & AUDITORIA<br>
+                    RELATÓRIO EXECUTIVO DE PRODUTIVIDADE & AUDITORIA<br>
                     Segurança de Dados Local
                 </div>
             </div>
             
             <div style="background: #f8fafc; border-left: 4px solid #10b981; padding: 15px; margin-bottom: 20px; border-radius: 4px;">
-                <h3 style="margin-top: 0; font-size: 0.95rem; font-weight: 700; color: #1e293b;">INDICADORES DE ROI E PRODUTIVIDADE</h3>
+                <h3 style="margin-top: 0; font-size: 0.95rem; font-weight: 700; color: #1e293b;">INDICADORES DE PRODUTIVIDADE</h3>
                 <table class="print-meta-table" style="margin-bottom: 0; margin-top: 10px;">
                     <tr style="text-align: center; font-weight: bold;">
                         <th style="text-align: center;">Horas Salvas / Mês</th>

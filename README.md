@@ -26,10 +26,10 @@ The application **defaults to Portuguese (Brazil)** for regional comfort and fea
 * **Preservation**: Prevents the text editor from losing its cursor position or active selection when clicking toolbar elements or AI actions. Includes Word/Character statistics and a robust programmatic Undo/Redo (Ctrl+Z / Ctrl+Y) history engine.
 
 ### 2. Document & Pitch Tools (Corporate Suite) 🚀
-* **📊 Slide Presentation Mode (Pitch Mode)**: Generates structured, responsive slide decks (Problem, Solution, Key Features, ROI, Next Steps) from notes using local LLMs. It features keyboard navigation (`ArrowLeft`/`ArrowRight`/`Space`/`Escape`) and an **Abort Button** to cancel generation mid-way.
-* **⏱️ ROI & Productivity Calculator**: Computes monthly time saved, percentage reduction, and annual workdays recovered based on task frequency. Generates a glowing, download-ready **Impact Card** certificate and prompts the local AI to compile a 2-sentence Strategic Business Brief.
+* **📊 Slide Presentation Mode (Pitch Mode)**: Generates structured, responsive slide decks (Problem, Solution, Key Features, Productivity, Next Steps) from notes using local LLMs. It features keyboard navigation (`ArrowLeft`/`ArrowRight`/`Space`/`Escape`) and an **Abort Button** to cancel generation mid-way.
+* **⏱️ Productivity & Impact Calculator**: Computes monthly time saved, percentage reduction, and annual workdays recovered based on task frequency. Generates a glowing, download-ready **Impact Card** certificate and prompts the local AI to compile a 2-sentence Strategic Business Brief.
 * **🎙️ Meeting Minutes (Gerar Ata)**: Formats meeting notes, transcripts, or dictations into a professional document with a General Summary, Key Decisions, and a structured markdown table of Action Items, Owners, and Deadlines.
-* **📄 Advanced PDF Export**: Choose between styled templates (Standard Clean margins, Formal Meeting Minutes with header details and signature lines, or Security Impact Reports including auto-imported calculations from the ROI calculator) before printing or saving.
+* **📄 Advanced PDF Export**: Choose between styled templates (Standard Clean margins, Formal Meeting Minutes with header details and signature lines, or Security Impact Reports including auto-imported calculations from the Productivity calculator) before printing or saving.
 
 ### 3. AI Quick Actions & Conversational Assistant 💬
 * **Toolbar AI Actions**: `Summarize` (notes synthesis), `Improve Writing` (rephrasing), `Translate` (automatic language toggle), `Extract Topics` (extract bullet points), `Expand Topic` (inline context generator), and `Auto-Format` (grammar and spacing polish).
