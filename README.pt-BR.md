@@ -87,17 +87,13 @@ smartnotes-ai/
 
 ### Pré-requisitos (Guia de Instalação via CLI)
 
-Você precisará do **Node.js**, **Python** e **Foundry Local AI** instalados em seu sistema. Você pode instalar todos eles diretamente através da sua linha de comando:
+Você precisará do **Node.js**, **Python** e **Foundry Local AI** instalados em seu sistema.
 
 #### 1. Windows (PowerShell / Prompt de Comando)
 ```powershell
-# Instalar o Node.js (Versão LTS estável)
+# Instalar Node.js (LTS), Python 3 e Foundry Local AI
 winget install OpenJS.NodeJS.LTS
-
-# Instalar o Python 3
 winget install Python.Python.3
-
-# Instalar o Foundry Local AI
 winget install Microsoft.FoundryLocal
 
 # NOTA: Reinicie a janela do seu terminal para atualizar a variável PATH do sistema.
@@ -105,54 +101,28 @@ winget install Microsoft.FoundryLocal
 
 #### 2. macOS (Terminal - usando Homebrew)
 ```bash
-# Instalar o Node.js
-brew install node
-
-# Instalar o Python 3
-brew install python
-
-# Instalar o Foundry Local AI
+# Instalar Node.js, Python 3 e Foundry Local AI
+brew install node python
 brew tap microsoft/foundrylocal
 brew install foundrylocal
 ```
 
 #### 3. Linux (Terminal - ex: Ubuntu/Debian)
 ```bash
-# Atualizar a lista de pacotes e instalar Node.js + NPM
-# (Usa -k para ignorar erros de SSL se você estiver atrás de um proxy/firewall corporativo)
+# 1. Instalar Node.js e Python 3 + Pip (ignora erros de SSL caso esteja atrás de proxy)
 curl -fsSL -k https://deb.nodesource.com/setup_20.x | sudo bash -
-sudo apt install -y nodejs
+sudo apt install -y nodejs python3 python3-pip
 
-# Instalar o Python 3 + Pip
-sudo apt update && sudo apt install -y python3 python3-pip
-
-# Instalar a CLI do Foundry Local AI (Detecta automaticamente a arquitetura)
-ARCH=$(uname -m)
-if [ "$ARCH" = "x86_64" ]; then
-  FILE="foundry-0.10.1-linux-x64.tar.gz"
-elif [ "$ARCH" = "aarch64" ] || [ "$ARCH" = "arm64" ]; then
-  FILE="foundry-0.10.1-linux-arm64.tar.gz"
-else
-  echo "Arquitetura não suportada: $ARCH"
-  exit 1
-fi
-
-# Baixar o pacote binário (usando -k para ignorar verificação de SSL se necessário)
-curl -L -O -k "https://github.com/microsoft/Foundry-Local/releases/download/cli-preview-0.10.1/$FILE"
-
-# Extrair para uma pasta local no diretório home (não requer privilégios sudo)
+# 2. Baixar e extrair a CLI do Foundry Local (para ARM64, substitua 'x64' por 'arm64')
+curl -L -O -k https://github.com/microsoft/Foundry-Local/releases/download/cli-preview-0.10.1/foundry-0.10.1-linux-x64.tar.gz
 mkdir -p "$HOME/foundry-local"
-tar -xzf "$FILE" -C "$HOME/foundry-local" --strip-components=1
+tar -xzf foundry-0.10.1-linux-x64.tar.gz -C "$HOME/foundry-local" --strip-components=1
 
-# Adicionar a pasta do executável ao PATH permanentemente, adicionando no início para evitar colisão com outros utilitários chamados 'foundry'
+# 3. Adicionar o caminho ao perfil e atualizar sessão (use ~/.zshrc se usar zsh)
 echo 'export PATH="$HOME/foundry-local/lib:$PATH"' >> ~/.bashrc
-# (Para usuários do zsh, execute este comando no lugar: echo 'export PATH="$HOME/foundry-local/lib:$PATH"' >> ~/.zshrc)
+export PATH="$HOME/foundry-local/lib:$PATH" && hash -r
 
-# Aplicar as mudanças na sessão do terminal ativa e limpar o cache de comandos do shell
-export PATH="$HOME/foundry-local/lib:$PATH"
-hash -r
-
-# Verificar a instalação (deve funcionar de qualquer pasta)
+# 4. Verificar a instalação
 foundry --version
 ```
 
